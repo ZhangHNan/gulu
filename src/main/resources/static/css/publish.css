@@ -1,0 +1,50 @@
+.main{
+    margin: 30px;
+    background-color: white;
+}
+
+.footer {
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    padding: 0 0 15px 0;
+}
+
+body{
+    background-color: #efefef;
+}
+
+.btn-sbm{
+    float: right;
+    margin-bottom: 15px;
+}
+
+.right-bar{
+    padding-right: 30px;
+    overflow: hidden;
+}
+.msg-error-div{
+    padding: 4px;
+    margin: 5px;
+    width: auto;
+    clear: both;
+}
+.msg-error{
+    padding:10px 18px;
+    /*display: none;*/
+}
+.comment-tags{
+    margin-top: 10px;
+}
+.comment-tag{
+    margin-top: 10px;
+    margin-right: 8px;
+    padding-top: 4.5px;
+    display: inline-block;
+}
+.comment-tag-icon{
+    margin-right: 4px;
+}
+.tab-content{
+    margin-top: 10px;
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>发布页面</title>
+    <!--这样写的话前端和后端测试都可用使用bootstrap-->
+    <!--jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边)-->
+    <script src="../static/js/jquery-3.4.1.min.js" th:src="@{/js/jquery-3.2.1.min.js}"></script>
+    <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="../static/css/bootstrap-theme.min.css" th:href="@{/css/bootstrap-theme.min.css}">
+    <link rel="stylesheet" href="../static/css/publish.css" th:href="@{/css/publish.css}">
+    <script src="../static/js/publish.js" th:src="@{/js/publish.js}"></script>
+    <!--使用富文本要用的css和js-->
+    <link rel="stylesheet" href="../static/css/editormd.min.css" th:href="@{/css/editormd.min.css}">
+    <script src="../static/js/editormd.min.js" th:src="@{/js/editormd.min.js}"></script>
+</head>
+<body>
+<div th:insert="~{navigation :: nav}"></div>
+<div>
+    <div class="container-fluid main">
+        <div class="row">
+            <div class="col-lg-9 col-md-12 col-xs-12">
+                <!--左3/4区域：帖子的编辑区-->
+                <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 发起</h2>
+                <hr>
+                <!--第一次发帖时要提交的表单-->
+                <form th:action="@{/publish}" action="/publish" method="post" >
+                <!--<form th:action="@{'/publish/'+${questionId}}" action="/publish" method="post" >-->
+                    <!--两个相同的片段而且有id，将它抽取为公共片段-->
+                    <div class="form-group">
+                        <input type="hidden" name="id" th:value="${id}">
+                        <label for="title">问题标题（简单扼要）</label>
+                        <input th:value="${title}" type="text" class="form-control" id="title" name="title"
+                               placeholder="问题标题……"/>
+                    </div>
+
+                    <div class="form-group" id="question-editor">
+                        <label for="description">问题补充（必填，请参照右侧提示）：</label>
+                        <textarea th:text="${description}" style="display:none;" name="description" id="description" class="form-control"
+                                  cols="30" rows="10"></textarea>
+                    </div>
+                    <script type="text/javascript">
+                        $(function() {
+                            var editor = editormd("question-editor", {
+                                //查看项目上的README.md的Options
+                                width  : "100%",
+                                height : "350px",
+                                path   : "/js/lib/",
+                                delay : 0 ,
+                                placeholder : "请输入问题描述",
+                            //    启用图片上传功能
+                                imageUpload : true,
+                                imageFormats : ["jpg","jpeg","gif","png","bmg","webp"],
+                                imageUploadURL : "/file/upload"
+                            });
+                        });
+                    </script>
+
+                    <div class="form-group">
+                        <label for="tag">添加标签：</label>
+                        <input th:value="${tag}" type="text" class="form-control" id="tag" name="tag"
+                               placeholder="输入标签，以，号分隔" autocomplete="off" onclick="showSelectTag()"/>
+                        <!--标签选择区-->
+                        <div id="select-tag" style="display: none" class="comment-tags">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" th:class="${tag.categoryName=='开发语言'}?'active':''" th:each="tag:${tags}"><a href="#home" th:href="'#'+${tag.categoryName}" th:text="${tag.categoryName}" th:aria-controls="${tag.categoryName}" role="tab" data-toggle="tab">开发语言</a></li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" th:class="${tag.categoryName=='开发语言'}?'tab-pane active':'tab-pane'" class="tab-pane" th:each="tag:${tags}" th:id="${tag.categoryName}" id="home">
+                                    <span th:each="tagName:${tag.tags}" onclick="selectTag(this)" th:data-tag="${tagName}" class="label label-info comment-tag"><span class="glyphicon glyphicon-tags comment-tag-icon"></span><span th:text="${tagName}">java</span></span>
+                                    <!--<span onclick="selectTag('spring')" class="label label-info comment-tag"><span class="glyphicon glyphicon-tags comment-tag-icon"></span><span>spring</span></span>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-9 col-md-12 col-xs-12">
+                                <div class="msg-error-div"><span th:text="${error}" th:if="${error!=null}"
+                                                                 class="alert alert-danger msg-error">警告：测试警告！</span></div>
+                            </div>
+                            <div class="col-lg-3 col-md-12 col-xs-12">
+                                <button type="submit" class="btn btn-success btn-sbm">发布</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-3 col-md-12 col-xs-12 right-bar">
+                <!--右边1/4区域：使用手册-->
+                <br>
+                <h2>欢迎使用发布功能</h2>
+                <hr>
+                <h3>问题发起指南</h3>
+                <hr>
+                <p>
+                    本网站的问题描述部分采用markdown语法编辑
+                </p>
+                <p>
+                    1.鼠标悬浮左边输入框上方法图标可了解点击图标的具体功能
+                </p>
+                <p>
+                    2.输入框右边是预览框，是您发布页面后，问题详情页面真正显示的内容！点击小眼睛图标可以关闭预览框。
+                </p>
+                <p>
+                    3.发布的内容不能违规！
+                </p>
+                <p>
+                    4.发布内容之前请先登录，以免填写的内容丢失！
+                </p>
+                <p>
+                    5.标题、内容、标签都不为空才可发帖成功。
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:insert="~{footer :: foot}"></div>
+</body>
+</html>
