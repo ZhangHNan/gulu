@@ -1,5 +1,6 @@
 package wanzhi.gulu.community.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import wanzhi.gulu.community.dto.registerDTO;
 import wanzhi.gulu.community.exception.CustomizeErrorCode;
-import wanzhi.gulu.community.exception.CustomizeException;
 import wanzhi.gulu.community.mapper.UserMapper;
 import wanzhi.gulu.community.model.User;
 import wanzhi.gulu.community.model.UserExample;
@@ -45,6 +45,18 @@ public class RegisterController {
         }
         //手机验证码通过后才执行下面语句
 
+        //验证用户名是否为空
+        if (StringUtils.isBlank(registerDTO.getName())){
+            //回显并携带错误信息
+            model.addAttribute("phone",registerDTO.getPhone());
+            model.addAttribute("name",registerDTO.getName());
+            model.addAttribute("email",registerDTO.getEmail());
+            model.addAttribute("password",registerDTO.getPassword());
+            model.addAttribute("passwordAgain",registerDTO.getPasswordAgain());
+            model.addAttribute("msg",CustomizeErrorCode.NAME_IS_EMPTY.getMassage());
+            return "register";
+        }
+
         //验证输入密码与再次输入密码是否一致
         if (!registerDTO.getPassword().equals(registerDTO.getPasswordAgain())){
             //回显并携带错误信息
@@ -56,7 +68,6 @@ public class RegisterController {
             model.addAttribute("msg",CustomizeErrorCode.PASSWORD_UNLIKE.getMassage());
             return "register";
         }
-
         User user = new User();
         user.setName(registerDTO.getName());
         user.setEmail(registerDTO.getEmail());

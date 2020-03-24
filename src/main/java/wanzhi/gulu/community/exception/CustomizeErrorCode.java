@@ -15,7 +15,8 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     CONTENT_IS_EMPTY(4007,"评论内容不能为空！"),
     FILE_UPLOAD_FAIL(7005,"图片上传失败！"),
     PASSWORD_UNLIKE(4008,"两次输入密码不一致！"),
-    PHONE_ALREADY_EXIST(9001,"该手机号已注册")
+    PHONE_ALREADY_EXIST(9001,"该手机号已注册"),
+    NAME_IS_EMPTY(9004,"用户名不能为空")
     ;//这里定义的枚举是为了给下面构造函数中传入message准备的
 
     private String message;
