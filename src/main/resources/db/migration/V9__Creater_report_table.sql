@@ -1,4 +1,4 @@
-CREATE TABLE `repor` (
+CREATE TABLE `report` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `target _id` bigint(20) DEFAULT NULL COMMENT '被举报的问题或评论id',
   `target _type` int(11) DEFAULT NULL COMMENT '类型：问题/评论',

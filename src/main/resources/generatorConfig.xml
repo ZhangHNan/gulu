@@ -51,5 +51,20 @@
         <table tableName="notification" domainObjectName="Notification" >
         </table>
 
+        <table tableName="like" domainObjectName="Like" >
+        </table>
+
+        <table tableName="tread" domainObjectName="Tread" >
+        </table>
+
+        <table tableName="star" domainObjectName="Star" >
+        </table>
+
+        <table tableName="Watch" domainObjectName="Watch" >
+        </table>
+
+        <table tableName="report" domainObjectName="Report" >
+        </table>
+
     </context>
 </generatorConfiguration>
