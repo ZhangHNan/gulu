@@ -46,7 +46,7 @@ public class CommentController {
             return CommentResultDTO.errorOf(CustomizeErrorCode.CONTENT_IS_EMPTY);
         }
         comment.setCommentator(user.getId());
-        comment.setParentId(commentCreateDTO.getParentId());//注意这个ParentId可能不存在：发帖用户已删除
+        comment.setTargetId(commentCreateDTO.getTargetId());//注意这个ParentId可能不存在：发帖用户已删除
         comment.setType(commentCreateDTO.getType());
         comment.setContent(commentCreateDTO.getContent());
         comment.setGmtModified(System.currentTimeMillis());

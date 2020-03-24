@@ -49,7 +49,7 @@ public class NotificationController {
             notificationMapper.updateByExample(notification, example);
             //查询outerid对应的questionId
             Comment comment = commentMapper.selectByPrimaryKey(outerid);
-            Long parentId = comment.getParentId();
+            Long parentId = comment.getTargetId();
             //跳转
             return "forward:/question/"+parentId;
         }

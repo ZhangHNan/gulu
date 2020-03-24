@@ -56,7 +56,7 @@ public class AuthorizeController {
             String token = UUID.randomUUID().toString();//抽取token用于存入cookie
             user.setToken(token);
             user.setName(githubUser.getLogin());
-            user.setAccountId(String.valueOf(githubUser.getId()));//将Long类型强转为字符串
+            user.setAccountId(githubUser.getId());//将Long类型强转为字符串
             user.setGmtModified(System.currentTimeMillis());
             user.setAvatarUrl(githubUser.getAvatarUrl());
             userService.createOrUpdate(user); //没有存入？存入了，数据库中有个字段名没改（tocken=>token）导致数据刷新都没显示

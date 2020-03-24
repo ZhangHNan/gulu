@@ -332,11 +332,11 @@ public class PageUtils {
             User user = userMapper.selectByPrimaryKey(notificationDTO.getNotifier());
             notificationDTO.setUser(user);
             if (notificationDTO.getType() == NotificationTypeEnum.REPLY_QUESTION.getType()) {
-                Question question = questionMapper.selectByPrimaryKey(notificationDTO.getOuterid());
+                Question question = questionMapper.selectByPrimaryKey(notificationDTO.getOuterId());
                 notificationDTO.setOuterTitle(question.getTitle());
                 notificationDTO.setTypeName(NotificationTypeEnum.REPLY_QUESTION.getName());
             } else {
-                Comment comment = commentMapper.selectByPrimaryKey(notificationDTO.getOuterid());
+                Comment comment = commentMapper.selectByPrimaryKey(notificationDTO.getOuterId());
                 notificationDTO.setOuterTitle(comment.getContent());
                 notificationDTO.setTypeName(NotificationTypeEnum.REPLY_COMMENT.getName());
             }

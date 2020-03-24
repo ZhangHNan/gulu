@@ -43,7 +43,7 @@ public class CommentService {
     //添加评论功能
     @Transactional//增加事务
     public void insert(Comment comment) {
-        if (comment.getParentId() == null || comment.getParentId() == 0) {
+        if (comment.getTargetId() == null || comment.getTargetId() == 0) {
             throw new CustomizeException(CustomizeErrorCode.TARGET_PARAM_ERROR);
         }
         if (comment.getType() == null || !CommentTypeEnum.isExist(comment.getType())) {
@@ -51,13 +51,13 @@ public class CommentService {
         }
         if (comment.getType() == CommentTypeEnum.COMMENT.getType()) {
             //回复评论
-            Comment dbComment = commentMapper.selectByPrimaryKey(comment.getParentId());
+            Comment dbComment = commentMapper.selectByPrimaryKey(comment.getTargetId());
             if (dbComment == null) {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
             //增加评论的评论数
             Comment updateComment = new Comment();
-            updateComment.setId(comment.getParentId());
+            updateComment.setId(comment.getTargetId());
             updateComment.setCommentCount(1L);
             commentMapper.insertSelective(comment);
             commentExtMapper.incCommentCount(updateComment);
@@ -65,11 +65,11 @@ public class CommentService {
             createNotify(comment,dbComment.getCommentator(), NotificationTypeEnum.REPLY_COMMENT);
         } else {
             //回复问题
-            Question dbQuestion = questionMapper.selectByPrimaryKey(comment.getParentId());
+            Question dbQuestion = questionMapper.selectByPrimaryKey(comment.getTargetId());
             if (dbQuestion == null) {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
-            dbQuestion.setCommentCount(1);
+            dbQuestion.setCommentCount(1L);
             questionExtMapper.incCommentCount(dbQuestion);
             commentMapper.insertSelective(comment);
             //创建通知
@@ -82,7 +82,7 @@ public class CommentService {
         Notification notification = new Notification();
         notification.setGmtCreate(System.currentTimeMillis());
         notification.setType(notificationTypeEnum.getType());
-        notification.setOuterid(comment.getParentId());
+        notification.setOuterid(comment.getTargetId());
         notification.setNotifier(comment.getCommentator());
         notification.setStatus(NotificationStatusEnum.UNREAD.getStatus());
         notification.setReceiver(receiver);
@@ -93,7 +93,7 @@ public class CommentService {
     public List<CommentDTO> listByTargetId(Long id, CommentTypeEnum type) {
         CommentExample example = new CommentExample();
         example.createCriteria()
-                .andParentIdEqualTo(id)
+                .andTargetIdEqualTo(id)
                 .andTypeEqualTo(type.getType());
         example.setOrderByClause("gmt_create desc");//按照创建时间倒叙查询
         //根据ParentId查询问题评论

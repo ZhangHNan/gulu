@@ -103,7 +103,7 @@ public class QuestionService {
 //        questionMapper.updateByExampleSelective(updateQuestion, example);
         Question updateQuestion = new Question();
         updateQuestion.setId(id);
-        updateQuestion.setViewCount(1);
+        updateQuestion.setViewCount(1L);
         questionExtMapper.incView(updateQuestion);
     }
 
