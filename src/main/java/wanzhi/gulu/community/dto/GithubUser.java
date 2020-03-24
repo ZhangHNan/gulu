@@ -7,9 +7,10 @@ import lombok.Data;
  */
 @Data
 public class GithubUser {
+    private Long id;       //github的id
     private String login;  //返回的name为空的，login才是用户名
-    private Long id;
-    private String bio;
-    private String avatarUrl;
-
+    private String name;   //github账号设置的名称
+    private String bio;    //github的简介
+    private String email;  //github上保存的email
+    private String avatarUrl; //github头像
 }

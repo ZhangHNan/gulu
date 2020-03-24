@@ -1,5 +1,6 @@
 package wanzhi.gulu.community.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -55,11 +56,17 @@ public class AuthorizeController {
             User user = new User();//下面要使用set方法给这个对象的属性赋值，此处不可用null，必须实例化一个对象。
             String token = UUID.randomUUID().toString();//抽取token用于存入cookie
             user.setToken(token);
-            user.setName(githubUser.getLogin());
-            user.setAccountId(githubUser.getId());//将Long类型强转为字符串
             user.setGmtModified(System.currentTimeMillis());
+            user.setAccountId(githubUser.getId());
             user.setAvatarUrl(githubUser.getAvatarUrl());
-            userService.createOrUpdate(user); //没有存入？存入了，数据库中有个字段名没改（tocken=>token）导致数据刷新都没显示
+            user.setEmail(githubUser.getEmail());
+            user.setBio(githubUser.getBio());
+            if(StringUtils.isBlank(githubUser.getName())){
+                user.setName(githubUser.getLogin());
+            }else{
+                user.setName(githubUser.getName());
+            }
+            userService.createOrUpdate(user);
             response.addCookie(new Cookie("token",token));
             if (accessTokenDTO.getState().equals("1")){
                 return "redirect:/index";
