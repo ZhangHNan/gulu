@@ -42,7 +42,7 @@
                     </li>
                     <!--登录按钮-->
                     <li th:if="${session.user==null}"><a
-                            href="https://github.com/login/oauth/authorize?client_id=c14b8a6a1a6b4e02b9a1&redirect_uri=http://localhost:8887/callback&scope=user&state=1">登录</a>
+                            href="/login">登录</a>
                     </li>
                     <!--登录后列表-->
                     <li th:if="${session.user!=null}" class="dropdown">

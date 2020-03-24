@@ -1,5 +1,5 @@
 .main{
-    margin: 30px;
+    margin: 30px 280px;
     background-color: white;
 }
 
@@ -9,7 +9,34 @@
     color: #666;
     padding: 0 0 15px 0;
 }
+.input-item{
+    margin: 18px;
+}
+.div-title{
+    padding: 0 4px;
+}
+.title{
+    float: right;
+    padding: 6px 0;
+}
+.input{
+    width: 320px;
+}
+.welcome{
+    text-align: center;
+    margin: 24px 0;
+}
+.btn-submit{
+    float: right;
+    margin: 8px 191px;
+}
+.input-item-msg{
+    margin-top: 35px;
+    margin-left: 0;
+}
+.msg-error{
 
+}
 body{
     background-color: #efefef;
 }

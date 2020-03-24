@@ -21,7 +21,6 @@ public class UserService {
         userExample.createCriteria()
                 .andAccountIdEqualTo(user.getAccountId());
         List<User> users = userMapper.selectByExample(userExample);
-        User dbUser = users.get(0);
 //        User dbUser = userMapper.findByAccountId(user.getAccountId());
         //根据accountId判断数据库中有无这个user数据
 //        if(dbUser == null){
@@ -35,6 +34,7 @@ public class UserService {
             user.setPower(0);
             userMapper.insert(user);
         }else{
+            User dbUser = users.get(0);
             //如果有，只更新Token
 //            userMapper.update(user);
             //如果头像、email、简介、name是空的话将github上的信息更新到账户信息中，如果有信息将其原样返回
