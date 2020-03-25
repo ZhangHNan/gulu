@@ -12,6 +12,7 @@ import wanzhi.gulu.community.exception.CustomizeErrorCode;
 import wanzhi.gulu.community.exception.CustomizeException;
 import wanzhi.gulu.community.mapper.*;
 import wanzhi.gulu.community.model.*;
+import wanzhi.gulu.community.util.HotUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,9 @@ public class CommentService {
 
     @Autowired
     private QuestionExtMapper questionExtMapper;
+
+    @Autowired
+    HotUtils hotUtils;
 
     @Autowired
     CommentExtMapper commentExtMapper;
@@ -61,6 +65,7 @@ public class CommentService {
             updateComment.setCommentCount(1L);
             commentMapper.insertSelective(comment);
             commentExtMapper.incCommentCount(updateComment);
+            hotUtils.incCommentHot(dbComment.getId(),1L);
             //创建通知
             createNotify(comment,dbComment.getCommentator(), NotificationTypeEnum.REPLY_COMMENT);
         } else {
@@ -73,7 +78,8 @@ public class CommentService {
             questionExtMapper.incCommentCount(dbQuestion);
             commentMapper.insertSelective(comment);
             //增加热力值
-
+            hotUtils.incQuestionHot(dbQuestion.getId(),1L);
+            hotUtils.incUserHot(dbQuestion.getCreator(),1L);
             //创建通知
             createNotify(comment,dbQuestion.getCreator(), NotificationTypeEnum.REPLY_QUESTION);
         }
