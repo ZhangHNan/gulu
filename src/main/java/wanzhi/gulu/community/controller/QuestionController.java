@@ -38,7 +38,7 @@ public class QuestionController {
         //累计阅读数和热度值
         questionService.view(id,loginId);
         QuestionDTO questionDTO = questionService.findQuestionById(id);
-        List<CommentDTO> commentDTOs = commentService.listByTargetId(id,CommentTypeEnum.QUESTION);
+        List<CommentDTO> commentDTOs = commentService.listByTargetId(id,CommentTypeEnum.QUESTION,loginId);
         List<QuestionDTO> relatedQuestionDTOS = questionService.selectRelated(questionDTO);
         model.addAttribute("questionDTO",questionDTO);
         model.addAttribute("commentDTOS",commentDTOs);

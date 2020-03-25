@@ -110,3 +110,6 @@ body{
     width: 70%;
     margin: auto;
 }
+.like-active{
+    color:red;
+}

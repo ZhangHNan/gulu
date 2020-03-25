@@ -102,3 +102,63 @@ function collapseComments(e) {
         }
     }
 }
+
+
+//点赞功能
+// function praise(status,praiseClass,type) {
+//     $.ajax({
+//         type:"POST",
+//         url:"/commentPraise",
+//         contentType:"application/json",
+//         data:JSON.stringify({
+//             "creator": creator,
+//             "praiseId": praiseId,
+//             "type": type
+//         }),
+//         success:function (response) {
+//             if(response.code == 200){
+//                 var newStatus = response.praiseStatus;
+//                 if (newStatus==1){
+//                     praiseClass.replace("glyphicon glyphicon-thumbs-up comments-like icon like-active");
+//                 }else{
+//                     praiseClass.replace("glyphicon glyphicon-thumbs-up comments-like icon");
+//                 }
+//             }else{
+//                 alert(response.message);
+//
+//             }
+//         },
+//         dataType:"json"
+//     })
+// }
+//评论点赞功能
+function commentPraise(e) {
+    var commentId = e.getAttribute("data-id");
+    // var praiseStatus = e.getAttribute("data-status");
+    var creator = e.getAttribute("data-creator");
+    var id = "#comment-"+commentId;
+    $.ajax({
+        type:"POST",
+        url:"/commentPraise",
+        contentType:"application/json",
+        data:JSON.stringify({
+            "creator": creator,
+            "praiseId": commentId,
+            "type": 2
+        }),
+        success:function (response) {
+            if(response.code == 200){
+                var newStatus = response.praiseStatus;
+                if (newStatus==1){
+                    $(id).toggleClass("like-active");
+                }else{
+                    $(id).removeClass("like-active")
+                }
+            }else{
+                alert(response.message);
+
+            }
+        },
+        dataType:"json"
+    })
+}

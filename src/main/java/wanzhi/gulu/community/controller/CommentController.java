@@ -65,8 +65,13 @@ public class CommentController {
     //获取二级评论列表API
     @ResponseBody
     @GetMapping("/comment/{id}")
-    public CommentResultDTO comments(@PathVariable("id")Long id){
-        List<CommentDTO> commentDTOs = commentService.listByTargetId(id,CommentTypeEnum.COMMENT);
+    public CommentResultDTO comments(@PathVariable("id")Long id,HttpServletRequest request){
+        User user = (User)request.getSession().getAttribute("user");
+        Long loginId = null;
+        if (user!=null){
+            loginId = user.getId();
+        }
+        List<CommentDTO> commentDTOs = commentService.listByTargetId(id,CommentTypeEnum.COMMENT,loginId);
         return CommentResultDTO.okOf(commentDTOs);
     }
 }

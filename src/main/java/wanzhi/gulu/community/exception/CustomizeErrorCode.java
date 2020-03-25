@@ -17,7 +17,7 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     PASSWORD_UNLIKE(4008,"两次输入密码不一致！"),
     PHONE_ALREADY_EXIST(9001,"该手机号已注册"),
     NAME_IS_EMPTY(9004,"用户名不能为空"),
-    TYPE_ERROR(4000,"类型异常！"),
+    PRAISE_TYPE_ERROR(4000,"点赞类型异常！"),
     ;//这里定义的枚举是为了给下面构造函数中传入message准备的
 
     private String message;

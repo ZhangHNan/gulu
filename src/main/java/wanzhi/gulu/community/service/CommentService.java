@@ -8,11 +8,13 @@ import wanzhi.gulu.community.dto.CommentDTO;
 import wanzhi.gulu.community.enums.CommentTypeEnum;
 import wanzhi.gulu.community.enums.NotificationStatusEnum;
 import wanzhi.gulu.community.enums.NotificationTypeEnum;
+import wanzhi.gulu.community.enums.PraiseTypeEnum;
 import wanzhi.gulu.community.exception.CustomizeErrorCode;
 import wanzhi.gulu.community.exception.CustomizeException;
 import wanzhi.gulu.community.mapper.*;
 import wanzhi.gulu.community.model.*;
 import wanzhi.gulu.community.util.HotUtils;
+import wanzhi.gulu.community.util.PraiseUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,9 @@ public class CommentService {
 
     @Autowired
     HotUtils hotUtils;
+
+    @Autowired
+    PraiseUtils praiseUtils;
 
     @Autowired
     CommentExtMapper commentExtMapper;
@@ -98,7 +103,7 @@ public class CommentService {
     }
 
     //查询评论功能
-    public List<CommentDTO> listByTargetId(Long id, CommentTypeEnum type) {
+    public List<CommentDTO> listByTargetId(Long id, CommentTypeEnum type,Long loginId) {
         CommentExample example = new CommentExample();
         example.createCriteria()
                 .andTargetIdEqualTo(id)
@@ -127,6 +132,7 @@ public class CommentService {
             CommentDTO commentDTO = new CommentDTO();
             BeanUtils.copyProperties(comment, commentDTO);
             commentDTO.setUser(userMap.get(comment.getCommentator()));
+            commentDTO.setPraiseStatus(praiseUtils.getStatus(commentDTO.getId(),loginId,PraiseTypeEnum.COMMENT.getType()));
             return commentDTO;
         }).collect(Collectors.toList());
 

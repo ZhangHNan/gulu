@@ -4,7 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import wanzhi.gulu.community.dto.PraiseDTO;
 import wanzhi.gulu.community.mapper.CommentExtMapper;
+import wanzhi.gulu.community.mapper.PraiseMapper;
 import wanzhi.gulu.community.mapper.QuestionExtMapper;
+import wanzhi.gulu.community.model.Praise;
+import wanzhi.gulu.community.model.PraiseExample;
+
+import java.util.List;
 
 @Component
 public class PraiseUtils {
@@ -13,7 +18,24 @@ public class PraiseUtils {
     QuestionExtMapper questionExtMapper;
 
     @Autowired
+    PraiseMapper praiseMapper;
+
+    @Autowired
     CommentExtMapper commentExtMapper;
+
+    public Integer getStatus(Long praiseId,Long creatorId,Integer type){
+        PraiseExample example = new PraiseExample();
+        example.createCriteria()
+                .andCreatorEqualTo(creatorId)
+                .andPraiseIdEqualTo(praiseId)
+                .andTypeEqualTo(type);
+        List<Praise> praises = praiseMapper.selectByExample(example);
+        if (praises.size()==0){
+            return 0; //当前用户没点赞
+        }else{
+            return 1; //当前用户点赞了
+        }
+    }
 
     public void incQuestionPraise(Long id, Long incCount){
         PraiseDTO praiseDTO = new PraiseDTO();
