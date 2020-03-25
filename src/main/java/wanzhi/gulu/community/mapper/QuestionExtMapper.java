@@ -15,4 +15,6 @@ public interface QuestionExtMapper {
     Integer countBySearch(String regxpSearch);
 
     List<Question> selectBySearchPage(SearchDTO searchDTO);
+
+    int incHot(Question updateQuestion);
 }

@@ -33,4 +33,9 @@
   <select id="selectBySearchPage" parameterType="wanzhi.gulu.community.dto.SearchDTO" resultMap="BaseResultMap">
     select * from question WHERE (title REGEXP #{regxpSearch}) order by gmt_create desc limit #{start} , #{rows};
   </select>
+  <update id="incHot" parameterType="wanzhi.gulu.community.model.Question" >
+    update question
+    set hot = hot + #{hot,jdbcType=BIGINT}
+    where id = #{id}
+  </update>
 </mapper>

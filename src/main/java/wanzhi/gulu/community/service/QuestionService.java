@@ -104,7 +104,8 @@ public class QuestionService {
     }
 
     //增加阅读数
-    public void incView(Long id) {
+    @Transactional
+    public void view(Long id, Long loginId) {
 //        Question question = questionMapper.selectByPrimaryKey(id);
 //        Question updateQuestion = new Question();
 //        updateQuestion.setViewCount(question.getViewCount()+1);
@@ -112,10 +113,21 @@ public class QuestionService {
 //        example.createCriteria()
 //                .andIdEqualTo(id);
 //        questionMapper.updateByExampleSelective(updateQuestion, example);
+        Question question = questionMapper.selectByPrimaryKey(id);
+        Long creator = question.getCreator();
+        if (loginId.equals(creator)){//自己访问自己不增加浏览量和热度值
+            return;
+        }
         Question updateQuestion = new Question();
         updateQuestion.setId(id);
+        updateQuestion.setHot(1L);
         updateQuestion.setViewCount(1L);
+        User user = new User();
+        user.setId(creator);
+        user.setHot(1L);
+        userExtMapper.incHot(user);
         questionExtMapper.incView(updateQuestion);
+        questionExtMapper.incHot(updateQuestion);
     }
 
     //查询相关问题

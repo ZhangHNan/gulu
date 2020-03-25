@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import wanzhi.gulu.community.dto.CommentDTO;
 import wanzhi.gulu.community.dto.QuestionDTO;
 import wanzhi.gulu.community.enums.CommentTypeEnum;
+import wanzhi.gulu.community.model.User;
 import wanzhi.gulu.community.service.CommentService;
 import wanzhi.gulu.community.service.QuestionService;
+import wanzhi.gulu.community.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -25,9 +28,15 @@ public class QuestionController {
     //到问题详情页面
     @GetMapping("/question/{id}")
     public String question(@PathVariable("id") Long id,
+                           HttpServletRequest request,
                            Model model){
-        //累计阅读数
-        questionService.incView(id);
+        User user = (User)request.getSession().getAttribute("user");
+        Long loginId = null;
+        if (user!=null){
+            loginId = user.getId();
+        }
+        //累计阅读数和热度值
+        questionService.view(id,loginId);
         QuestionDTO questionDTO = questionService.findQuestionById(id);
         List<CommentDTO> commentDTOs = commentService.listByTargetId(id,CommentTypeEnum.QUESTION);
         List<QuestionDTO> relatedQuestionDTOS = questionService.selectRelated(questionDTO);
