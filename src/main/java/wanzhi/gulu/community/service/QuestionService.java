@@ -5,12 +5,14 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import wanzhi.gulu.community.dto.PageDTO;
 import wanzhi.gulu.community.dto.QuestionDTO;
 import wanzhi.gulu.community.exception.CustomizeErrorCode;
 import wanzhi.gulu.community.exception.CustomizeException;
 import wanzhi.gulu.community.mapper.QuestionExtMapper;
 import wanzhi.gulu.community.mapper.QuestionMapper;
+import wanzhi.gulu.community.mapper.UserExtMapper;
 import wanzhi.gulu.community.mapper.UserMapper;
 import wanzhi.gulu.community.model.Question;
 import wanzhi.gulu.community.model.QuestionExample;
@@ -33,6 +35,9 @@ public class QuestionService {
 
     @Autowired
     QuestionExtMapper questionExtMapper;
+
+    @Autowired
+    UserExtMapper userExtMapper;
 
     @Autowired
     PageUtils pageUtils;
@@ -78,14 +83,15 @@ public class QuestionService {
 
 
     //更新或创建帖子 ： 发布或编辑问题功能
-    public void updateOrCreate(Question question) {
+    @Transactional
+    public void updateOrCreate(Question question,User user) {
         if(question.getId()==null){
 //            questionMapper.create(question);
             question.setGmtCreate(question.getGmtModified());
             //创建帖子
             //增加热度值
-
-
+            user.setHot(10L);
+            userExtMapper.incHot(user);
             questionMapper.insertSelective(question);
         }else {
 //            questionMapper.update(question);

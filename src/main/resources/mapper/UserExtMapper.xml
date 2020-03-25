@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wanzhi.gulu.community.mapper.UserExtMapper">
+  <resultMap id="BaseResultMap" type="wanzhi.gulu.community.model.User">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="account_id" jdbcType="BIGINT" property="accountId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="token" jdbcType="VARCHAR" property="token" />
+    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="bio" jdbcType="VARCHAR" property="bio" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="like_count" jdbcType="BIGINT" property="likeCount" />
+    <result column="fans_count" jdbcType="BIGINT" property="fansCount" />
+    <result column="hot" jdbcType="BIGINT" property="hot" />
+    <result column="power" jdbcType="INTEGER" property="power" />
+    <result column="gmt_create" jdbcType="BIGINT" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="BIGINT" property="gmtModified" />
+  </resultMap>
+  <update id="incHot" parameterType="wanzhi.gulu.community.model.User" >
+    update user
+    set hot = hot + #{hot,jdbcType=BIGINT}
+    where id = #{id}
+  </update>
+</mapper>

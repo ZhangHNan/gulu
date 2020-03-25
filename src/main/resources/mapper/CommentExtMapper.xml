@@ -16,7 +16,7 @@
   </resultMap>
   <update id="incCommentCount" parameterType="wanzhi.gulu.community.model.Comment" >
     update comment
-    set comment_count = comment_count + #{commentCount,jdbcType=INTEGER}
+    set comment_count = comment_count + #{commentCount,jdbcType=BIGINT}
     where id = #{id}
   </update>
 </mapper>
