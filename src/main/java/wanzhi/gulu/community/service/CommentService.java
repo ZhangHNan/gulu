@@ -42,7 +42,7 @@ public class CommentService {
 
     //添加评论功能
     @Transactional//增加事务
-    public void insert(Comment comment) {
+    public void insert(Comment comment, Long loginId) {
         if (comment.getTargetId() == null || comment.getTargetId() == 0) {
             throw new CustomizeException(CustomizeErrorCode.TARGET_PARAM_ERROR);
         }
@@ -72,6 +72,8 @@ public class CommentService {
             dbQuestion.setCommentCount(1L);
             questionExtMapper.incCommentCount(dbQuestion);
             commentMapper.insertSelective(comment);
+            //增加热力值
+
             //创建通知
             createNotify(comment,dbQuestion.getCreator(), NotificationTypeEnum.REPLY_QUESTION);
         }

@@ -35,6 +35,10 @@ public class CommentController {
                        HttpServletRequest request){
         Comment comment = new Comment();
         User user = (User)request.getSession().getAttribute("user");
+        Long loginId = null;
+        if (user!=null){
+            loginId = user.getId();
+        }
         if (user == null) {
             //用户未登录
 //            comment.setCommentator(999);
@@ -52,7 +56,7 @@ public class CommentController {
         comment.setGmtModified(System.currentTimeMillis());
         comment.setGmtCreate(comment.getGmtModified());
         comment.setLikeCount(0L);
-        commentService.insert(comment);
+        commentService.insert(comment,loginId);
 //        Map<Object,Object> objectObjectMap = new HashMap<>();
 //        objectObjectMap.put("message","成功");
         return CommentResultDTO.okOf();

@@ -170,7 +170,7 @@ public class PublishController {
 //            System.out.println("question:"+question);
             return "publish";//要使用model传值就不能重定向
         }
-        questionService.updateOrCreate(question,user);
+        questionService.updateOrCreate(question,user.getId());
 //        System.out.println("question:"+question);
         return "redirect:/";
     }

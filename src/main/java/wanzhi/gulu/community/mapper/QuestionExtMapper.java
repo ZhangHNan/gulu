@@ -1,5 +1,6 @@
 package wanzhi.gulu.community.mapper;
 
+import wanzhi.gulu.community.dto.HotDTO;
 import wanzhi.gulu.community.dto.SearchDTO;
 import wanzhi.gulu.community.model.Question;
 
@@ -16,5 +17,5 @@ public interface QuestionExtMapper {
 
     List<Question> selectBySearchPage(SearchDTO searchDTO);
 
-    int incHot(Question updateQuestion);
+    int incHot(HotDTO record);
 }

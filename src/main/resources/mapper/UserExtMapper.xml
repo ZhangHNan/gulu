@@ -18,9 +18,9 @@
     <result column="gmt_create" jdbcType="BIGINT" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="BIGINT" property="gmtModified" />
   </resultMap>
-  <update id="incHot" parameterType="wanzhi.gulu.community.model.User" >
+  <update id="incHot" parameterType="wanzhi.gulu.community.dto.HotDTO" >
     update user
-    set hot = hot + #{hot,jdbcType=BIGINT}
+    set hot = hot + #{incHotCount,jdbcType=BIGINT}
     where id = #{id}
   </update>
 </mapper>

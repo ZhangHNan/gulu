@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import wanzhi.gulu.community.dto.HotDTO;
 import wanzhi.gulu.community.dto.PageDTO;
 import wanzhi.gulu.community.dto.QuestionDTO;
 import wanzhi.gulu.community.exception.CustomizeErrorCode;
@@ -17,6 +18,7 @@ import wanzhi.gulu.community.mapper.UserMapper;
 import wanzhi.gulu.community.model.Question;
 import wanzhi.gulu.community.model.QuestionExample;
 import wanzhi.gulu.community.model.User;
+import wanzhi.gulu.community.util.HotUtils;
 import wanzhi.gulu.community.util.PageUtils;
 
 import java.util.ArrayList;
@@ -37,10 +39,13 @@ public class QuestionService {
     QuestionExtMapper questionExtMapper;
 
     @Autowired
-    UserExtMapper userExtMapper;
+    UserService userService;
 
     @Autowired
     PageUtils pageUtils;
+
+    @Autowired
+    HotUtils hotUtils;
 
     @Value("${page.index.rows}")
     private Integer indexRows;//设置首页每页展示数据行数
@@ -84,14 +89,13 @@ public class QuestionService {
 
     //更新或创建帖子 ： 发布或编辑问题功能
     @Transactional
-    public void updateOrCreate(Question question,User user) {
+    public void updateOrCreate(Question question,Long loginId) {
         if(question.getId()==null){
 //            questionMapper.create(question);
             question.setGmtCreate(question.getGmtModified());
             //创建帖子
             //增加热度值
-            user.setHot(10L);
-            userExtMapper.incHot(user);
+            hotUtils.incUserHot(loginId,10L);
             questionMapper.insertSelective(question);
         }else {
 //            questionMapper.update(question);
@@ -120,14 +124,10 @@ public class QuestionService {
         }
         Question updateQuestion = new Question();
         updateQuestion.setId(id);
-        updateQuestion.setHot(1L);
         updateQuestion.setViewCount(1L);
-        User user = new User();
-        user.setId(creator);
-        user.setHot(1L);
-        userExtMapper.incHot(user);
         questionExtMapper.incView(updateQuestion);
-        questionExtMapper.incHot(updateQuestion);
+        hotUtils.incQuestionHot(id,1L);
+        hotUtils.incUserHot(creator,1L);
     }
 
     //查询相关问题

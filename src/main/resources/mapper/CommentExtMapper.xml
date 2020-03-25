@@ -19,4 +19,9 @@
     set comment_count = comment_count + #{commentCount,jdbcType=BIGINT}
     where id = #{id}
   </update>
+  <update id="incHot" parameterType="wanzhi.gulu.community.dto.HotDTO" >
+    update comment
+    set hot = hot + #{incHotCount,jdbcType=BIGINT}
+    where id = #{id}
+  </update>
 </mapper>
