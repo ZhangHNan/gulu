@@ -62,6 +62,11 @@ public class LoginController {
                     .andIdEqualTo(user.getId());
             userMapper.updateByExampleSelective(user,userExample);
             response.addCookie(new Cookie("token",token));
+        }else{
+            model.addAttribute("phone",phone);
+            model.addAttribute("password",password);
+            model.addAttribute("msg","密码错误！请重新输入密码，或检查账户是否正确！");
+            return "login";
         }
         return "redirect:/index";
     }
