@@ -82,9 +82,14 @@ public class QuestionService {
         if(question.getId()==null){
 //            questionMapper.create(question);
             question.setGmtCreate(question.getGmtModified());
+            //创建帖子
+            //增加热度值
+
+
             questionMapper.insertSelective(question);
         }else {
 //            questionMapper.update(question);
+            //修改帖子
             QuestionExample questionExample = new QuestionExample();
             questionExample.createCriteria()
                     .andIdEqualTo(question.getId());

@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="wanzhi.gulu.community.mapper.CommentExtMapper" >
-  <resultMap id="BaseResultMap" type="wanzhi.gulu.community.model.Comment" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
-    <result column="type" property="type" jdbcType="INTEGER" />
-    <result column="commentator" property="commentator" jdbcType="BIGINT" />
-    <result column="content" property="content" jdbcType="VARCHAR" />
-    <result column="gmt_create" property="gmtCreate" jdbcType="BIGINT" />
-    <result column="gmt_modified" property="gmtModified" jdbcType="BIGINT" />
-    <result column="like_count" property="likeCount" jdbcType="BIGINT" />
-    <result column="comment_count" property="commentCount" jdbcType="BIGINT" />
+  <resultMap id="BaseResultMap" type="wanzhi.gulu.community.model.Comment">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="target_id" jdbcType="BIGINT" property="targetId" />
+    <result column="commentator" jdbcType="BIGINT" property="commentator" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="like_count" jdbcType="BIGINT" property="likeCount" />
+    <result column="tread_count" jdbcType="BIGINT" property="treadCount" />
+    <result column="comment_count" jdbcType="BIGINT" property="commentCount" />
+    <result column="hot" jdbcType="BIGINT" property="hot" />
+    <result column="gmt_create" jdbcType="BIGINT" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="BIGINT" property="gmtModified" />
   </resultMap>
   <update id="incCommentCount" parameterType="wanzhi.gulu.community.model.Comment" >
     update comment
