@@ -13,31 +13,38 @@ public class TagCache {
 
     public static List<TagDTO> get() {
         List<TagDTO> tagDTOS = new ArrayList<>();
-        TagDTO program = new TagDTO();
-        program.setCategoryName("开发语言");
-        program.setTags(Arrays.asList("javascript", "php", "css", "html", "html5", "java", "node.js", "python", "c++", "c", "golang", "objective-c", "typescript", "shell", "swift", "c#", "sass", "ruby", "bash", "less", "asp.net", "lua", "scala", "coffeescript", "actionscript", "rust", "erlang", "perl"));
-        tagDTOS.add(program);
+        TagDTO cate = new TagDTO();
+        cate.setCategoryName("美食做法");
+        cate.setTags(Arrays.asList("美食做法", "秘制菜肴", "懒人菜谱", "川菜", "鲁菜", "粤菜", "湘菜", "浙菜", "闽菜", "苏菜", "徽菜", "地方特色菜", "创新菜肴"));
+        tagDTOS.add(cate);
 
-        TagDTO framework = new TagDTO();
-        framework.setCategoryName("平台框架");
-        framework.setTags(Arrays.asList("laravel", "spring", "express", "django", "flask", "yii", "ruby-on-rails", "tornado", "koa", "struts"));
-        tagDTOS.add(framework);
+        TagDTO skill = new TagDTO();
+        skill.setCategoryName("美食技巧");
+        skill.setTags(Arrays.asList("美食技巧", "原料选购","颠勺", "调味", "火候", "秘制酱料", "独门配方",  "独特技巧"));
+        tagDTOS.add(skill);
 
 
-        TagDTO server = new TagDTO();
-        server.setCategoryName("服务器");
-        server.setTags(Arrays.asList("linux", "nginx", "docker", "apache", "ubuntu", "centos", "缓存 tomcat", "负载均衡", "unix", "hadoop", "windows-server"));
-        tagDTOS.add(server);
-
-        TagDTO db = new TagDTO();
-        db.setCategoryName("数据库");
-        db.setTags(Arrays.asList("mysql", "redis", "mongodb", "sql", "oracle", "nosql memcached", "sqlserver", "postgresql", "sqlite"));
-        tagDTOS.add(db);
+        TagDTO culture = new TagDTO();
+        culture.setCategoryName("美食文化");
+        culture.setTags(Arrays.asList("美食文化","美食历史","川菜文化", "鲁菜文化", "粤菜文化", "湘菜文化", "浙菜文化", "闽菜文化", "苏菜文化", "徽菜文化","地方特色文化","创新文化","其他文化"));
+        tagDTOS.add(culture);
 
         TagDTO tool = new TagDTO();
-        tool.setCategoryName("开发工具");
-        tool.setTags(Arrays.asList("git", "github", "visual-studio-code", "vim", "sublime-text", "xcode intellij-idea", "eclipse", "maven", "ide", "svn", "visual-studio", "atom emacs", "textmate", "hg"));
+        tool.setCategoryName("厨具使用");
+        tool.setTags(Arrays.asList("厨具使用", "炊具", "刀具", "厨房器具", "打蛋器", "电饭煲", "厨房家电", "厨房安全"));
         tagDTOS.add(tool);
+
+        TagDTO help = new TagDTO();
+        help.setCategoryName("问题求助");
+        help.setTags(Arrays.asList("问题求助", "制作疑问", "十万个为什么", "这是什么", "其他疑问"));
+        tagDTOS.add(help);
+
+        TagDTO els = new TagDTO();
+        els.setCategoryName("其他");
+        els.setTags(Arrays.asList("其他"));
+        tagDTOS.add(els);
+
+
         return tagDTOS;
     }
 
@@ -53,10 +60,5 @@ public class TagCache {
         String invalid = Arrays.stream(split).filter(t -> StringUtils.isBlank(t) || !tagList.contains(t)).collect(Collectors.joining(","));
         //如果前端传入的标签合法，应该返回空字符串
         return invalid;
-    }
-
-    public static void main(String[] args) {
-        int i = (5 - 1) >>> 1;
-        System.out.println(i);
     }
 }

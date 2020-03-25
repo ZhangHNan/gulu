@@ -65,11 +65,11 @@
                         <div id="select-tag" style="display: none" class="comment-tags">
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs" role="tablist">
-                                <li role="presentation" th:class="${tag.categoryName=='开发语言'}?'active':''" th:each="tag:${tags}"><a href="#home" th:href="'#'+${tag.categoryName}" th:text="${tag.categoryName}" th:aria-controls="${tag.categoryName}" role="tab" data-toggle="tab">开发语言</a></li>
+                                <li role="presentation" th:class="${tag.categoryName=='美食做法'}?'active':''" th:each="tag:${tags}"><a href="#home" th:href="'#'+${tag.categoryName}" th:text="${tag.categoryName}" th:aria-controls="${tag.categoryName}" role="tab" data-toggle="tab">开发语言</a></li>
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
-                                <div role="tabpanel" th:class="${tag.categoryName=='开发语言'}?'tab-pane active':'tab-pane'" class="tab-pane" th:each="tag:${tags}" th:id="${tag.categoryName}" id="home">
+                                <div role="tabpanel" th:class="${tag.categoryName=='美食做法'}?'tab-pane active':'tab-pane'" class="tab-pane" th:each="tag:${tags}" th:id="${tag.categoryName}" id="home">
                                     <span th:each="tagName:${tag.tags}" onclick="selectTag(this)" th:data-tag="${tagName}" class="label label-info comment-tag"><span class="glyphicon glyphicon-tags comment-tag-icon"></span><span th:text="${tagName}">java</span></span>
                                     <!--<span onclick="selectTag('spring')" class="label label-info comment-tag"><span class="glyphicon glyphicon-tags comment-tag-icon"></span><span>spring</span></span>-->
                                 </div>
