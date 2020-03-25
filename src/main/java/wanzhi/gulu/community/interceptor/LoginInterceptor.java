@@ -7,6 +7,7 @@ import wanzhi.gulu.community.check.LoginCheck;
 import wanzhi.gulu.community.mapper.NotificationMapper;
 import wanzhi.gulu.community.model.User;
 import wanzhi.gulu.community.service.NotificationService;
+import wanzhi.gulu.community.service.QuestionService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,9 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Autowired
     NotificationService notificationService;
 
+    @Autowired
+    QuestionService questionService;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //进入首页时，获取cookies中的token数据，根据token查询数据库中有无登录数据
@@ -34,6 +38,8 @@ public class LoginInterceptor implements HandlerInterceptor {
         if(user!=null){
             //如果登录才查询未读通知
             Integer unread = notificationService.findUnreadCountByReceiver(user.getId());
+            Integer myQuestionCount =questionService.findQuestionCountByCreator(user.getId());
+            request.getSession().setAttribute("myQuestionCount",myQuestionCount);
             request.getSession().setAttribute("unread",unread);
         }
         return true;

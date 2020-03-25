@@ -38,7 +38,7 @@
                         <a href="/publish">发布 </a>
                     </li>
                     <li th:if="${session.user!=null}">
-                        <a href="/profile/replies">通知 <span class="badge" th:text="${session.unread}">4</span> </a>
+                        <a href="/myMessage">通知 <span class="badge" th:text="${session.unread}">4</span> </a>
                     </li>
                     <!--登录按钮-->
                     <li th:if="${session.user==null}"><a
@@ -51,7 +51,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="#">个人中心</a></li>
                             <li><a href="/myQuestion">我的帖子</a></li>
-                            <li><a href="/profile/replies">我的通知</a></li>
+                            <li><a href="/myMessage">我的通知</a></li>
                             <li><a href="#">我的收藏</a></li>
                             <li><a href="#">申诉中心</a></li>
                             <li><a href="/logout">退出登录</a></li>

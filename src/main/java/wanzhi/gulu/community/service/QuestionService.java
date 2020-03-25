@@ -125,4 +125,12 @@ public class QuestionService {
         }).collect(Collectors.toList());
         return questionDTOS;
     }
+
+    public Integer findQuestionCountByCreator(Long id) {
+        QuestionExample example = new QuestionExample();
+        example.createCriteria()
+                .andCreatorEqualTo(id);
+        int count = questionMapper.countByExample(example);
+        return count;
+    }
 }

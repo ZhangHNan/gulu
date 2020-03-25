@@ -25,7 +25,7 @@ function comment2target(targetId, type, content){
         url:"/comment",
         contentType:"application/json",
         data:JSON.stringify({
-            "parentId": targetId,
+            "targetId": targetId,
             "content": content,
             "type": type
         }),
