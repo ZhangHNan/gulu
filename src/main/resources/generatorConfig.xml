@@ -51,7 +51,7 @@
         <table tableName="notification" domainObjectName="Notification" >
         </table>
 
-        <table tableName="like" domainObjectName="Like" >
+        <table tableName="praise" domainObjectName="Praise" >
         </table>
 
         <table tableName="tread" domainObjectName="Tread" >

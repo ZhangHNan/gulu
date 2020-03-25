@@ -1,4 +1,4 @@
-CREATE TABLE `like` (
+CREATE TABLE `praise` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `creator` bigint(20) DEFAULT NULL COMMENT '点赞者id',
   `like_id` bigint(20) DEFAULT NULL COMMENT '点赞的问题/评论id',

@@ -1,15 +1,16 @@
 package wanzhi.gulu.community.mapper;
 
 import wanzhi.gulu.community.dto.HotDTO;
+import wanzhi.gulu.community.dto.PraiseDTO;
 import wanzhi.gulu.community.dto.SearchDTO;
 import wanzhi.gulu.community.model.Question;
 
 import java.util.List;
 
 public interface QuestionExtMapper {
-    int incView(Question record);
+    void incView(Question record);
 
-    int incCommentCount(Question record);
+    void incCommentCount(Question record);
 
     List<Question> selectRelated(Question record);
 
@@ -17,5 +18,9 @@ public interface QuestionExtMapper {
 
     List<Question> selectBySearchPage(SearchDTO searchDTO);
 
-    int incHot(HotDTO record);
+    void incHot(HotDTO record);
+
+    void incPraise(PraiseDTO record);
+
+    void redPraise(PraiseDTO praiseDTO);
 }

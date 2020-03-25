@@ -11,7 +11,7 @@ public class CommentDTO {
     private Long targetId; //被评论的问题id或者评论id
     private Long commentator; //（评论人）谁评论？
     private String content;  //评论的内容
-    private Long likeCount;  //点赞数
+    private Long praiseCount;  //点赞数
     private Long treadCount; //被踩数
     private Long commentCount; //这条评论的二级评论数
     private Long hot;

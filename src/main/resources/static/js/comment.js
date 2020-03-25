@@ -31,6 +31,7 @@ function comment2target(targetId, type, content){
         }),
         success:function (response) {
             if(response.code == 200){
+                //刷新页面
                 window.location.reload();
             }else{
                 if(response.code == 3005){
@@ -52,7 +53,7 @@ function comment2target(targetId, type, content){
 //展开二级评论
 function collapseComments(e) {
     var id = e.getAttribute("data-id");
-    var comments = $("#comment-"+id);
+    var comments = $("#comment-"+ id );
     //获取一下二级评论的展开状态
     var collapse = e.getAttribute("data-collapse","in");
     if (collapse){

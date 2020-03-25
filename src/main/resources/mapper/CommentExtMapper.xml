@@ -24,4 +24,14 @@
     set hot = hot + #{incHotCount,jdbcType=BIGINT}
     where id = #{id}
   </update>
+  <update id="incPraise" parameterType="wanzhi.gulu.community.dto.PraiseDTO" >
+    update comment
+    set praise_count = praise_count + #{praiseCount,jdbcType=BIGINT}
+    where id = #{id}
+  </update>
+  <update id="redPraise" parameterType="wanzhi.gulu.community.dto.PraiseDTO" >
+    update comment
+    set praise_count = praise_count - #{praiseCount,jdbcType=BIGINT}
+    where id = #{id}
+  </update>
 </mapper>

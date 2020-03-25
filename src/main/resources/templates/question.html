@@ -147,7 +147,7 @@
                 <!--这里是登录人的头像和名字，如果没登录，给个默认的头像和名字-->
                 <div>
                     <img class="media-object img-rounded img-avatar" th:src="${session.user!=null?session.user.avatarUrl:'/img/visitors.png'}"
-                         src="../static/img/默认头像.png">
+                         src="../static/img/visitors.png">
                     <span th:text="${session.user!=null?session.user.name:'游客'}">游客</span>
                 </div>
                 <div id="comment_area">
