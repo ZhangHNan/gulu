@@ -63,6 +63,18 @@
                     编辑
                 </a>
 
+                <!--点赞-->
+                <span class="glyphicon glyphicon-thumbs-up comments-like icon like-active"
+                      th:class="${questionDTO.praiseStatus==0?'glyphicon glyphicon-thumbs-up comments-like icon':'glyphicon glyphicon-thumbs-up comments-like icon like-active'}"
+                      th:data-id="${questionDTO.id}" th:data-creator="${session.user!=null?session.user.id:'0'}"
+                      th:id="'quePraise-'+${questionDTO.id}" onclick="questionPraise(this)"></span>
+                <span th:text="${questionDTO.praiseCount}" th:id="'quePraCount-'+${questionDTO.id}"></span>
+                <!--踩-->
+                <span class="glyphicon glyphicon-thumbs-down comments-like icon like-active"
+                      th:class="${questionDTO.treadStatus==0?'glyphicon glyphicon-thumbs-down comments-like icon':'glyphicon glyphicon-thumbs-down comments-like icon tread-active'}"
+                      th:data-id="${questionDTO.id}" th:data-creator="${session.user!=null?session.user.id:'0'}"
+                      th:id="'queTread-'+${questionDTO.id}" onclick="questionTread(this)"></span>
+                <span th:text="${questionDTO.treadCount}" th:id="'queTreCount-'+${questionDTO.id}"></span>
                 <!--回复数部分-->
                 <h4 class="comments-replyCount">
                     <span th:text="${questionDTO.commentCount}">0</span> 个回复
@@ -88,7 +100,7 @@
                             <span th:text="${commentDTO.praiseCount}" th:id="'comPraCount-'+${commentDTO.id}"></span>
                             <!--踩-->
                             <span class="glyphicon glyphicon-thumbs-down comments-like icon like-active"
-                                  th:class="${commentDTO.praiseStatus==0?'glyphicon glyphicon-thumbs-down comments-like icon':'glyphicon glyphicon-thumbs-down comments-like icon tread-active'}"
+                                  th:class="${commentDTO.treadStatus==0?'glyphicon glyphicon-thumbs-down comments-like icon':'glyphicon glyphicon-thumbs-down comments-like icon tread-active'}"
                                   th:data-id="${commentDTO.id}" th:data-creator="${session.user!=null?session.user.id:'0'}"
                                   th:id="'comTread-'+${commentDTO.id}" onclick="commentTread(this)"></span>
                             <span th:text="${commentDTO.treadCount}" th:id="'comTreCount-'+${commentDTO.id}"></span>

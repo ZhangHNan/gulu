@@ -15,6 +15,7 @@ import wanzhi.gulu.community.mapper.*;
 import wanzhi.gulu.community.model.*;
 import wanzhi.gulu.community.util.HotUtils;
 import wanzhi.gulu.community.util.PraiseUtils;
+import wanzhi.gulu.community.util.TreadUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,9 @@ public class CommentService {
 
     @Autowired
     PraiseUtils praiseUtils;
+
+    @Autowired
+    TreadUtils treadUtils;
 
     @Autowired
     CommentExtMapper commentExtMapper;
@@ -134,8 +138,10 @@ public class CommentService {
             commentDTO.setUser(userMap.get(comment.getCommentator()));
             if (loginId!=null){
                 commentDTO.setPraiseStatus(praiseUtils.getStatus(commentDTO.getId(),loginId,PraiseTypeEnum.COMMENT.getType()));
+                commentDTO.setTreadStatus(treadUtils.getStatus(commentDTO.getId(),loginId,PraiseTypeEnum.COMMENT.getType()));
             } else{
                 commentDTO.setPraiseStatus(0);
+                commentDTO.setTreadStatus(0);
             }
             return commentDTO;
         }).collect(Collectors.toList());

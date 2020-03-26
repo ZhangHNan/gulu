@@ -12,11 +12,13 @@ public class QuestionDTO {
     private String tag;         //标签
     private Long creator;       //创建人
     private Long viewCount;    //浏览量
-    private Long likeCount;    //点赞数
+    private Long praiseCount;    //点赞数
     private Long treadCount;  //被踩数
     private Long hot;   //热度值
     private Long commentCount; //问题的一级评论数
     private Long gmtCreate;     //创建时间
     private Long gmtModified;   //修改时间
     private User user;          //创建人详情
+    private Integer praiseStatus; //点赞状态
+    private Integer treadStatus; //踩状态
 }

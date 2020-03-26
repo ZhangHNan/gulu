@@ -103,34 +103,6 @@ function collapseComments(e) {
     }
 }
 
-
-//点赞功能
-// function praise(status,praiseClass,type) {
-//     $.ajax({
-//         type:"POST",
-//         url:"/commentPraise",
-//         contentType:"application/json",
-//         data:JSON.stringify({
-//             "creator": creator,
-//             "praiseId": praiseId,
-//             "type": type
-//         }),
-//         success:function (response) {
-//             if(response.code == 200){
-//                 var newStatus = response.praiseStatus;
-//                 if (newStatus==1){
-//                     praiseClass.replace("glyphicon glyphicon-thumbs-up comments-like icon like-active");
-//                 }else{
-//                     praiseClass.replace("glyphicon glyphicon-thumbs-up comments-like icon");
-//                 }
-//             }else{
-//                 alert(response.message);
-//
-//             }
-//         },
-//         dataType:"json"
-//     })
-// }
 //评论点赞功能
 function commentPraise(e) {
     var commentId = e.getAttribute("data-id");
@@ -192,6 +164,76 @@ function commentTread(e) {
                 }else{
                     $(id).removeClass("tread-active");
                     $(comTreCount).text(TreadCount);
+                }
+            }else{
+                alert(response.message);
+            }
+        },
+        dataType:"json"
+    })
+}
+
+//问题点赞功能
+function questionPraise(e) {
+    var questionId = e.getAttribute("data-id");
+    var creator = e.getAttribute("data-creator");
+    var id = "#quePraise-"+questionId;
+    var quePraCount= "#quePraCount-"+questionId;
+    $.ajax({
+        type:"POST",
+        url:"/questionPraise",
+        contentType:"application/json",
+        data:JSON.stringify({
+            "creator": creator,
+            "praiseId": questionId,
+            "type": 1
+        }),
+        success:function (response) {
+            if(response.code == 200){
+                var newStatus = response.nowStatus;
+                var praiseCount = response.nowCount;
+                debugger;
+                if (newStatus==1){
+                    $(id).toggleClass("like-active");
+                    $(quePraCount).text(praiseCount);
+                }else{
+                    $(id).removeClass("like-active");
+                    $(quePraCount).text(praiseCount);
+                }
+            }else{
+                alert(response.message);
+            }
+        },
+        dataType:"json"
+    })
+}
+
+//问题踩功能
+function questionTread(e) {
+    var questionId = e.getAttribute("data-id");
+    var creator = e.getAttribute("data-creator");
+    var id = "#queTread-"+questionId;
+    var queTreCount= "#queTreCount-"+questionId;
+    $.ajax({
+        type:"POST",
+        url:"/questionTread",
+        contentType:"application/json",
+        data:JSON.stringify({
+            "creator": creator,
+            "treadId": questionId,
+            "type": 1
+        }),
+        success:function (response) {
+            if(response.code == 200){
+                var newStatus = response.nowStatus;
+                var TreadCount = response.nowCount;
+                debugger;
+                if (newStatus==1){
+                    $(id).toggleClass("tread-active");
+                    $(queTreCount).text(TreadCount);
+                }else{
+                    $(id).removeClass("tread-active");
+                    $(queTreCount).text(TreadCount);
                 }
             }else{
                 alert(response.message);

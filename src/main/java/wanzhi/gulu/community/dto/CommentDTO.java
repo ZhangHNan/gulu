@@ -18,5 +18,6 @@ public class CommentDTO {
     private Long gmtCreate;  //创建时间
     private Long gmtModified; //修改时间
     private Integer praiseStatus; //点赞状态
+    private Integer treadStatus; //踩状态
     private User user;     //评论人详情
 }

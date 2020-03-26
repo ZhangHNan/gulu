@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wanzhi.gulu.community.dto.PageDTO;
 import wanzhi.gulu.community.dto.QuestionDTO;
+import wanzhi.gulu.community.enums.PraiseTypeEnum;
 import wanzhi.gulu.community.exception.CustomizeErrorCode;
 import wanzhi.gulu.community.exception.CustomizeException;
 import wanzhi.gulu.community.mapper.QuestionExtMapper;
@@ -18,6 +19,8 @@ import wanzhi.gulu.community.model.QuestionExample;
 import wanzhi.gulu.community.model.User;
 import wanzhi.gulu.community.util.HotUtils;
 import wanzhi.gulu.community.util.PageUtils;
+import wanzhi.gulu.community.util.PraiseUtils;
+import wanzhi.gulu.community.util.TreadUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,6 +44,12 @@ public class QuestionService {
 
     @Autowired
     PageUtils pageUtils;
+
+    @Autowired
+    PraiseUtils praiseUtils;
+
+    @Autowired
+    TreadUtils treadUtils;
 
     @Autowired
     HotUtils hotUtils;
@@ -70,7 +79,7 @@ public class QuestionService {
     }
 
     //根据id查询QuestionDTO ：到问题详情页时
-    public QuestionDTO findQuestionById(Long id) {
+    public QuestionDTO findQuestionById(Long id,Long loginId) {
 //        QuestionDTO questionDTO = questionMapper.findById(id);
         Question question = questionMapper.selectByPrimaryKey(id);
         if(question==null){//如果查询一个没有的帖子，抛一个自定义的异常
@@ -81,6 +90,13 @@ public class QuestionService {
 //        User user = userMapper.findById(questionDTO.getCreator());
         User user = userMapper.selectByPrimaryKey(question.getCreator());
         questionDTO.setUser(user);
+        if (loginId != null){
+            questionDTO.setPraiseStatus(praiseUtils.getStatus(id,loginId,PraiseTypeEnum.QUESTION.getType()));
+            questionDTO.setTreadStatus(treadUtils.getStatus(id,loginId,PraiseTypeEnum.QUESTION.getType()));
+        }else{
+            questionDTO.setPraiseStatus(0);
+            questionDTO.setTreadStatus(0);
+        }
         return questionDTO;
     }
 
