@@ -148,8 +148,8 @@ function commentPraise(e) {
         }),
         success:function (response) {
             if(response.code == 200){
-                var newStatus = response.praiseStatus;
-                var praiseCount = response.praiseCount;
+                var newStatus = response.nowStatus;
+                var praiseCount = response.nowCount;
                 debugger;
                 if (newStatus==1){
                     $(id).toggleClass("like-active");

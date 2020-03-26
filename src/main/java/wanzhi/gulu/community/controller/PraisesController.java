@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import wanzhi.gulu.community.dto.CommentResultDTO;
 import wanzhi.gulu.community.dto.PraiseCreateDTO;
-import wanzhi.gulu.community.dto.PraiseResultDTO;
+import wanzhi.gulu.community.dto.PTSWResultDTO;
 import wanzhi.gulu.community.exception.CustomizeErrorCode;
 import wanzhi.gulu.community.exception.CustomizeException;
 import wanzhi.gulu.community.model.Praise;
@@ -47,7 +47,7 @@ public class PraisesController {
             quePraCount = praisesService.removeQuestionPraise(praise);
             status = 0;
         }
-        return PraiseResultDTO.okOf(status,quePraCount);
+        return PTSWResultDTO.okOf(status,quePraCount);
     }
 
     @ResponseBody
@@ -77,6 +77,6 @@ public class PraisesController {
             comPraCount=praisesService.removeCommentPraise(praise);
             status = 0;
         }
-        return PraiseResultDTO.okOf(status,comPraCount);
+        return PTSWResultDTO.okOf(status,comPraCount);
     }
 }
