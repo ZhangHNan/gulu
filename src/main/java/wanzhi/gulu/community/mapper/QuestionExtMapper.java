@@ -26,4 +26,6 @@ public interface QuestionExtMapper {
     void incTread(CountDTO countDTO);
 
     void redTread(CountDTO countDTO);
+
+    void redHot(CountDTO hotDTO);
 }

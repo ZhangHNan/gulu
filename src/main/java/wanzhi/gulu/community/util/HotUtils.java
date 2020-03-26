@@ -39,4 +39,25 @@ public class HotUtils {
         hotDTO.setCount(incCount);
         commentExtMapper.incHot(hotDTO);
     }
+
+    public void redCommentHot(Long id,Long incCount){
+        CountDTO hotDTO = new CountDTO();
+        hotDTO.setId(id);
+        hotDTO.setCount(incCount);
+        commentExtMapper.redHot(hotDTO);
+    }
+
+    public void redQuestionHot(Long id,Long incCount){
+        CountDTO hotDTO = new CountDTO();
+        hotDTO.setId(id);
+        hotDTO.setCount(incCount);
+        questionExtMapper.redHot(hotDTO);
+    }
+
+    public void redUserHot(Long id,Long incCount){
+        CountDTO hotDTO = new CountDTO();
+        hotDTO.setId(id);
+        hotDTO.setCount(incCount);
+        userExtMapper.redHot(hotDTO);
+    }
 }

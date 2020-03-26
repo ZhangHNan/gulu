@@ -9,6 +9,7 @@ import wanzhi.gulu.community.mapper.PraiseMapper;
 import wanzhi.gulu.community.mapper.QuestionMapper;
 import wanzhi.gulu.community.model.Praise;
 import wanzhi.gulu.community.model.PraiseExample;
+import wanzhi.gulu.community.util.HotUtils;
 import wanzhi.gulu.community.util.PraiseUtils;
 
 import java.util.List;
@@ -21,6 +22,9 @@ public class PraisesService {
 
     @Autowired
     PraiseUtils praiseUtils;
+
+    @Autowired
+    HotUtils hotUtils;
 
     public Praise checkPraiseStatus(PraiseCreateDTO praiseCreateDTO) {
         PraiseExample example = new PraiseExample();
@@ -45,7 +49,7 @@ public class PraisesService {
         //增加问题likeCount
         praiseUtils.incQuestionPraise(praiseCreateDTO.getPraiseId(),1L);
         //热度值
-
+        hotUtils.inc
         //返回点赞数
         return praiseUtils.getQuePraCount(praiseCreateDTO.getPraiseId());
 

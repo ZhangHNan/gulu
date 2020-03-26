@@ -38,6 +38,11 @@
     set hot = hot + #{count,jdbcType=BIGINT}
     where id = #{id}
   </update>
+  <update id="redHot" parameterType="wanzhi.gulu.community.dto.CountDTO" >
+    update question
+    set hot = hot - #{count,jdbcType=BIGINT}
+    where id = #{id}
+  </update>
   <update id="incPraise" parameterType="wanzhi.gulu.community.dto.CountDTO" >
     update question
     set praise_count = praise_count + #{count,jdbcType=BIGINT}

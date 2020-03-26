@@ -31,7 +31,7 @@ public class QuestionController {
                            HttpServletRequest request,
                            Model model){
         User user = (User)request.getSession().getAttribute("user");
-        Long loginId = null;
+        Long loginId;
         List<CommentDTO> commentDTOs;
         QuestionDTO questionDTO;
         if (user!=null){

@@ -23,4 +23,9 @@
     set hot = hot + #{count,jdbcType=BIGINT}
     where id = #{id}
   </update>
+  <update id="redHot" parameterType="wanzhi.gulu.community.dto.CountDTO" >
+    update user
+    set hot = hot - #{count,jdbcType=BIGINT}
+    where id = #{id}
+  </update>
 </mapper>

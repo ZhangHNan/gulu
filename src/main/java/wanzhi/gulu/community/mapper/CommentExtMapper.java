@@ -15,4 +15,6 @@ public interface CommentExtMapper {
     void incTread(CountDTO countDTO);
 
     void redTread(CountDTO countDTO);
+
+    void redHot(CountDTO hotDTO);
 }
