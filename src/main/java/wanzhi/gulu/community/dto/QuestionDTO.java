@@ -21,4 +21,6 @@ public class QuestionDTO {
     private User user;          //创建人详情
     private Integer praiseStatus; //点赞状态
     private Integer treadStatus; //踩状态
+    private Long starCount; //被收藏数
+    private Integer starStatus; //收藏状态
 }

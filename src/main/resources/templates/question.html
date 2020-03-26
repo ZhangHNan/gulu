@@ -70,11 +70,17 @@
                       th:id="'quePraise-'+${questionDTO.id}" onclick="questionPraise(this)"></span>
                 <span th:text="${questionDTO.praiseCount}" class="ICount" th:id="'quePraCount-'+${questionDTO.id}">11</span>
                 <!--踩-->
-                <span class="glyphicon glyphicon-thumbs-down comments-like icon like-active"
+                <span class="glyphicon glyphicon-thumbs-down comments-like icon tread-active"
                       th:class="${questionDTO.treadStatus==0?'glyphicon glyphicon-thumbs-down comments-like icon':'glyphicon glyphicon-thumbs-down comments-like icon tread-active'}"
                       th:data-id="${questionDTO.id}"
                       th:id="'queTread-'+${questionDTO.id}" onclick="questionTread(this)"></span>
                 <span th:text="${questionDTO.treadCount}" class="ICount" th:id="'queTreCount-'+${questionDTO.id}">11</span>
+                <!--收藏-->
+                <span class="glyphicon glyphicon-star-empty comments-like icon star-active"
+                      th:class="${questionDTO.starStatus==0?'glyphicon glyphicon-star-empty comments-like icon':'glyphicon glyphicon-star-empty comments-like icon star-active'}"
+                      th:data-id="${questionDTO.id}"
+                      th:id="'star-'+${questionDTO.id}" onclick="star(this)"></span>
+                <span th:text="${questionDTO.starCount}" class="ICount" th:id="'starCount-'+${questionDTO.id}">11</span>
                 <!--回复数部分-->
                 <h4 class="comments-replyCount">
                     <span th:text="${questionDTO.commentCount}">0</span> 个回复

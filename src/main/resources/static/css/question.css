@@ -124,3 +124,6 @@ body{
     cursor: default;
     color:#999;
 }
+.star-active{
+    color: orangered;
+}

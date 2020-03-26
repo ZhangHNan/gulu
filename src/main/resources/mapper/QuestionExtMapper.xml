@@ -63,4 +63,14 @@
     set tread_count = tread_count - #{count,jdbcType=BIGINT}
     where id = #{id}
   </update>
+  <update id="incStar" parameterType="wanzhi.gulu.community.dto.CountDTO" >
+    update question
+    set star_count = star_count + #{count,jdbcType=BIGINT}
+    where id = #{id}
+  </update>
+  <update id="redStar" parameterType="wanzhi.gulu.community.dto.CountDTO" >
+    update question
+    set star_count = star_count - #{count,jdbcType=BIGINT}
+    where id = #{id}
+  </update>
 </mapper>

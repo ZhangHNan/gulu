@@ -28,4 +28,8 @@ public interface QuestionExtMapper {
     void redTread(CountDTO countDTO);
 
     void redHot(CountDTO hotDTO);
+
+    void incStar(CountDTO countDTO);
+
+    void redStar(CountDTO countDTO);
 }

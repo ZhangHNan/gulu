@@ -17,10 +17,7 @@ import wanzhi.gulu.community.mapper.UserMapper;
 import wanzhi.gulu.community.model.Question;
 import wanzhi.gulu.community.model.QuestionExample;
 import wanzhi.gulu.community.model.User;
-import wanzhi.gulu.community.util.HotUtils;
-import wanzhi.gulu.community.util.PageUtils;
-import wanzhi.gulu.community.util.PraiseUtils;
-import wanzhi.gulu.community.util.TreadUtils;
+import wanzhi.gulu.community.util.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,6 +47,9 @@ public class QuestionService {
 
     @Autowired
     TreadUtils treadUtils;
+
+    @Autowired
+    StarUtils starUtils;
 
     @Autowired
     HotUtils hotUtils;
@@ -93,9 +93,11 @@ public class QuestionService {
         if (loginId != null){
             questionDTO.setPraiseStatus(praiseUtils.getStatus(id,loginId,PraiseTypeEnum.QUESTION.getType()));
             questionDTO.setTreadStatus(treadUtils.getStatus(id,loginId,PraiseTypeEnum.QUESTION.getType()));
+            questionDTO.setStarStatus(starUtils.getStatus(id,loginId));
         }else{
             questionDTO.setPraiseStatus(0);
             questionDTO.setTreadStatus(0);
+            questionDTO.setStarStatus(0);
         }
         return questionDTO;
     }

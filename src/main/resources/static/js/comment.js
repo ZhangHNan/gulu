@@ -258,3 +258,37 @@ function questionTread(e) {
         dataType:"json"
     })
 }
+
+//问题收藏功能
+function star(e) {
+    var questionId = e.getAttribute("data-id");
+    var creator = $("#loginId").val();
+    var id = "#star-"+questionId;
+    var starCount= "#starCount-"+questionId;
+    $.ajax({
+        type:"POST",
+        url:"/star",
+        contentType:"application/json",
+        data:JSON.stringify({
+            "collector": creator,
+            "starId": questionId,
+        }),
+        success:function (response) {
+            if(response.code == 200){
+                var newStatus = response.nowStatus;
+                var nowCount = response.nowCount;
+                debugger;
+                if (newStatus==1){
+                    $(id).toggleClass("star-active");
+                    $(starCount).text(nowCount);
+                }else{
+                    $(id).removeClass("star-active");
+                    $(starCount).text(nowCount);
+                }
+            }else{
+                alert(response.message);
+            }
+        },
+        dataType:"json"
+    })
+}
