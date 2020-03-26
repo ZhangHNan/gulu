@@ -9,6 +9,7 @@ import wanzhi.gulu.community.mapper.PraiseMapper;
 import wanzhi.gulu.community.mapper.QuestionMapper;
 import wanzhi.gulu.community.model.Praise;
 import wanzhi.gulu.community.model.PraiseExample;
+import wanzhi.gulu.community.model.Question;
 import wanzhi.gulu.community.util.HotUtils;
 import wanzhi.gulu.community.util.PraiseUtils;
 
@@ -22,6 +23,9 @@ public class PraisesService {
 
     @Autowired
     PraiseUtils praiseUtils;
+
+    @Autowired
+    QuestionMapper questionMapper;
 
     @Autowired
     HotUtils hotUtils;
@@ -49,7 +53,9 @@ public class PraisesService {
         //增加问题likeCount
         praiseUtils.incQuestionPraise(praiseCreateDTO.getPraiseId(),1L);
         //热度值
-        hotUtils.inc
+        hotUtils.incQuestionHot(praiseCreateDTO.getPraiseId(),3L);
+        Question targetQuestion = questionMapper.selectByPrimaryKey(praiseCreateDTO.getPraiseId());
+        hotUtils.incUserHot(targetQuestion.getCreator(),3L);
         //返回点赞数
         return praiseUtils.getQuePraCount(praiseCreateDTO.getPraiseId());
 
@@ -59,6 +65,10 @@ public class PraisesService {
     public Long removeQuestionPraise(Praise praise){
         praiseMapper.deleteByPrimaryKey(praise.getId());
         praiseUtils.redQuestionPraise(praise.getPraiseId(),1L);
+        //热度值
+        hotUtils.redQuestionHot(praise.getPraiseId(),3L);
+        Question targetQuestion = questionMapper.selectByPrimaryKey(praise.getPraiseId());
+        hotUtils.redUserHot(targetQuestion.getCreator(),3L);
         return praiseUtils.getQuePraCount(praise.getPraiseId());
     }
 
@@ -72,7 +82,7 @@ public class PraisesService {
         //增加评论likeCount
         praiseUtils.incCommentPraise(praiseCreateDTO.getPraiseId(),1L);
         //热度值
-
+        hotUtils.incCommentHot(praiseCreateDTO.getPraiseId(),3L);
         //返回点赞数
         return praiseUtils.getComPraCount(praiseCreateDTO.getPraiseId());
     }
@@ -81,6 +91,7 @@ public class PraisesService {
     public Long removeCommentPraise(Praise praise) {
         praiseMapper.deleteByPrimaryKey(praise.getId());
         praiseUtils.redCommentPraise(praise.getPraiseId(),1L);
+        hotUtils.redCommentHot(praise.getPraiseId(),3L);
         return praiseUtils.getComPraCount(praise.getPraiseId());
     }
 }

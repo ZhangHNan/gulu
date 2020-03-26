@@ -7,11 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 import wanzhi.gulu.community.dto.PraiseCreateDTO;
 import wanzhi.gulu.community.dto.TreadCreateDTO;
 import wanzhi.gulu.community.mapper.PraiseMapper;
+import wanzhi.gulu.community.mapper.QuestionMapper;
 import wanzhi.gulu.community.mapper.TreadMapper;
-import wanzhi.gulu.community.model.Praise;
-import wanzhi.gulu.community.model.PraiseExample;
-import wanzhi.gulu.community.model.Tread;
-import wanzhi.gulu.community.model.TreadExample;
+import wanzhi.gulu.community.model.*;
+import wanzhi.gulu.community.util.HotUtils;
 import wanzhi.gulu.community.util.PraiseUtils;
 import wanzhi.gulu.community.util.TreadUtils;
 
@@ -25,6 +24,12 @@ public class TreadService {
 
     @Autowired
     TreadUtils treadUtils;
+
+    @Autowired
+    QuestionMapper questionMapper;
+
+    @Autowired
+    HotUtils hotUtils;
 
     public Tread checkTreadStatus(TreadCreateDTO treadCreateDTO) {
         TreadExample example = new TreadExample();
@@ -49,7 +54,9 @@ public class TreadService {
         //增加问题treadCount
         treadUtils.incQuestionTread(treadCreateDTO.getTreadId(),1L);
         //热度值
-
+        hotUtils.redQuestionHot(treadCreateDTO.getTreadId(),4L);
+        Question targetQuestion = questionMapper.selectByPrimaryKey(treadCreateDTO.getTreadId());
+        hotUtils.redUserHot(targetQuestion.getCreator(),4L);
         //返回踩数
         return treadUtils.getQueTreCount(treadCreateDTO.getTreadId());
 
@@ -59,6 +66,10 @@ public class TreadService {
     public Long removeQuestionTread(Tread tread){
         treadMapper.deleteByPrimaryKey(tread.getId());
         treadUtils.redQuestionTread(tread.getTreadId(),1L);
+        //热度值
+        hotUtils.incQuestionHot(tread.getTreadId(),4L);
+        Question targetQuestion = questionMapper.selectByPrimaryKey(tread.getTreadId());
+        hotUtils.incUserHot(targetQuestion.getCreator(),4L);
         return treadUtils.getQueTreCount(tread.getTreadId());
     }
 
@@ -72,7 +83,7 @@ public class TreadService {
         //增加评论treadCount
         treadUtils.incCommentTread(treadCreateDTO.getTreadId(),1L);
         //热度值
-
+        hotUtils.redCommentHot(treadCreateDTO.getTreadId(),4L);
         //返回踩数
         return treadUtils.getComTreCount(treadCreateDTO.getTreadId());
     }
@@ -81,6 +92,7 @@ public class TreadService {
     public Long removeCommentTread(Tread tread) {
         treadMapper.deleteByPrimaryKey(tread.getId());
         treadUtils.redCommentTread(tread.getTreadId(),1L);
+        hotUtils.incCommentHot(tread.getTreadId(),4L);
         return treadUtils.getComTreCount(tread.getTreadId());
     }
 }
