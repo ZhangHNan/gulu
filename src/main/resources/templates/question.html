@@ -66,13 +66,13 @@
                 <!--点赞-->
                 <span class="glyphicon glyphicon-thumbs-up comments-like icon like-active"
                       th:class="${questionDTO.praiseStatus==0?'glyphicon glyphicon-thumbs-up comments-like icon':'glyphicon glyphicon-thumbs-up comments-like icon like-active'}"
-                      th:data-id="${questionDTO.id}" th:data-creator="${session.user!=null?session.user.id:'0'}"
+                      th:data-id="${questionDTO.id}"
                       th:id="'quePraise-'+${questionDTO.id}" onclick="questionPraise(this)"></span>
                 <span th:text="${questionDTO.praiseCount}" class="ICount" th:id="'quePraCount-'+${questionDTO.id}">11</span>
                 <!--踩-->
                 <span class="glyphicon glyphicon-thumbs-down comments-like icon like-active"
                       th:class="${questionDTO.treadStatus==0?'glyphicon glyphicon-thumbs-down comments-like icon':'glyphicon glyphicon-thumbs-down comments-like icon tread-active'}"
-                      th:data-id="${questionDTO.id}" th:data-creator="${session.user!=null?session.user.id:'0'}"
+                      th:data-id="${questionDTO.id}"
                       th:id="'queTread-'+${questionDTO.id}" onclick="questionTread(this)"></span>
                 <span th:text="${questionDTO.treadCount}" class="ICount" th:id="'queTreCount-'+${questionDTO.id}">11</span>
                 <!--回复数部分-->
@@ -95,13 +95,13 @@
                             <!--点赞-->
                             <span class="glyphicon glyphicon-thumbs-up comments-like icon like-active"
                                   th:class="${commentDTO.praiseStatus==0?'glyphicon glyphicon-thumbs-up comments-like icon':'glyphicon glyphicon-thumbs-up comments-like icon like-active'}"
-                                  th:data-id="${commentDTO.id}" th:data-creator="${session.user!=null?session.user.id:'0'}"
+                                  th:data-id="${commentDTO.id}"
                                   th:id="'comPraise-'+${commentDTO.id}" onclick="commentPraise(this)"></span>
                             <span th:text="${commentDTO.praiseCount}" class="ICount" th:id="'comPraCount-'+${commentDTO.id}">11</span>
                             <!--踩-->
                             <span class="glyphicon glyphicon-thumbs-down comments-like icon like-active"
                                   th:class="${commentDTO.treadStatus==0?'glyphicon glyphicon-thumbs-down comments-like icon':'glyphicon glyphicon-thumbs-down comments-like icon tread-active'}"
-                                  th:data-id="${commentDTO.id}" th:data-creator="${session.user!=null?session.user.id:'0'}"
+                                  th:data-id="${commentDTO.id}"
                                   th:id="'comTread-'+${commentDTO.id}" onclick="commentTread(this)"></span>
                             <span th:text="${commentDTO.treadCount}" class="ICount" th:id="'comTreCount-'+${commentDTO.id}">11</span>
 
@@ -208,5 +208,16 @@
     </div>
 </div>
 <div th:insert="~{footer :: foot}"></div>
+<input type="hidden" id="loginId" th:value="${session.user!=null?session.user.id:'0'}">
+<span class="glyphicon glyphicon-thumbs-up comments-like icon like-active"
+      data-id="${commentDTO.id}"
+      id="'comPraise-'+${commentDTO.id}" onclick="commentPraise(this)"></span>
+<span class="ICount" id="'comPraCount-'+${commentDTO.id}"></span>
+
+<span class="glyphicon glyphicon-thumbs-down comments-like icon tread-active"
+      data-id="${commentDTO.id}"
+      id="'comTread-'+${commentDTO.id}" onclick="commentTread(this)"></span>
+<span  class="ICount" id="'comTreCount-'+${commentDTO.id}"></span>
+
 </body>
 </html>

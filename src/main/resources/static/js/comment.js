@@ -74,6 +74,14 @@ function collapseComments(e) {
         } else {
             $.getJSON("/comment/" + id, function (data) {
                 $.each(data.data.reverse(), function (index, comment) {
+                    var praiseClass ="";
+                    var treadClass = "";
+                    if (comment.praiseStatus == 1) {
+                        praiseClass = "like-active";
+                    }
+                    if (comment.treadStatus == 1){
+                        treadClass = "tread-active";
+                    }
                     var a = "<div class=\"media\">\n" +
                         "                                <div class=\"media-left\">\n" +
                         "                                    <img class=\"media-object img-rounded img-comments\" src=\"" + comment.user.avatarUrl + "\"\n" +
@@ -84,8 +92,16 @@ function collapseComments(e) {
                         "                                    <div>\n" +
                         "                                        " + comment.content + "\n" +
                         "                                    </div>\n" +
-                        "                                    <div class=\"comment-menu\">\n" +
-                        "                                        <span class=\"glyphicon glyphicon-thumbs-up comments-like icon\"></span>\n" +
+                        "                                    <div class=\"comment-menu\">\n" +"" +
+                        "                                        <span class=\"glyphicon glyphicon-thumbs-up comments-like icon "+praiseClass+"\"\n" +
+                        "                                              data-id=\""+comment.id+"\"\n" +
+                        "                                              id=\"comPraise-"+comment.id+"\" onclick=\"commentPraise(this)\"></span>\n" +
+                        "                                        <span class=\"ICount\" id=\"comPraCount-"+comment.id+"\">"+comment.praiseCount+"</span>\n" +
+                        "\n" +
+                        "                                        <span class=\"glyphicon glyphicon-thumbs-down comments-like icon "+treadClass+"\"\n" +
+                        "                                              data-id=\""+comment.id+"\"\n" +
+                        "                                              id=\"comTread-"+comment.id+"\" onclick=\"commentTread(this)\"></span>\n" +
+                        "                                        <span  class=\"ICount\" id=\"comTreCount-"+comment.id+"\">"+comment.treadCount+"</span>"+
                         "                                        <span class=\"pull-right comments-data\">" + moment(comment.gmtCreate).format('YYYY-M-D HH:mm') + "</span>\n" +
                         "                                    </div>\n" +
                         "                                </div>\n" +
@@ -106,7 +122,7 @@ function collapseComments(e) {
 //评论点赞功能
 function commentPraise(e) {
     var commentId = e.getAttribute("data-id");
-    var creator = e.getAttribute("data-creator");
+    var creator = $("#loginId").val();
     var id = "#comPraise-"+commentId;
     var comPraCount= "#comPraCount-"+commentId;
     $.ajax({
@@ -141,7 +157,7 @@ function commentPraise(e) {
 //评论踩功能
 function commentTread(e) {
     var commentId = e.getAttribute("data-id");
-    var creator = e.getAttribute("data-creator");
+    var creator = $("#loginId").val();
     var id = "#comTread-"+commentId;
     var comTreCount= "#comTreCount-"+commentId;
     $.ajax({
@@ -176,7 +192,7 @@ function commentTread(e) {
 //问题点赞功能
 function questionPraise(e) {
     var questionId = e.getAttribute("data-id");
-    var creator = e.getAttribute("data-creator");
+    var creator = $("#loginId").val();
     var id = "#quePraise-"+questionId;
     var quePraCount= "#quePraCount-"+questionId;
     $.ajax({
@@ -211,7 +227,7 @@ function questionPraise(e) {
 //问题踩功能
 function questionTread(e) {
     var questionId = e.getAttribute("data-id");
-    var creator = e.getAttribute("data-creator");
+    var creator = $("#loginId").val();
     var id = "#queTread-"+questionId;
     var queTreCount= "#queTreCount-"+questionId;
     $.ajax({
