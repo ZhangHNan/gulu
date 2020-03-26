@@ -111,5 +111,8 @@ body{
     margin: auto;
 }
 .like-active{
-    color:red;
+    color: #ff2222;
+}
+.tread-active{
+    color: darkgoldenrod;
 }

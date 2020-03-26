@@ -165,3 +165,38 @@ function commentPraise(e) {
         dataType:"json"
     })
 }
+
+//评论踩功能
+function commentTread(e) {
+    var commentId = e.getAttribute("data-id");
+    var creator = e.getAttribute("data-creator");
+    var id = "#comTread-"+commentId;
+    var comTreCount= "#comTreCount-"+commentId;
+    $.ajax({
+        type:"POST",
+        url:"/commentTread",
+        contentType:"application/json",
+        data:JSON.stringify({
+            "creator": creator,
+            "treadId": commentId,
+            "type": 2
+        }),
+        success:function (response) {
+            if(response.code == 200){
+                var newStatus = response.nowStatus;
+                var TreadCount = response.nowCount;
+                debugger;
+                if (newStatus==1){
+                    $(id).toggleClass("tread-active");
+                    $(comTreCount).text(TreadCount);
+                }else{
+                    $(id).removeClass("tread-active");
+                    $(comTreCount).text(TreadCount);
+                }
+            }else{
+                alert(response.message);
+            }
+        },
+        dataType:"json"
+    })
+}

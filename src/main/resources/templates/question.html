@@ -80,11 +80,19 @@
                             我是评论内容
                         </div>
                         <div class="comment-menu" >
+                            <!--点赞-->
                             <span class="glyphicon glyphicon-thumbs-up comments-like icon like-active"
                                   th:class="${commentDTO.praiseStatus==0?'glyphicon glyphicon-thumbs-up comments-like icon':'glyphicon glyphicon-thumbs-up comments-like icon like-active'}"
                                   th:data-id="${commentDTO.id}" th:data-creator="${session.user!=null?session.user.id:'0'}"
                                   th:id="'comPraise-'+${commentDTO.id}" onclick="commentPraise(this)"></span>
                             <span th:text="${commentDTO.praiseCount}" th:id="'comPraCount-'+${commentDTO.id}"></span>
+                            <!--踩-->
+                            <span class="glyphicon glyphicon-thumbs-down comments-like icon like-active"
+                                  th:class="${commentDTO.praiseStatus==0?'glyphicon glyphicon-thumbs-down comments-like icon':'glyphicon glyphicon-thumbs-down comments-like icon tread-active'}"
+                                  th:data-id="${commentDTO.id}" th:data-creator="${session.user!=null?session.user.id:'0'}"
+                                  th:id="'comTread-'+${commentDTO.id}" onclick="commentTread(this)"></span>
+                            <span th:text="${commentDTO.treadCount}" th:id="'comTreCount-'+${commentDTO.id}"></span>
+
                             <span class="glyphicon glyphicon-comment icon" th:data-id="${commentDTO.id}" onclick="collapseComments(this)"></span>
                             <span class="commentCount icon" th:text="${commentDTO.commentCount}"></span>
                             <span class="pull-right comments-data" th:text="${#dates.format(commentDTO.gmtCreate,'yyyy-MM-dd HH:mm')}">2019-06-09</span>
