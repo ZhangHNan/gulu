@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wanzhi.gulu.community.dto.PraiseCreateDTO;
 import wanzhi.gulu.community.mapper.PraiseMapper;
+import wanzhi.gulu.community.mapper.QuestionMapper;
 import wanzhi.gulu.community.model.Praise;
 import wanzhi.gulu.community.model.PraiseExample;
 import wanzhi.gulu.community.util.PraiseUtils;
@@ -35,7 +36,7 @@ public class PraisesService {
     }
 
     @Transactional
-    public void createQuestionPraise(PraiseCreateDTO praiseCreateDTO) {
+    public Long createQuestionPraise(PraiseCreateDTO praiseCreateDTO) {
         Praise praise = new Praise();
         praise.setGmtCreate(System.currentTimeMillis());
         BeanUtils.copyProperties(praiseCreateDTO,praise);
@@ -44,16 +45,21 @@ public class PraisesService {
         //增加问题likeCount
         praiseUtils.incQuestionPraise(praiseCreateDTO.getPraiseId(),1L);
         //热度值
+
+        //返回点赞数
+        return praiseUtils.getQuePraCount(praiseCreateDTO.getPraiseId());
+
     }
 
     @Transactional
-    public void removeQuestionPraise(Praise praise){
+    public Long removeQuestionPraise(Praise praise){
         praiseMapper.deleteByPrimaryKey(praise.getId());
         praiseUtils.redQuestionPraise(praise.getPraiseId(),1L);
+        return praiseUtils.getQuePraCount(praise.getPraiseId());
     }
 
     @Transactional
-    public void createCommentPraise(PraiseCreateDTO praiseCreateDTO) {
+    public Long createCommentPraise(PraiseCreateDTO praiseCreateDTO) {
         Praise praise = new Praise();
         praise.setGmtCreate(System.currentTimeMillis());
         BeanUtils.copyProperties(praiseCreateDTO,praise);
@@ -62,11 +68,15 @@ public class PraisesService {
         //增加评论likeCount
         praiseUtils.incCommentPraise(praiseCreateDTO.getPraiseId(),1L);
         //热度值
+
+        //返回点赞数
+        return praiseUtils.getComPraCount(praiseCreateDTO.getPraiseId());
     }
 
     @Transactional
-    public void removeCommentPraise(Praise praise) {
+    public Long removeCommentPraise(Praise praise) {
         praiseMapper.deleteByPrimaryKey(praise.getId());
         praiseUtils.redCommentPraise(praise.getPraiseId(),1L);
+        return praiseUtils.getComPraCount(praise.getPraiseId());
     }
 }

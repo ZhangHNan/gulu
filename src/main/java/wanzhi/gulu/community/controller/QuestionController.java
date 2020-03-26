@@ -32,13 +32,17 @@ public class QuestionController {
                            Model model){
         User user = (User)request.getSession().getAttribute("user");
         Long loginId = null;
+        List<CommentDTO> commentDTOs;
         if (user!=null){
             loginId = user.getId();
+            //累计阅读数和热度值
+            questionService.view(id,loginId);
+            commentDTOs = commentService.listByTargetId(id,CommentTypeEnum.QUESTION,loginId);
+        }else{
+            questionService.view(id,null);
+            commentDTOs = commentService.listByTargetId(id,CommentTypeEnum.QUESTION,null);
         }
-        //累计阅读数和热度值
-        questionService.view(id,loginId);
         QuestionDTO questionDTO = questionService.findQuestionById(id);
-        List<CommentDTO> commentDTOs = commentService.listByTargetId(id,CommentTypeEnum.QUESTION,loginId);
         List<QuestionDTO> relatedQuestionDTOS = questionService.selectRelated(questionDTO);
         model.addAttribute("questionDTO",questionDTO);
         model.addAttribute("commentDTOS",commentDTOs);

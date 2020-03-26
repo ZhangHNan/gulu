@@ -3,11 +3,11 @@ package wanzhi.gulu.community.util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import wanzhi.gulu.community.dto.PraiseDTO;
-import wanzhi.gulu.community.mapper.CommentExtMapper;
-import wanzhi.gulu.community.mapper.PraiseMapper;
-import wanzhi.gulu.community.mapper.QuestionExtMapper;
+import wanzhi.gulu.community.mapper.*;
+import wanzhi.gulu.community.model.Comment;
 import wanzhi.gulu.community.model.Praise;
 import wanzhi.gulu.community.model.PraiseExample;
+import wanzhi.gulu.community.model.Question;
 
 import java.util.List;
 
@@ -16,6 +16,12 @@ public class PraiseUtils {
 
     @Autowired
     QuestionExtMapper questionExtMapper;
+
+    @Autowired
+    QuestionMapper questionMapper;
+
+    @Autowired
+    CommentMapper commentMapper;
 
     @Autowired
     PraiseMapper praiseMapper;
@@ -35,6 +41,11 @@ public class PraiseUtils {
         }else{
             return 1; //当前用户点赞了
         }
+    }
+
+    public Long getQuePraCount(Long id){
+        Question question = questionMapper.selectByPrimaryKey(id);
+        return question.getPraiseCount();
     }
 
     public void incQuestionPraise(Long id, Long incCount){
@@ -63,5 +74,10 @@ public class PraiseUtils {
         praiseDTO.setId(id);
         praiseDTO.setPraiseCount(redCount);
         commentExtMapper.redPraise(praiseDTO);
+    }
+
+    public Long getComPraCount(Long id) {
+        Comment comment = commentMapper.selectByPrimaryKey(id);
+        return comment.getPraiseCount();
     }
 }

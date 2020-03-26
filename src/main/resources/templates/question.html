@@ -82,8 +82,9 @@
                         <div class="comment-menu" >
                             <span class="glyphicon glyphicon-thumbs-up comments-like icon like-active"
                                   th:class="${commentDTO.praiseStatus==0?'glyphicon glyphicon-thumbs-up comments-like icon':'glyphicon glyphicon-thumbs-up comments-like icon like-active'}"
-                                  th:data-id="${commentDTO.id}" th:data-creator="${session.user.id}" th:data-status="${commentDTO.praiseStatus}"
-                                  th:id="'comment-'+${commentDTO.id}" onclick="commentPraise(this)"></span>
+                                  th:data-id="${commentDTO.id}" th:data-creator="${session.user!=null?session.user.id:'0'}"
+                                  th:id="'comPraise-'+${commentDTO.id}" onclick="commentPraise(this)"></span>
+                            <span th:text="${commentDTO.praiseCount}" th:id="'comPraCount-'+${commentDTO.id}"></span>
                             <span class="glyphicon glyphicon-comment icon" th:data-id="${commentDTO.id}" onclick="collapseComments(this)"></span>
                             <span class="commentCount icon" th:text="${commentDTO.commentCount}"></span>
                             <span class="pull-right comments-data" th:text="${#dates.format(commentDTO.gmtCreate,'yyyy-MM-dd HH:mm')}">2019-06-09</span>

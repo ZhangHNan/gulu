@@ -37,14 +37,17 @@ public class PraisesController {
 
         Praise praise = praisesService.checkPraiseStatus(praiseCreateDTO);
         Integer status;
+        Long quePraCount;
         if (praise==null){
-            praisesService.createQuestionPraise(praiseCreateDTO);
+            //点赞
+            quePraCount = praisesService.createQuestionPraise(praiseCreateDTO);
             status = 1;
         }else {
-            praisesService.removeQuestionPraise(praise);
+            //取消点赞
+            quePraCount = praisesService.removeQuestionPraise(praise);
             status = 0;
         }
-        return PraiseResultDTO.okOf(status);
+        return PraiseResultDTO.okOf(status,quePraCount);
     }
 
     @ResponseBody
@@ -64,13 +67,16 @@ public class PraisesController {
 
         Praise praise = praisesService.checkPraiseStatus(praiseCreateDTO);
         Integer status;
+        Long comPraCount;
         if (praise==null){
-            praisesService.createCommentPraise(praiseCreateDTO);
+            //点赞
+            comPraCount=praisesService.createCommentPraise(praiseCreateDTO);
             status = 1;
         }else {
-            praisesService.removeCommentPraise(praise);
+            //取消点赞
+            comPraCount=praisesService.removeCommentPraise(praise);
             status = 0;
         }
-        return PraiseResultDTO.okOf(status);
+        return PraiseResultDTO.okOf(status,comPraCount);
     }
 }

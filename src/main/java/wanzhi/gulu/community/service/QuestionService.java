@@ -119,7 +119,7 @@ public class QuestionService {
 //        questionMapper.updateByExampleSelective(updateQuestion, example);
         Question question = questionMapper.selectByPrimaryKey(id);
         Long creator = question.getCreator();
-        if (loginId.equals(creator)){//自己访问自己不增加浏览量和热度值
+        if (creator.equals(loginId)){//自己访问自己不增加浏览量和热度值
             return;
         }
         Question updateQuestion = new Question();

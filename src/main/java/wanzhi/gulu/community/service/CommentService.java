@@ -132,7 +132,11 @@ public class CommentService {
             CommentDTO commentDTO = new CommentDTO();
             BeanUtils.copyProperties(comment, commentDTO);
             commentDTO.setUser(userMap.get(comment.getCommentator()));
-            commentDTO.setPraiseStatus(praiseUtils.getStatus(commentDTO.getId(),loginId,PraiseTypeEnum.COMMENT.getType()));
+            if (loginId!=null){
+                commentDTO.setPraiseStatus(praiseUtils.getStatus(commentDTO.getId(),loginId,PraiseTypeEnum.COMMENT.getType()));
+            } else{
+                commentDTO.setPraiseStatus(0);
+            }
             return commentDTO;
         }).collect(Collectors.toList());
 
