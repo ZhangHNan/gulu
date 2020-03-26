@@ -34,4 +34,14 @@
     set praise_count = praise_count - #{count,jdbcType=BIGINT}
     where id = #{id}
   </update>
+  <update id="incTread" parameterType="wanzhi.gulu.community.dto.CountDTO" >
+    update comment
+    set tread_count = tread_count + #{count,jdbcType=BIGINT}
+    where id = #{id}
+  </update>
+  <update id="redTread" parameterType="wanzhi.gulu.community.dto.CountDTO" >
+    update comment
+    set tread_count = tread_count - #{count,jdbcType=BIGINT}
+    where id = #{id}
+  </update>
 </mapper>

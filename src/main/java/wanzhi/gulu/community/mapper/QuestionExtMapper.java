@@ -22,4 +22,8 @@ public interface QuestionExtMapper {
     void incPraise(CountDTO record);
 
     void redPraise(CountDTO countDTO);
+
+    void incTread(CountDTO countDTO);
+
+    void redTread(CountDTO countDTO);
 }
