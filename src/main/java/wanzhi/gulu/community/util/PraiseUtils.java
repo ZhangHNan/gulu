@@ -2,7 +2,7 @@ package wanzhi.gulu.community.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import wanzhi.gulu.community.dto.PraiseDTO;
+import wanzhi.gulu.community.dto.CountDTO;
 import wanzhi.gulu.community.mapper.*;
 import wanzhi.gulu.community.model.Comment;
 import wanzhi.gulu.community.model.Praise;
@@ -49,31 +49,31 @@ public class PraiseUtils {
     }
 
     public void incQuestionPraise(Long id, Long incCount){
-        PraiseDTO praiseDTO = new PraiseDTO();
-        praiseDTO.setId(id);
-        praiseDTO.setPraiseCount(incCount);
-        questionExtMapper.incPraise(praiseDTO);
+        CountDTO countDTO = new CountDTO();
+        countDTO.setId(id);
+        countDTO.setCount(incCount);
+        questionExtMapper.incPraise(countDTO);
     }
 
     public void redQuestionPraise(Long id, long redCount) {
-        PraiseDTO praiseDTO = new PraiseDTO();
-        praiseDTO.setId(id);
-        praiseDTO.setPraiseCount(redCount);
-        questionExtMapper.redPraise(praiseDTO);
+        CountDTO countDTO = new CountDTO();
+        countDTO.setId(id);
+        countDTO.setCount(redCount);
+        questionExtMapper.redPraise(countDTO);
     }
 
     public void incCommentPraise(Long id, long incCount) {
-        PraiseDTO praiseDTO = new PraiseDTO();
-        praiseDTO.setId(id);
-        praiseDTO.setPraiseCount(incCount);
-        commentExtMapper.incPraise(praiseDTO);
+        CountDTO countDTO = new CountDTO();
+        countDTO.setId(id);
+        countDTO.setCount(incCount);
+        commentExtMapper.incPraise(countDTO);
     }
 
     public void redCommentPraise(Long id, long redCount) {
-        PraiseDTO praiseDTO = new PraiseDTO();
-        praiseDTO.setId(id);
-        praiseDTO.setPraiseCount(redCount);
-        commentExtMapper.redPraise(praiseDTO);
+        CountDTO countDTO = new CountDTO();
+        countDTO.setId(id);
+        countDTO.setCount(redCount);
+        commentExtMapper.redPraise(countDTO);
     }
 
     public Long getComPraCount(Long id) {

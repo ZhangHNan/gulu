@@ -3,7 +3,7 @@ package wanzhi.gulu.community.dto;
 import lombok.Data;
 
 @Data
-public class HotDTO {
+public class CountDTO {
     private Long id;
-    private Long incHotCount;
+    private Long count;
 }

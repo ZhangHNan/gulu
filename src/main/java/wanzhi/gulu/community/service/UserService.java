@@ -3,7 +3,6 @@ package wanzhi.gulu.community.service;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import wanzhi.gulu.community.dto.HotDTO;
 import wanzhi.gulu.community.mapper.UserExtMapper;
 import wanzhi.gulu.community.mapper.UserMapper;
 import wanzhi.gulu.community.model.User;

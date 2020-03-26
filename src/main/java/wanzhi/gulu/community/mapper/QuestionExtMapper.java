@@ -1,7 +1,6 @@
 package wanzhi.gulu.community.mapper;
 
-import wanzhi.gulu.community.dto.HotDTO;
-import wanzhi.gulu.community.dto.PraiseDTO;
+import wanzhi.gulu.community.dto.CountDTO;
 import wanzhi.gulu.community.dto.SearchDTO;
 import wanzhi.gulu.community.model.Question;
 
@@ -18,9 +17,9 @@ public interface QuestionExtMapper {
 
     List<Question> selectBySearchPage(SearchDTO searchDTO);
 
-    void incHot(HotDTO record);
+    void incHot(CountDTO record);
 
-    void incPraise(PraiseDTO record);
+    void incPraise(CountDTO record);
 
-    void redPraise(PraiseDTO praiseDTO);
+    void redPraise(CountDTO countDTO);
 }

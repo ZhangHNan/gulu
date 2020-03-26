@@ -33,19 +33,19 @@
   <select id="selectBySearchPage" parameterType="wanzhi.gulu.community.dto.SearchDTO" resultMap="BaseResultMap">
     select * from question WHERE (title REGEXP #{regxpSearch}) order by gmt_create desc limit #{start} , #{rows};
   </select>
-  <update id="incHot" parameterType="wanzhi.gulu.community.dto.HotDTO" >
+  <update id="incHot" parameterType="wanzhi.gulu.community.dto.CountDTO" >
     update question
-    set hot = hot + #{incHotCount,jdbcType=BIGINT}
+    set hot = hot + #{count,jdbcType=BIGINT}
     where id = #{id}
   </update>
-  <update id="incPraise" parameterType="wanzhi.gulu.community.dto.PraiseDTO" >
+  <update id="incPraise" parameterType="wanzhi.gulu.community.dto.CountDTO" >
     update question
-    set praise_count = praise_count + #{praiseCount,jdbcType=BIGINT}
+    set praise_count = praise_count + #{count,jdbcType=BIGINT}
     where id = #{id}
   </update>
-  <update id="redPraise" parameterType="wanzhi.gulu.community.dto.PraiseDTO" >
+  <update id="redPraise" parameterType="wanzhi.gulu.community.dto.CountDTO" >
     update question
-    set praise_count = praise_count - #{praiseCount,jdbcType=BIGINT}
+    set praise_count = praise_count - #{count,jdbcType=BIGINT}
     where id = #{id}
   </update>
 </mapper>

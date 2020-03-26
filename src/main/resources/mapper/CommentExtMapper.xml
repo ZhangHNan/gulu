@@ -19,19 +19,19 @@
     set comment_count = comment_count + #{commentCount,jdbcType=BIGINT}
     where id = #{id}
   </update>
-  <update id="incHot" parameterType="wanzhi.gulu.community.dto.HotDTO" >
+  <update id="incHot" parameterType="wanzhi.gulu.community.dto.CountDTO" >
     update comment
-    set hot = hot + #{incHotCount,jdbcType=BIGINT}
+    set hot = hot + #{count,jdbcType=BIGINT}
     where id = #{id}
   </update>
-  <update id="incPraise" parameterType="wanzhi.gulu.community.dto.PraiseDTO" >
+  <update id="incPraise" parameterType="wanzhi.gulu.community.dto.CountDTO" >
     update comment
-    set praise_count = praise_count + #{praiseCount,jdbcType=BIGINT}
+    set praise_count = praise_count + #{count,jdbcType=BIGINT}
     where id = #{id}
   </update>
-  <update id="redPraise" parameterType="wanzhi.gulu.community.dto.PraiseDTO" >
+  <update id="redPraise" parameterType="wanzhi.gulu.community.dto.CountDTO" >
     update comment
-    set praise_count = praise_count - #{praiseCount,jdbcType=BIGINT}
+    set praise_count = praise_count - #{count,jdbcType=BIGINT}
     where id = #{id}
   </update>
 </mapper>

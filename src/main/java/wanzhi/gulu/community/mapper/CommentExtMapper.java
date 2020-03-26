@@ -1,15 +1,14 @@
 package wanzhi.gulu.community.mapper;
 
-import wanzhi.gulu.community.dto.HotDTO;
-import wanzhi.gulu.community.dto.PraiseDTO;
+import wanzhi.gulu.community.dto.CountDTO;
 import wanzhi.gulu.community.model.Comment;
 
 public interface CommentExtMapper {
     void incCommentCount(Comment record);
 
-    void incHot(HotDTO record);
+    void incHot(CountDTO record);
 
-    void incPraise(PraiseDTO praiseDTO);
+    void incPraise(CountDTO countDTO);
 
-    void redPraise(PraiseDTO praiseDTO);
+    void redPraise(CountDTO countDTO);
 }
