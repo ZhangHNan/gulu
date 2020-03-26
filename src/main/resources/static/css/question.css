@@ -31,6 +31,7 @@ body{
 }
 .question-edit{
     color:#999;
+    margin-right: 24px;
 }
 .comment{
     margin: 10px 5px;
@@ -51,8 +52,8 @@ body{
 .comment-menu{
     color:#999;
 }
-.comment-menu .icon{
-    margin-right: 15px;
+.icon{
+    margin-right: 8px;
     cursor: pointer;
 }
 .comment-menu .active{
@@ -89,8 +90,8 @@ body{
 }
 .commentCount{
     position: relative;
-    left: -13px;
     top: -2px;
+    cursor: default;
 }
 .comment-tag{
     margin-right: 8px;
@@ -115,4 +116,11 @@ body{
 }
 .tread-active{
     color: darkgoldenrod;
+}
+.ICount{
+    position: relative;
+    top: -2px;
+    margin-right: 16px;
+    cursor: default;
+    color:#999;
 }

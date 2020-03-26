@@ -58,7 +58,7 @@
                 </div>
                 <hr>
                 <!--编辑部分-->
-                <a th:if="${session.user!=null&&questionDTO.user.accountId==session.user.accountId}" th:href="@{'/publish/'+${questionDTO.id}}" href="#" class="question-edit">
+                <a th:if="${session.user!=null&&questionDTO.user.id==session.user.id}" th:href="@{'/publish/'+${questionDTO.id}}" href="#" class="question-edit">
                     <span class="glyphicon glyphicon-edit " aria-hidden="true"></span>
                     编辑
                 </a>
@@ -68,13 +68,13 @@
                       th:class="${questionDTO.praiseStatus==0?'glyphicon glyphicon-thumbs-up comments-like icon':'glyphicon glyphicon-thumbs-up comments-like icon like-active'}"
                       th:data-id="${questionDTO.id}" th:data-creator="${session.user!=null?session.user.id:'0'}"
                       th:id="'quePraise-'+${questionDTO.id}" onclick="questionPraise(this)"></span>
-                <span th:text="${questionDTO.praiseCount}" th:id="'quePraCount-'+${questionDTO.id}"></span>
+                <span th:text="${questionDTO.praiseCount}" class="ICount" th:id="'quePraCount-'+${questionDTO.id}">11</span>
                 <!--踩-->
                 <span class="glyphicon glyphicon-thumbs-down comments-like icon like-active"
                       th:class="${questionDTO.treadStatus==0?'glyphicon glyphicon-thumbs-down comments-like icon':'glyphicon glyphicon-thumbs-down comments-like icon tread-active'}"
                       th:data-id="${questionDTO.id}" th:data-creator="${session.user!=null?session.user.id:'0'}"
                       th:id="'queTread-'+${questionDTO.id}" onclick="questionTread(this)"></span>
-                <span th:text="${questionDTO.treadCount}" th:id="'queTreCount-'+${questionDTO.id}"></span>
+                <span th:text="${questionDTO.treadCount}" class="ICount" th:id="'queTreCount-'+${questionDTO.id}">11</span>
                 <!--回复数部分-->
                 <h4 class="comments-replyCount">
                     <span th:text="${questionDTO.commentCount}">0</span> 个回复
@@ -97,16 +97,16 @@
                                   th:class="${commentDTO.praiseStatus==0?'glyphicon glyphicon-thumbs-up comments-like icon':'glyphicon glyphicon-thumbs-up comments-like icon like-active'}"
                                   th:data-id="${commentDTO.id}" th:data-creator="${session.user!=null?session.user.id:'0'}"
                                   th:id="'comPraise-'+${commentDTO.id}" onclick="commentPraise(this)"></span>
-                            <span th:text="${commentDTO.praiseCount}" th:id="'comPraCount-'+${commentDTO.id}"></span>
+                            <span th:text="${commentDTO.praiseCount}" class="ICount" th:id="'comPraCount-'+${commentDTO.id}">11</span>
                             <!--踩-->
                             <span class="glyphicon glyphicon-thumbs-down comments-like icon like-active"
                                   th:class="${commentDTO.treadStatus==0?'glyphicon glyphicon-thumbs-down comments-like icon':'glyphicon glyphicon-thumbs-down comments-like icon tread-active'}"
                                   th:data-id="${commentDTO.id}" th:data-creator="${session.user!=null?session.user.id:'0'}"
                                   th:id="'comTread-'+${commentDTO.id}" onclick="commentTread(this)"></span>
-                            <span th:text="${commentDTO.treadCount}" th:id="'comTreCount-'+${commentDTO.id}"></span>
+                            <span th:text="${commentDTO.treadCount}" class="ICount" th:id="'comTreCount-'+${commentDTO.id}">11</span>
 
                             <span class="glyphicon glyphicon-comment icon" th:data-id="${commentDTO.id}" onclick="collapseComments(this)"></span>
-                            <span class="commentCount icon" th:text="${commentDTO.commentCount}"></span>
+                            <span class="commentCount" th:text="${commentDTO.commentCount}">11</span>
                             <span class="pull-right comments-data" th:text="${#dates.format(commentDTO.gmtCreate,'yyyy-MM-dd HH:mm')}">2019-06-09</span>
                         </div>
                         <!--二级评论部分-->
