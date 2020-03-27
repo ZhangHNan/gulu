@@ -172,4 +172,8 @@ public class QuestionService {
         int count = questionMapper.countByExample(example);
         return count;
     }
+
+    public PageDTO findPageByStar(Integer currentPage, Long id) {
+        return pageUtils.autoStructureQuestionPageDTOByStar(currentPage,questionRows,questionButtonCount,id);
+    }
 }

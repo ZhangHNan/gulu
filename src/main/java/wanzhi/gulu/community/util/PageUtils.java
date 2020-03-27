@@ -39,6 +39,9 @@ public class PageUtils {
     @Autowired
     CommentMapper commentMapper;
 
+    @Autowired
+    StarMapper starMapper;
+
     //编写自动构建PageDTO的步骤
     private PageDTO autoStructurePageDTO(int currentPage, int rows, int buttonCount) {
         //查询数据总数TotalCount
@@ -345,4 +348,49 @@ public class PageUtils {
         pageDTO.setDataS(notificationDTOs);
         return pageDTO;
     }
+
+    public PageDTO autoStructureQuestionPageDTOByStar(Integer currentPage, Integer rows, Integer buttonCount, Long id) {
+        PageDTO pageDTO = new PageDTO();
+        //查询数据总数TotalCount
+        StarExample example = new StarExample();
+        example.createCriteria()
+                .andCollectorEqualTo(id);
+        List<Star> stars = starMapper.selectByExample(example);
+        List<Long> myStarQuestionId = stars.stream().map(s -> s.getStarId()).collect(Collectors.toList());
+        Integer totalCount = myStarQuestionId.size();
+        //构建分页模型
+        pageDTO = autoStructurePageModel(currentPage, rows, buttonCount, totalCount);
+        //补充数据
+        pageDTO = injectQuestionDTODataSByStar(pageDTO, myStarQuestionId);
+        return pageDTO;
+    }
+
+    private PageDTO injectQuestionDTODataSByStar(PageDTO pageDTO, List<Long> myStarQuestionId) {
+        List<QuestionDTO> questionDTOS = myStarQuestionId.stream().map(m ->
+        {
+            //按创建时间排序未做？
+            QuestionDTO questionDTO = new QuestionDTO();
+            System.out.println(m);
+            Question question = questionMapper.selectByPrimaryKey(m);
+            System.out.println(question);
+            BeanUtils.copyProperties(question, questionDTO);
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
+            questionDTO.setUser(user);
+            System.out.println(questionDTO);
+            return questionDTO;
+        }).collect(Collectors.toList());
+        pageDTO.setDataS(questionDTOS);
+        System.out.println(questionDTOS);
+        return pageDTO;
+    }
+
+//    private Integer selectQuestionDTOTotalCountByStar(Long id) {
+//        StarExample example = new StarExample();
+//        example.createCriteria()
+//                .andCollectorEqualTo(id);
+//        List<Star> stars = starMapper.selectByExample(example);
+//        List<Long> myStarQuestionId = stars.stream().map(s -> s.getStarId()).collect(Collectors.toList());
+//        return myStarQuestionId.size();
+//    }
+
 }

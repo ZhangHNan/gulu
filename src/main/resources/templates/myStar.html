@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>我的帖子</title>
+    <title>我的收藏</title>
     <!--jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边)-->
     <script src="../static/js/jquery-3.4.1.min.js" th:src="@{/js/jquery-3.2.1.min.js}"></script>
     <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
@@ -18,8 +18,8 @@
             <div class="col-lg-9 col-md-12 col-xs-12">
                 <!--左3/4区域：主页的主体-->
                 <h2>
-                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                    我的帖子</h2>
+                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                    我的收藏</h2>
                 <hr>
                 <div class="media" th:each="questionDTO:${pageDTO.dataS}">
                     <div class="media-left">
@@ -32,11 +32,11 @@
                         <a th:href="@{'/question/'+${questionDTO.getId()}}">
                         <h4 class="media-heading" th:text="${questionDTO.title}">怎么学会java</h4>
                         </a>
-                        [[${questionDTO.description}]]
+                        <span>作者：</span><span th:text="${questionDTO.user.name}"></span>
                         <br>
                         <span class="text-desc"> [[${questionDTO.commentCount}]] 个回复 | [[${questionDTO.viewCount}]] 次浏览 |
                             <span th:text="${#dates.format(questionDTO.gmtCreate,'yyyy-MM-dd HH:mm')}"></span> |
-                            <a th:if="${session.user!=null&&questionDTO.user.accountId==session.user.accountId}" th:href="@{'/publish/'+${questionDTO.id}}" href="#" class="question-edit">
+                            <a th:if="${session.user!=null&&questionDTO.user.id==session.user.id}" th:href="@{'/publish/'+${questionDTO.id}}" href="#" class="question-edit">
                                 <span class="glyphicon glyphicon-edit " aria-hidden="true"></span>
                                 编辑
                             </a>
@@ -75,9 +75,9 @@
                 <!--右边1/4区域：选择列表-->
                 <div class="list-group">
                     <a href="/myProfile" class="list-group-item">我的信息</a>
-                    <a href="/myQuestion" class="list-group-item active">我的问题<span class="badge" th:text="${session.myQuestionCount}">10</span></a>
+                    <a href="/myQuestion" class="list-group-item">我的问题<span class="badge" th:text="${session.myQuestionCount}">10</span></a>
                     <a href="/myMessage" class="list-group-item" >最新回复<span class="badge" th:text="${session.unread}">14</span></a>
-                    <a href="/myStar" class="list-group-item">我的收藏</a>
+                    <a href="/myStar" class="list-group-item active">我的收藏</a>
                     <a href="/myWatch" class="list-group-item">我的关注</a>
                     <a href="/#" class="list-group-item">申诉中心</a>
                     <a href="/logout" class="list-group-item">退出登录</a>
