@@ -37,3 +37,71 @@ body{
     color: white;
     background-color: red;
 }
+.avatar-profile{
+    width: 200px;
+    height: 200px;
+    margin-right: 24px;
+    margin-left: 24px;
+}
+.myprofile *{
+    display: inline-block;
+}
+.myBioA{
+    padding: 0 4px;
+}
+.myBioBtn{
+    font-size: 12px;
+    line-height: 12px;
+}
+.myBioContent{
+    /*首行缩进2字*/
+    text-indent: 2em;
+    font-size: 14px;
+    line-height: 16px;
+    width: 85%;
+    height: 108px;
+    background-color: lavenderblush;
+    padding: 10px;
+    overflow: auto;
+}
+.notBound{
+    color: #999;
+}
+.toBound{
+    margin-left: 12px;
+}
+.toBound:hover{
+    text-decoration: none;
+}
+.toVIP{
+    margin-left: 12px;
+}
+.toVIP:hover{
+    text-decoration: none;
+    color: gold;
+}
+.userName{
+    margin-bottom: 16px;
+}
+.con-body{
+    padding-bottom: 20px;
+}
+.btn-avatar{
+    margin: 10px 48px;
+}
+.like-active{
+    color: #ff2222;
+}
+.ICount{
+    margin-right: 20px;
+    margin-left: 4px;
+    cursor: default;
+    color:#999;
+}
+.star-active{
+    color: orangered;
+}
+.psh{
+    margin-top: 10px;
+    margin-bottom: 8px;
+}
