@@ -50,7 +50,7 @@ public class StarService {
         //增加问题的star_count
         Question targetQuestion = questionMapper.selectByPrimaryKey(starCreateDTO.getStarId());
         starUtils.incStar(starCreateDTO.getStarId(),1L);
-        starUtils.incFans(targetQuestion.getCreator(),1L);
+        starUtils.incUserLikeCount(targetQuestion.getCreator(),2L);
         //热度值
         hotUtils.incQuestionHot(starCreateDTO.getStarId(),5L);
         hotUtils.incUserHot(targetQuestion.getCreator(),5L);
@@ -62,7 +62,7 @@ public class StarService {
         starMapper.deleteByPrimaryKey(star.getId());
         Question targetQuestion = questionMapper.selectByPrimaryKey(star.getStarId());
         starUtils.redStar(star.getStarId(),1L);
-        starUtils.redFans(targetQuestion.getCreator(),1L);
+        starUtils.redUserLikeCount(targetQuestion.getCreator(),2L);
         //热度值
         hotUtils.redQuestionHot(star.getStarId(),5L);
         hotUtils.redUserHot(targetQuestion.getCreator(),5L);

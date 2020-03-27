@@ -58,12 +58,12 @@
                         <a href="#" class="toBound" th:if="${session.user.password!=null}">更换密码</a>
                         <br>
                         <div class="psh">
-                            获赞数&nbsp;
-                            <span class="glyphicon glyphicon-thumbs-up like-active"></span>
+                            人气值&nbsp;
+                            <span class="glyphicon glyphicon-stats star-active"></span>
                             <span class="ICount" th:text="${session.user.likeCount}">11</span>
                             <!--收藏-->
-                            被收藏数&nbsp;
-                            <span class="glyphicon glyphicon-star star-active"></span>
+                            粉丝数&nbsp;
+                            <span class="glyphicon glyphicon-heart star-active"></span>
                             <span class="ICount" th:text="${session.user.fansCount}">11</span>
                             热度值&nbsp;
                             <span class="glyphicon glyphicon-fire star-active"></span>

@@ -59,17 +59,17 @@ public class StarUtils {
         return 1; //当前用户收藏了
     }
 
-    public void incFans(Long id, long incCount) {
+    public void incUserLikeCount(Long id, long incCount) {
         CountDTO countDTO = new CountDTO();
         countDTO.setId(id);
         countDTO.setCount(incCount);
-        userExtMapper.incFans(countDTO);
+        userExtMapper.incPraise(countDTO);
     }
 
-    public void redFans(Long id, long redCount) {
+    public void redUserLikeCount(Long id, long incCount) {
         CountDTO countDTO = new CountDTO();
         countDTO.setId(id);
-        countDTO.setCount(redCount);
-        userExtMapper.redFans(countDTO);
+        countDTO.setCount(incCount);
+        userExtMapper.redPraise(countDTO);
     }
 }
