@@ -33,7 +33,7 @@
                         <h2 class="media-heading userName" th:text="${session.user.name}">娜扎</h2>
                         <span class="label label-default" th:if="${session.user.power==0}">普通用户</span>
                         <a href="#" class="toVIP" th:if="${session.user.power==0}">升级会员</a>
-                        <span class="label label-warning" th:if="${session.user.power==1}">尊贵会员</span>
+                        <span class="label label-warning" th:if="${session.user.power==1}">会员用户</span>
                         <br>
                         <!--下面这些如果有就显示，没有提示去绑定-->
                         <h4>手机号：</h4>

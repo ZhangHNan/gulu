@@ -35,7 +35,7 @@
                         <span>作者：</span><span th:text="${questionDTO.user.name}"></span>
                         <br>
                         <span class="text-desc"> [[${questionDTO.commentCount}]] 个回复 | [[${questionDTO.viewCount}]] 次浏览 |
-                            <span th:text="${#dates.format(questionDTO.gmtCreate,'yyyy-MM-dd HH:mm')}"></span> |
+                            <span th:text="${#dates.format(questionDTO.gmtCreate,'yyyy-MM-dd HH:mm')}"></span> <span th:if="${session.user!=null&&questionDTO.user.id==session.user.id}">|</span>
                             <a th:if="${session.user!=null&&questionDTO.user.id==session.user.id}" th:href="@{'/publish/'+${questionDTO.id}}" href="#" class="question-edit">
                                 <span class="glyphicon glyphicon-edit " aria-hidden="true"></span>
                                 编辑
