@@ -21,43 +21,60 @@
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                     我的信息</h2>
                 <hr>
-                <div class="media" th:each="questionDTO:${pageDTO.dataS}">
+                <div class="media">
                     <div class="media-left">
-                        <a th:href="@{'/question/'+${questionDTO.getId()}}">
-                            <img class="media-object img-rounded avatar-profile" th:src="${questionDTO.user.avatarUrl}"
+                        <a href="#">
+                            <img class="media-object img-rounded avatar-profile" th:src="${session.user.avatarUrl}"
                                  src="../static/img/9150e4e5gy1gab4a9xjurj205h04wdfr.jpg">
                         </a>
                         <a href="#" class="btn btn-primary btn-avatar">更换头像</a>
                     </div>
                     <div class="media-body myprofile">
-                        <h2 class="media-heading userName" th:text="${questionDTO.title}">娜扎</h2>
-                        <span class="label label-default">普通用户</span>
-                        <a href="#" class="toVIP">升级会员</a>
+                        <h2 class="media-heading userName" th:text="${session.user.name}">娜扎</h2>
+                        <span class="label label-default" th:if="${session.user.power==0}">普通用户</span>
+                        <a href="#" class="toVIP" th:if="${session.user.power==0}">升级会员</a>
+                        <span class="label label-warning" th:if="${session.user.power==1}">尊贵会员</span>
                         <br>
-                        <h4>手机号：</h4> <span class="notBound">未绑定</span> <a href="#" class="toBound">去绑定</a>
+                        <!--下面这些如果有就显示，没有提示去绑定-->
+                        <h4>手机号：</h4>
+                        <span class="notBound" th:if="${session.user.phone==null}">未绑定</span>
+                        <a href="#" class="toBound" th:if="${session.user.phone==null}">去绑定</a>
+                        <span class="notBound" th:if="${session.user.phone!=null}" th:text="${session.user.phone}">未绑定</span>
                         <br>
-                        <h4>github账号：</h4> <span class="notBound">未绑定</span> <a href="#" class="toBound">去绑定</a>
+                        <h4>github账号：</h4>
+                        <span class="notBound" th:if="${session.user.accountId==null}">未绑定</span>
+                        <a href="#" class="toBound" th:if="${session.user.accountId==null}">去绑定</a>
+                        <span class="notBound" th:if="${session.user.accountId!=null}" th:text="${session.user.accountId}">未绑定</span>
                         <br>
-                        <h4>email：</h4> <span class="notBound">未绑定</span> <a href="#" class="toBound">去绑定</a>
+                        <h4>email：</h4>
+                        <span class="notBound" th:if="${session.user.email==null}">未绑定</span>
+                        <a href="#" class="toBound" th:if="${session.user.email==null}">去绑定</a>
+                        <span class="notBound" th:if="${session.user.email!=null}" th:text="${session.user.email}">未绑定</span>
                         <br>
-                        <h4>密 码：</h4> <span class="notBound">********</span> <a href="#" class="toBound">更换密码</a>
+                        <h4>密 码：</h4>
+                        <span class="notBound" th:if="${session.user.password==null}">未设置密码！</span>
+                        <a href="#" class="toBound" th:if="${session.user.password==null}">设置密码</a>
+                        <span class="notBound" th:if="${session.user.password!=null}">********</span>
+                        <a href="#" class="toBound" th:if="${session.user.password!=null}">更换密码</a>
                         <br>
                         <div class="psh">
                             获赞数&nbsp;
                             <span class="glyphicon glyphicon-thumbs-up like-active"></span>
-                            <span class="ICount">11</span>
+                            <span class="ICount" th:text="${session.user.likeCount}">11</span>
                             <!--收藏-->
                             被收藏数&nbsp;
-                            <span class="glyphicon glyphicon-star-empty star-active"></span>
-                            <span class="ICount">11</span>
+                            <span class="glyphicon glyphicon-star star-active"></span>
+                            <span class="ICount" th:text="${session.user.fansCount}">11</span>
                             热度值&nbsp;
                             <span class="glyphicon glyphicon-fire star-active"></span>
-                            <span class="ICount">11</span>
+                            <span class="ICount" th:text="${session.user.hot}">11</span>
                         </div>
                         <br>
                         <h3>个人简介</h3> <a href="#" class="btn btn-primary myBioA"><span class="myBioBtn">更新简介</span></a>
                         <br>
-                        <p class="myBioContent">我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人</p>
+                        <p class="myBioContent" th:if="${session.user.bio==null}">这个人很懒，什么都没写！</p>
+                        <p class="myBioContent" th:if="${session.user.bio!=null}" th:text="${session.user.bio}">我是一个好人我是一个好人
+                            我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人</p>
                     </div>
                 </div>
             </div>

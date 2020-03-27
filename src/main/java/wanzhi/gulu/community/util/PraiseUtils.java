@@ -29,6 +29,9 @@ public class PraiseUtils {
     @Autowired
     CommentExtMapper commentExtMapper;
 
+    @Autowired
+    UserExtMapper userExtMapper;
+
     public Integer getStatus(Long praiseId,Long creatorId,Integer type){
         PraiseExample example = new PraiseExample();
         example.createCriteria()
@@ -79,5 +82,19 @@ public class PraiseUtils {
     public Long getComPraCount(Long id) {
         Comment comment = commentMapper.selectByPrimaryKey(id);
         return comment.getPraiseCount();
+    }
+
+    public void incUserLikeCount(Long id, long incCount) {
+        CountDTO countDTO = new CountDTO();
+        countDTO.setId(id);
+        countDTO.setCount(incCount);
+        userExtMapper.incPraise(countDTO);
+    }
+
+    public void redUserLikeCount(Long id, long incCount) {
+        CountDTO countDTO = new CountDTO();
+        countDTO.setId(id);
+        countDTO.setCount(incCount);
+        userExtMapper.redPraise(countDTO);
     }
 }

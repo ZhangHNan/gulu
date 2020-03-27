@@ -6,6 +6,7 @@ import wanzhi.gulu.community.dto.CountDTO;
 import wanzhi.gulu.community.mapper.QuestionExtMapper;
 import wanzhi.gulu.community.mapper.QuestionMapper;
 import wanzhi.gulu.community.mapper.StarMapper;
+import wanzhi.gulu.community.mapper.UserExtMapper;
 import wanzhi.gulu.community.model.Question;
 import wanzhi.gulu.community.model.Star;
 import wanzhi.gulu.community.model.StarExample;
@@ -23,6 +24,9 @@ public class StarUtils {
 
     @Autowired
     StarMapper starMapper;
+
+    @Autowired
+    UserExtMapper userExtMapper;
 
     public void incStar(Long id, Long incCount){
         CountDTO countDTO = new CountDTO();
@@ -53,5 +57,19 @@ public class StarUtils {
             return 0; //当前用户没收藏
         }
         return 1; //当前用户收藏了
+    }
+
+    public void incFans(Long id, long incCount) {
+        CountDTO countDTO = new CountDTO();
+        countDTO.setId(id);
+        countDTO.setCount(incCount);
+        userExtMapper.incFans(countDTO);
+    }
+
+    public void redFans(Long id, long redCount) {
+        CountDTO countDTO = new CountDTO();
+        countDTO.setId(id);
+        countDTO.setCount(redCount);
+        userExtMapper.redFans(countDTO);
     }
 }

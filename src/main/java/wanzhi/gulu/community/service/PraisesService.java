@@ -52,9 +52,10 @@ public class PraisesService {
         praiseMapper.insert(praise);
         //增加问题likeCount
         praiseUtils.incQuestionPraise(praiseCreateDTO.getPraiseId(),1L);
+        Question targetQuestion = questionMapper.selectByPrimaryKey(praiseCreateDTO.getPraiseId());
+        praiseUtils.incUserLikeCount(targetQuestion.getCreator(),1L);
         //热度值
         hotUtils.incQuestionHot(praiseCreateDTO.getPraiseId(),3L);
-        Question targetQuestion = questionMapper.selectByPrimaryKey(praiseCreateDTO.getPraiseId());
         hotUtils.incUserHot(targetQuestion.getCreator(),3L);
         //返回点赞数
         return praiseUtils.getQuePraCount(praiseCreateDTO.getPraiseId());
@@ -64,10 +65,11 @@ public class PraisesService {
     @Transactional
     public Long removeQuestionPraise(Praise praise){
         praiseMapper.deleteByPrimaryKey(praise.getId());
+        Question targetQuestion = questionMapper.selectByPrimaryKey(praise.getPraiseId());
         praiseUtils.redQuestionPraise(praise.getPraiseId(),1L);
+        praiseUtils.redUserLikeCount(targetQuestion.getCreator(),1L);
         //热度值
         hotUtils.redQuestionHot(praise.getPraiseId(),3L);
-        Question targetQuestion = questionMapper.selectByPrimaryKey(praise.getPraiseId());
         hotUtils.redUserHot(targetQuestion.getCreator(),3L);
         return praiseUtils.getQuePraCount(praise.getPraiseId());
     }

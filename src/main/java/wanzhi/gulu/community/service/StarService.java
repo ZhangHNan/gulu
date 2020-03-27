@@ -48,10 +48,11 @@ public class StarService {
         //创建数据
         starMapper.insert(star);
         //增加问题的star_count
+        Question targetQuestion = questionMapper.selectByPrimaryKey(starCreateDTO.getStarId());
         starUtils.incStar(starCreateDTO.getStarId(),1L);
+        starUtils.incFans(targetQuestion.getCreator(),1L);
         //热度值
         hotUtils.incQuestionHot(starCreateDTO.getStarId(),5L);
-        Question targetQuestion = questionMapper.selectByPrimaryKey(starCreateDTO.getStarId());
         hotUtils.incUserHot(targetQuestion.getCreator(),5L);
         //返回收藏数
         return starUtils.getStarCount(starCreateDTO.getStarId());
@@ -59,10 +60,11 @@ public class StarService {
 
     public Long removeStar(Star star) {
         starMapper.deleteByPrimaryKey(star.getId());
+        Question targetQuestion = questionMapper.selectByPrimaryKey(star.getStarId());
         starUtils.redStar(star.getStarId(),1L);
+        starUtils.redFans(targetQuestion.getCreator(),1L);
         //热度值
         hotUtils.redQuestionHot(star.getStarId(),5L);
-        Question targetQuestion = questionMapper.selectByPrimaryKey(star.getStarId());
         hotUtils.redUserHot(targetQuestion.getCreator(),5L);
         return starUtils.getStarCount(star.getStarId());
     }
