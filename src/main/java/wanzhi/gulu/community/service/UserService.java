@@ -72,4 +72,12 @@ public class UserService {
     public void binding(User loginUser) {
         userMapper.updateByPrimaryKey(loginUser);
     }
+
+    public Boolean checkPhone(String data) {
+        UserExample example = new UserExample();
+        example.createCriteria()
+                .andPhoneEqualTo(data);
+        List<User> users = userMapper.selectByExample(example);
+        return users.size() != 0;
+    }
 }

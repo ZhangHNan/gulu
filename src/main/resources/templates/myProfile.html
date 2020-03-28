@@ -39,7 +39,7 @@
                         <!--下面这些如果有就显示，没有提示去绑定-->
                         <h4>手机号：</h4>
                         <span class="notBound" th:if="${session.user.phone==null}">未绑定</span>
-                        <a href="#" class="toBound" th:if="${session.user.phone==null}">去绑定</a>
+                        <a href="#" onclick="bindingPhone()" class="toBound" th:if="${session.user.phone==null}">去绑定</a>
                         <span class="notBound" th:if="${session.user.phone!=null}" th:text="${session.user.phone}">未绑定</span>
                         <br>
                         <h4>github账号：</h4>
@@ -54,9 +54,9 @@
                         <br>
                         <h4>密 码：</h4>
                         <span class="notBound" th:if="${session.user.password==null}">未设置密码！</span>
-                        <a href="#" class="toBound" th:if="${session.user.password==null}">设置密码</a>
+                        <a href="#" onclick="bindingPassword()" class="toBound" th:if="${session.user.password==null}">设置密码</a>
                         <span class="notBound" th:if="${session.user.password!=null}">********</span>
-                        <a href="#" class="toBound" th:if="${session.user.password!=null}">更换密码</a>
+                        <a href="#" onclick="bindingPassword()" class="toBound" th:if="${session.user.password!=null}">更换密码</a>
                         <br>
                         <div class="psh">
                             人气值&nbsp;

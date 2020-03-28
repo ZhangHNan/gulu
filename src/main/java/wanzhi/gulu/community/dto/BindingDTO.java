@@ -3,6 +3,6 @@ package wanzhi.gulu.community.dto;
 import lombok.Data;
 
 @Data
-public class PasswordDTO {
-    private String password;
+public class BindingDTO {
+    private String data;
 }
