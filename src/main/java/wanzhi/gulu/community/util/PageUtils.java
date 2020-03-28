@@ -5,10 +5,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import wanzhi.gulu.community.dto.NotificationDTO;
-import wanzhi.gulu.community.dto.PageDTO;
-import wanzhi.gulu.community.dto.QuestionDTO;
-import wanzhi.gulu.community.dto.SearchDTO;
+import wanzhi.gulu.community.dto.*;
 import wanzhi.gulu.community.enums.NotificationTypeEnum;
 import wanzhi.gulu.community.mapper.*;
 import wanzhi.gulu.community.model.*;
@@ -41,6 +38,9 @@ public class PageUtils {
 
     @Autowired
     StarMapper starMapper;
+
+    @Autowired
+    WatchMapper watchMapper;
 
     //编写自动构建PageDTO的步骤
     private PageDTO autoStructurePageDTO(int currentPage, int rows, int buttonCount) {
@@ -383,13 +383,48 @@ public class PageUtils {
         return pageDTO;
     }
 
-    //    private Integer selectQuestionDTOTotalCountByStar(Long id) {
-//        StarExample example = new StarExample();
-//        example.createCriteria()
-//                .andCollectorEqualTo(id);
-//        List<Star> stars = starMapper.selectByExample(example);
-//        List<Long> myStarQuestionId = stars.stream().map(s -> s.getStarId()).collect(Collectors.toList());
-//        return myStarQuestionId.size();
-//    }
 
+    //    private Integer selectQuestionDTOTotalCountByStar(Long id) {
+
+    //    }
+//        return myStarQuestionId.size();
+//        List<Long> myStarQuestionId = stars.stream().map(s -> s.getStarId()).collect(Collectors.toList());
+//        List<Star> stars = starMapper.selectByExample(example);
+//                .andCollectorEqualTo(id);
+//        example.createCriteria()
+//        StarExample example = new StarExample();
+
+    public PageDTO autoStructureUserDTOByWatch(Integer currentPage, Integer rows, Integer buttonCount, Long id) {
+        PageDTO pageDTO;
+        //查询总数TotalCount
+        Integer totalCount = selectUserDTOTotalCountByWatch(id);
+        //构建分页模型
+        pageDTO = autoStructurePageModel(currentPage, rows, buttonCount, totalCount);
+        //补充分页数据
+        pageDTO = injectUserDTODataSByWatch(pageDTO, id);
+        return pageDTO;
+    }
+
+    private Integer selectUserDTOTotalCountByWatch(Long id) {
+        WatchExample example = new WatchExample();
+        example.createCriteria()
+                .andCollectorEqualTo(id);
+        return watchMapper.countByExample(example);
+    }
+
+    private PageDTO injectUserDTODataSByWatch(PageDTO pageDTO, Long id) {
+
+        WatchExample example = new WatchExample();
+        example.createCriteria()
+                .andCollectorEqualTo(id);
+        List<Watch> watches = watchMapper.selectByExample(example);
+        List<UserDTO> collects = watches.stream().map(watch -> {
+            UserDTO userDTO = new UserDTO();
+            User user = userMapper.selectByPrimaryKey(watch.getWatchId());
+            BeanUtils.copyProperties(user, userDTO);
+            return userDTO;
+        }).collect(Collectors.toList());
+        pageDTO.setDataS(collects);
+        return pageDTO;
+    }
 }

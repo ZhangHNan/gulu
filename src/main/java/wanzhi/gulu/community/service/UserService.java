@@ -3,13 +3,16 @@ package wanzhi.gulu.community.service;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import wanzhi.gulu.community.dto.PageDTO;
 import wanzhi.gulu.community.dto.UserDTO;
 import wanzhi.gulu.community.mapper.UserExtMapper;
 import wanzhi.gulu.community.mapper.UserMapper;
 import wanzhi.gulu.community.model.User;
 import wanzhi.gulu.community.model.UserExample;
 import wanzhi.gulu.community.model.Watch;
+import wanzhi.gulu.community.util.PageUtils;
 import wanzhi.gulu.community.util.WatchUtils;
 
 import java.util.List;
@@ -25,6 +28,16 @@ public class UserService {
 
     @Autowired
     WatchUtils watchUtils;
+
+    @Autowired
+    PageUtils pageUtils;
+
+    @Value("${page.notification.rows}")
+    private Integer notificationRows;//设置通知页每页展示数据行数
+
+    @Value("${page.notification.buttonCount}")
+    private Integer notificationButtonCount;//设置通知页每页展示页面按钮数。请设置为奇数，设置为偶数中间段还是奇数个，头和尾才是偶数个
+
 
     //创建或更新用户：主要更新token
     public void createOrUpdate(User user){
@@ -94,5 +107,9 @@ public class UserService {
         BeanUtils.copyProperties(user,userDTO);
         userDTO.setWatch(watchUtils.isWatch(loginId,id));
         return userDTO;
+    }
+
+    public PageDTO findPageByWatch(Integer currentPage, Long id) {
+        return pageUtils.autoStructureUserDTOByWatch(currentPage, notificationRows,notificationButtonCount,id);
     }
 }

@@ -34,6 +34,7 @@
                         <h2 class="media-heading userName" th:text="${userDTO.name}">娜扎</h2>
                         <span class="label label-default" th:if="${userDTO.power==0}">普通用户</span>
                         <span class="label label-warning" th:if="${userDTO.power==1}">会员用户</span>
+                        <span class="label label-danger" th:if="${userDTO.power==2}">管理员</span>
                         <div class="watch" onclick="toWatch(this)" th:data-id="${userDTO.id}">
                             <span class="glyphicon glyphicon-eye-open watch-active"
                             th:class="${userDTO.watch?'glyphicon glyphicon-eye-open watch-active':'glyphicon glyphicon-eye-open'}">
