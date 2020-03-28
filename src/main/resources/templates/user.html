@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" href="../static/css/bootstrap-theme.min.css" th:href="@{/css/bootstrap-theme.min.css}">
     <link rel="stylesheet" href="../static/css/user.css" th:href="@{/css/user.css}">
-    <script src="../static/js/myProfile.js" th:src="@{/js/myProfile.js}"></script>
+    <script src="../static/js/user.js" th:src="@{/js/user.js}"></script>
 </head>
 <body>
 <div th:insert="~{navigation :: nav}"></div>
@@ -34,7 +34,7 @@
                         <h2 class="media-heading userName" th:text="${userDTO.name}">娜扎</h2>
                         <span class="label label-default" th:if="${userDTO.power==0}">普通用户</span>
                         <span class="label label-warning" th:if="${userDTO.power==1}">会员用户</span>
-                        <div class="watch">
+                        <div class="watch" onclick="toWatch(this)" th:data-id="${userDTO.id}">
                             <span class="glyphicon glyphicon-eye-open watch-active"
                             th:class="${userDTO.watch?'glyphicon glyphicon-eye-open watch-active':'glyphicon glyphicon-eye-open'}">
                             </span>

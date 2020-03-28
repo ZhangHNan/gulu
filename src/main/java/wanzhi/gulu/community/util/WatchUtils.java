@@ -41,4 +41,16 @@ public class WatchUtils {
         List<Watch> watches = watchMapper.selectByExample(example);
         return watches.size() != 0;
     }
+
+    public Watch checkWatch(Long loginId, Long id) {
+        WatchExample example = new WatchExample();
+        example.createCriteria()
+                .andCollectorEqualTo(loginId)
+                .andWatchIdEqualTo(id);
+        List<Watch> watches = watchMapper.selectByExample(example);
+        if (watches.size()!=0){
+            return watches.get(0);
+        }
+        return null;
+    }
 }

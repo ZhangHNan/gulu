@@ -3,10 +3,10 @@ package wanzhi.gulu.community.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import wanzhi.gulu.community.dto.BindingDTO;
 import wanzhi.gulu.community.dto.PageDTO;
+import wanzhi.gulu.community.dto.ResultDTO;
 import wanzhi.gulu.community.dto.UserDTO;
 import wanzhi.gulu.community.exception.CustomizeErrorCode;
 import wanzhi.gulu.community.exception.CustomizeException;
@@ -14,6 +14,7 @@ import wanzhi.gulu.community.model.Question;
 import wanzhi.gulu.community.model.User;
 import wanzhi.gulu.community.service.QuestionService;
 import wanzhi.gulu.community.service.UserService;
+import wanzhi.gulu.community.service.WatchService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,6 +26,9 @@ public class UserController {
 
     @Autowired
     QuestionService questionService;
+
+    @Autowired
+    WatchService watchService;
 
     //到用户详情
     @GetMapping("/user")
@@ -41,5 +45,22 @@ public class UserController {
         model.addAttribute("pageDTO",pageDTO);
         model.addAttribute("userDTO",userDTO);
         return "user";
+    }
+
+    //关注功能
+    //升级会员
+    @ResponseBody
+    @PostMapping("/watch")
+    public Object VIP(@RequestBody BindingDTO bindingDTO,
+                      HttpServletRequest request){
+        User loginUser = (User)request.getSession().getAttribute("user");
+        if (loginUser==null){
+            throw new CustomizeException(CustomizeErrorCode.LOGIN_NOT_FOUND);
+        }
+
+        //关注/取消关注功能
+        watchService.updateWatch(loginUser.getId(),Long.parseLong(bindingDTO.getData()));
+
+        return ResultDTO.okOf();
     }
 }
