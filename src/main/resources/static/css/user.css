@@ -122,6 +122,7 @@ body{
     color: orangered;
 }
 .unWatch{
+    margin-left: 4px;
 }
 .watched{
     color:#999;

@@ -38,7 +38,7 @@
                             <span class="glyphicon glyphicon-eye-open watch-active"
                             th:class="${userDTO.watch?'glyphicon glyphicon-eye-open watch-active':'glyphicon glyphicon-eye-open'}">
                             </span>
-                            <span class="unWatch" th:if="${userDTO.watch}">关注</span>
+                            <span class="unWatch" th:if="${!userDTO.watch}">关注</span>
                             <span class="watched" th:if="${userDTO.watch}">已关注</span>
                         </div>
                         <br>
