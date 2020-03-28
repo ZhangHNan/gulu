@@ -78,8 +78,7 @@ public class PageUtils {
 
     private Integer selectQuestionDTOTotalCountBySearch(String regxpSearch) {
         //根据创建者来查询帖子总数
-        Integer totalCount = questionExtMapper.countBySearch(regxpSearch);
-        return totalCount;
+        return questionExtMapper.countBySearch(regxpSearch);
     }
 
     private PageDTO injectQuestionDTODataSBySearch(PageDTO pageDTO, String regxpSearch) {
@@ -384,7 +383,7 @@ public class PageUtils {
         return pageDTO;
     }
 
-//    private Integer selectQuestionDTOTotalCountByStar(Long id) {
+    //    private Integer selectQuestionDTOTotalCountByStar(Long id) {
 //        StarExample example = new StarExample();
 //        example.createCriteria()
 //                .andCollectorEqualTo(id);

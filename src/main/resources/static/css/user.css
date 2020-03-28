@@ -1,0 +1,131 @@
+.main{
+    margin: 30px;
+    background-color: white;
+}
+
+.footer {
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    padding: 0 0 15px 0;
+}
+
+body{
+    background-color: #efefef;
+}
+
+.right-bar{
+    padding-right: 30px;
+    overflow: hidden;
+}
+.profile .list-group{
+    margin-top: 18px;
+}
+.img-avatar{
+    width: 38px;
+    height: 38px;
+}
+.text-desc{
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+}
+.question-edit{
+    color:#999;
+}
+.badge-red{
+    color: white;
+    background-color: red;
+}
+.avatar-profile{
+    width: 200px;
+    height: 200px;
+    margin: 4px 30px 24px 30px;
+}
+.myProfile *{
+    display: inline-block;
+}
+.myBioA{
+    padding: 0 4px;
+}
+.myBioBtn{
+    font-size: 12px;
+    line-height: 12px;
+}
+.myBioContent{
+    /*首行缩进2字*/
+    text-indent: 2em;
+    font-size: 14px;
+    line-height: 16px;
+    width: 85%;
+    /*height: 108px;*/
+    background-color: lavenderblush;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 12px;
+    /*overflow: auto;*/
+}
+.notBound{
+    color: #999;
+}
+.toBound{
+    margin-left: 12px;
+}
+.toBound:hover{
+    text-decoration: none;
+}
+.toVIP{
+    margin-left: 12px;
+}
+.toVIP:hover{
+    text-decoration: none;
+    color: gold;
+}
+.userName{
+    margin-bottom: 8px;
+}
+.con-body{
+    padding-bottom: 30px;
+}
+.btn-avatar{
+    margin: 10px 48px;
+}
+.like-active{
+    color: #ff2222;
+}
+.ICount{
+    margin-right: 20px;
+    margin-left: 4px;
+    cursor: default;
+    color:#999;
+}
+.star-active{
+    color: orangered;
+}
+.psh{
+    margin-top: 16px;
+    margin-bottom: 24px;
+}
+.bioText{
+    width: 304%;
+}
+.none{
+    display: none;
+}
+.watch *{
+    cursor: pointer;
+}
+.watch{
+    margin-left: 24px;
+}
+.watch-active{
+    color: orangered;
+}
+.unWatch{
+}
+.watched{
+    color:#999;
+}
+.user-question{
+    margin-left: 267px;
+}

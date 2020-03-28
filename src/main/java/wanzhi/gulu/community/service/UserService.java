@@ -1,12 +1,16 @@
 package wanzhi.gulu.community.service;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import wanzhi.gulu.community.dto.UserDTO;
 import wanzhi.gulu.community.mapper.UserExtMapper;
 import wanzhi.gulu.community.mapper.UserMapper;
 import wanzhi.gulu.community.model.User;
 import wanzhi.gulu.community.model.UserExample;
+import wanzhi.gulu.community.model.Watch;
+import wanzhi.gulu.community.util.WatchUtils;
 
 import java.util.List;
 
@@ -18,6 +22,9 @@ public class UserService {
 
     @Autowired
     UserExtMapper userExtMapper;
+
+    @Autowired
+    WatchUtils watchUtils;
 
     //创建或更新用户：主要更新token
     public void createOrUpdate(User user){
@@ -79,5 +86,13 @@ public class UserService {
                 .andPhoneEqualTo(data);
         List<User> users = userMapper.selectByExample(example);
         return users.size() != 0;
+    }
+
+    public UserDTO findUserDTOByid(Long id, Long loginId) {
+        UserDTO userDTO = new UserDTO();
+        User user = userMapper.selectByPrimaryKey(id);
+        BeanUtils.copyProperties(user,userDTO);
+        userDTO.setWatch(watchUtils.isWatch(loginId,id));
+        return userDTO;
     }
 }

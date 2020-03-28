@@ -78,6 +78,11 @@ public class QuestionService {
         return pageUtils.autoStructureQuestionPageDTOByCreator(currentPage, questionRows, questionButtonCount, id);
     }
 
+    //用户详情页面
+    public PageDTO findPageByUserId(Integer currentPage, Long id) {
+        return pageUtils.autoStructureQuestionPageDTOByCreator(currentPage, questionRows, questionButtonCount, id);
+    }
+
     //根据id查询QuestionDTO ：到问题详情页时
     public QuestionDTO findQuestionById(Long id,Long loginId) {
 //        QuestionDTO questionDTO = questionMapper.findById(id);
