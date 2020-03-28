@@ -83,5 +83,16 @@ public class MyProfileController {
         return ResultDTO.okOf();
     }
 
+    @PostMapping("/updateBio")
+    public String bindingBio(@RequestParam("bio")String bio,
+                             HttpServletRequest request){
+        User loginUser = (User)request.getSession().getAttribute("user");
+        if (loginUser==null){
+            throw new CustomizeException(CustomizeErrorCode.LOGIN_NOT_FOUND);
+        }
+        loginUser.setBio(bio);
+        userService.binding(loginUser);
+        return "redirect:/myProfile";
+    }
 
 }

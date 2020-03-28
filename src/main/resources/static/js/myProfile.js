@@ -63,3 +63,10 @@ function bindingPassword(){
         })
     }
 }
+
+function updateBio() {
+    var oldBio = $("#old-bio").text();
+    $("#bioText").text(oldBio);
+    $("#bioArea").toggleClass("none");
+    $("#old-bio").toggleClass("none");
+}

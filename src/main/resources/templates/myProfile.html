@@ -71,11 +71,17 @@
                             <span class="ICount" th:text="${session.user.hot}">11</span>
                         </div>
                         <br>
-                        <h3>个人简介</h3> <a href="#" class="btn btn-primary myBioA"><span class="myBioBtn">更新简介</span></a>
+                        <h3>个人简介</h3> <span class="btn btn-primary myBioA"><span class="myBioBtn" onclick="updateBio()">更新简介</span></span>
                         <br>
-                        <p class="myBioContent" th:if="${session.user.bio==null}">这个人很懒，什么都没写！</p>
-                        <p class="myBioContent" th:if="${session.user.bio!=null}" th:text="${session.user.bio}">我是一个好人我是一个好人
-                            我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人</p>
+                        <p class="myBioContent" th:id="old-bio" th:if="${session.user.bio==null}">这个人很懒，什么都没写！</p>
+                        <p class="myBioContent" th:id="old-bio" th:if="${session.user.bio!=null}" th:text="${session.user.bio}">我是一个好人我是一个好人
+                            我是一个好人我是一个好人我是一个好人我是一个好人我是一个好人
+                        </p>
+                        <form action="/updateBio" method="post" class="none" id="bioArea">
+                            <textarea class="form-control bioText" rows="4" name="bio" id="bioText"></textarea>
+                            <br>
+                            <button type="submit" class="btn btn-primary">提交</button>
+                        </form>
                     </div>
                 </div>
             </div>
