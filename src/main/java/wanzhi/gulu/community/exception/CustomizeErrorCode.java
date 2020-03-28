@@ -19,6 +19,8 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     NAME_IS_EMPTY(9004,"用户名不能为空"),
     PRAISE_TYPE_ERROR(4000,"点赞类型异常！"),
     TREAD_TYPE_ERROR(4000,"踩类型异常!"),
+    GITHUB_ALREADY_BINDING(4000,"用户已绑定github账号"),
+    ACCOUNTID_IS_EXIST(4100,"该github账户已绑定，不可再绑定！"),
     ;//这里定义的枚举是为了给下面构造函数中传入message准备的
 
     private String message;

@@ -43,7 +43,7 @@
                         <br>
                         <h4>github账号：</h4>
                         <span class="notBound" th:if="${session.user.accountId==null}">未绑定</span>
-                        <a href="#" class="toBound" th:if="${session.user.accountId==null}">去绑定</a>
+                        <a href="https://github.com/login/oauth/authorize?client_id=c14b8a6a1a6b4e02b9a1&redirect_uri=http://localhost:8887/callback&scope=user&state=2" class="toBound" th:if="${session.user.accountId==null}">去绑定</a>
                         <span class="notBound" th:if="${session.user.accountId!=null}" th:text="${session.user.accountId}">未绑定</span>
                         <br>
                         <h4>email：</h4>

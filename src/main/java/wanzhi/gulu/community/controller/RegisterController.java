@@ -75,6 +75,7 @@ public class RegisterController {
         user.setPassword(registerDTO.getPassword());
         user.setGmtModified(System.currentTimeMillis());
         user.setGmtCreate(user.getGmtModified());
+        user.setAvatarUrl("/img/default.png");
         user.setLikeCount(0L);
         user.setFansCount(0L);
         user.setHot(0L);

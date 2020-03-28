@@ -60,4 +60,16 @@ public class UserService {
             userMapper.updateByExampleSelective(user,userExample1);
         }
     }
+
+    public void binding(User loginUser) {
+        userMapper.updateByPrimaryKey(loginUser);
+    }
+
+    public boolean checkAccountId(Long id) {
+        UserExample example = new UserExample();
+        example.createCriteria()
+                .andAccountIdEqualTo(id);
+        List<User> users = userMapper.selectByExample(example);
+        return users.size() != 0;
+    }
 }
