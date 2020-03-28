@@ -21,4 +21,11 @@ public class ResultDTO {
         resultDTO.setMessage(message);
         return resultDTO;
     }
+
+    public static ResultDTO errorOf(String message) {
+        ResultDTO resultDTO = new ResultDTO();
+        resultDTO.setCode(408);
+        resultDTO.setMessage(message);
+        return resultDTO;
+    }
 }

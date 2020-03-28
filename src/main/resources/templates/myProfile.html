@@ -24,22 +24,25 @@
                 <hr>
                 <div class="media">
                     <div class="media-left">
-                        <a href="#">
+                        <a>
                             <img class="media-object img-rounded avatar-profile" th:src="${session.user.avatarUrl}"
                                  src="../static/img/9150e4e5gy1gab4a9xjurj205h04wdfr.jpg">
                         </a>
-                        <a href="#" class="btn btn-primary btn-avatar">更换头像</a>
+                        <button style="position:relative;" class="btn btn-info btn-fill btn-avatar btn-wd" id="btn" name="upfile">
+                            更换头像
+                            <input id="upfile" style="opacity:0;width:100%;height:100%;position:absolute;top:0;left:0" type="file" name="upfile" onchange="fileUpload();"/>
+                        </button>
                     </div>
                     <div class="media-body myprofile">
                         <h2 class="media-heading userName" th:text="${session.user.name}">娜扎</h2>
                         <span class="label label-default" th:if="${session.user.power==0}">普通用户</span>
-                        <a href="#" class="toVIP" th:if="${session.user.power==0}">升级会员</a>
+                        <a class="toVIP" onclick="toVIP()" th:if="${session.user.power==0}">升级会员</a>
                         <span class="label label-warning" th:if="${session.user.power==1}">会员用户</span>
                         <br>
                         <!--下面这些如果有就显示，没有提示去绑定-->
                         <h4>手机号：</h4>
                         <span class="notBound" th:if="${session.user.phone==null}">未绑定</span>
-                        <a href="#" onclick="bindingPhone()" class="toBound" th:if="${session.user.phone==null}">去绑定</a>
+                        <a onclick="bindingPhone()" class="toBound" th:if="${session.user.phone==null}">去绑定</a>
                         <span class="notBound" th:if="${session.user.phone!=null}" th:text="${session.user.phone}">未绑定</span>
                         <br>
                         <h4>github账号：</h4>
@@ -49,14 +52,14 @@
                         <br>
                         <h4>email：</h4>
                         <span class="notBound" th:if="${session.user.email==null}">未绑定</span>
-                        <a onclick="bindingEmail()" href="#" class="toBound" th:if="${session.user.email==null}">去绑定</a>
+                        <a onclick="bindingEmail()" class="toBound" th:if="${session.user.email==null}">去绑定</a>
                         <span class="notBound" th:if="${session.user.email!=null}" th:text="${session.user.email}">未绑定</span>
                         <br>
                         <h4>密 码：</h4>
                         <span class="notBound" th:if="${session.user.password==null}">未设置密码！</span>
-                        <a href="#" onclick="bindingPassword()" class="toBound" th:if="${session.user.password==null}">设置密码</a>
+                        <a onclick="bindingPassword()" class="toBound" th:if="${session.user.password==null}">设置密码</a>
                         <span class="notBound" th:if="${session.user.password!=null}">********</span>
-                        <a href="#" onclick="bindingPassword()" class="toBound" th:if="${session.user.password!=null}">更换密码</a>
+                        <a onclick="bindingPassword()" class="toBound" th:if="${session.user.password!=null}">更换密码</a>
                         <br>
                         <div class="psh">
                             人气值&nbsp;
