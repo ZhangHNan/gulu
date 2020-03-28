@@ -3,7 +3,7 @@ package wanzhi.gulu.community.dto;
 import lombok.Data;
 
 @Data
-public class registerDTO {
+public class RegisterDTO {
     private String name;
     private String email;
     private String phone;

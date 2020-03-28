@@ -10,7 +10,6 @@ import wanzhi.gulu.community.dto.AccessTokenDTO;
 import wanzhi.gulu.community.dto.GithubUser;
 import wanzhi.gulu.community.exception.CustomizeErrorCode;
 import wanzhi.gulu.community.exception.CustomizeException;
-import wanzhi.gulu.community.mapper.UserMapper;
 import wanzhi.gulu.community.model.User;
 import wanzhi.gulu.community.provider.GithubProvider;
 import wanzhi.gulu.community.service.UserService;

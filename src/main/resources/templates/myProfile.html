@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" href="../static/css/bootstrap-theme.min.css" th:href="@{/css/bootstrap-theme.min.css}">
     <link rel="stylesheet" href="../static/css/profile.css" th:href="@{/css/profile.css}">
+    <script src="../static/js/myProfile.js" th:src="@{/js/myProfile.js}"></script>
 </head>
 <body>
 <div th:insert="~{navigation :: nav}"></div>
@@ -48,7 +49,7 @@
                         <br>
                         <h4>email：</h4>
                         <span class="notBound" th:if="${session.user.email==null}">未绑定</span>
-                        <a href="#" class="toBound" th:if="${session.user.email==null}">去绑定</a>
+                        <a onclick="bindingEmail()" href="#" class="toBound" th:if="${session.user.email==null}">去绑定</a>
                         <span class="notBound" th:if="${session.user.email!=null}" th:text="${session.user.email}">未绑定</span>
                         <br>
                         <h4>密 码：</h4>
