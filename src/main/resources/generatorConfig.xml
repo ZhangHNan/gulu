@@ -66,5 +66,11 @@
         <table tableName="report" domainObjectName="Report" >
         </table>
 
+        <table tableName="report_deal" domainObjectName="ReportDeal" >
+        </table>
+
+        <table tableName="appeal" domainObjectName="Appeal" >
+        </table>
+
     </context>
 </generatorConfiguration>

@@ -192,7 +192,7 @@
                     <h3>发起人</h3>
                     <img class="media-object img-rounded img-avatar" th:src="${questionDTO.user.avatarUrl}"
                          src="../static/img/9150e4e5gy1gab4a9xjurj205h04wdfr.jpg">
-                    <span th:text="${questionDTO.user.name}">黎明</span>
+                    <a th:href="'/user?id='+${questionDTO.user.id}" class="author"><span th:text="${questionDTO.user.name}">黎明</span></a>
                 </div>
                 <hr>
                 <div id="related">
