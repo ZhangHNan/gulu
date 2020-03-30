@@ -81,6 +81,73 @@
                       th:data-id="${questionDTO.id}"
                       th:id="'star-'+${questionDTO.id}" onclick="star(this)"></span>
                 <span th:text="${questionDTO.starCount}" class="ICount" th:id="'starCount-'+${questionDTO.id}">11</span>
+
+                <!-- Button trigger modal -->
+                <a class="btn-report" data-toggle="modal" data-target="#questionModal">
+                    举报
+                </a>
+
+                <!-- 模态框 -->
+                <div class="modal fade" id="questionModal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h2 class="modal-title">请选择举报类型及填写举报原因</h2>
+                            </div>
+                            <form action="/report" method="post">
+                                <div class="modal-body">
+                                    <input type="hidden" name="targetId" th:value="${questionDTO.id}">
+                                    <input type="hidden" name="targetType" value="1">
+                                    <h3>选择举报的类型：</h3>
+                                    <div class="choose-row">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="reportType" value="内容与题目不符"> 内容与题目不符
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="reportType" value="标题夸张"> 标题夸张
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="reportType" value="标签与内容不符"> 标签与内容不符
+                                        </label>
+                                    </div>
+                                    <div class="choose-row">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="reportType" value="内容不属实"> 内容不属实
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="reportType" value="内容低俗"> 内容低俗
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="reportType" value="内容有欺骗性"> 内容有欺骗性
+                                        </label>
+                                    </div>
+                                    <div class="choose-row">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="reportType" value="广告传销"> 广告传销
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="reportType" value="内容违规"> 内容违规
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="reportType" value="垃圾内容"> 垃圾内容
+                                        </label>
+                                    </div>
+                                    <h3>填写举报的原因：</h3>
+                                    <div class="reason-row">
+                                        <textarea class="form-control" rows="4" name="reportReason" placeholder="请输入举报原因..."></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                    <button type="submit" class="btn btn-primary">提交</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
                 <!--回复数部分-->
                 <h4 class="comments-replyCount">
                     <span th:text="${questionDTO.commentCount}">0</span> 个回复
@@ -110,6 +177,62 @@
                                   th:data-id="${commentDTO.id}"
                                   th:id="'comTread-'+${commentDTO.id}" onclick="commentTread(this)"></span>
                             <span th:text="${commentDTO.treadCount}" class="ICount" th:id="'comTreCount-'+${commentDTO.id}">11</span>
+
+                            <!--举报-->
+                            <!-- Button trigger modal -->
+                            <a class="btn-report" data-toggle="modal" th:data-target="'#commentModal-'+${commentDTO.id}">
+                                举报
+                            </a>
+
+                            <!-- 模态框 -->
+                            <div class="modal fade" th:id="'commentModal-'+${commentDTO.id}" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h2 class="modal-title">请选择举报类型及填写举报原因</h2>
+                                        </div>
+                                        <form action="/report" method="post">
+                                            <div class="modal-body">
+                                                <input type="hidden" name="targetId" th:value="${commentDTO.id}">
+                                                <input type="hidden" name="targetType" value="2">
+                                                <h3>选择举报的类型：</h3>
+                                                <div class="choose-row">
+                                                    <label class="checkbox-inline">
+                                                        <input type="checkbox" name="reportType" value="恶意中伤"> 恶意中伤
+                                                    </label>
+                                                    <label class="checkbox-inline">
+                                                        <input type="checkbox" name="reportType" value="言语攻击"> 言语攻击
+                                                    </label>
+                                                    <label class="checkbox-inline">
+                                                        <input type="checkbox" name="reportType" value="传播谣言"> 传播谣言
+                                                    </label>
+                                                </div>
+                                                <div class="choose-row">
+                                                    <label class="checkbox-inline">
+                                                        <input type="checkbox" name="reportType" value="广告欺诈"> 广告欺诈
+                                                    </label>
+                                                    <label class="checkbox-inline">
+                                                        <input type="checkbox" name="reportType" value="违法言论"> 违法言论
+                                                    </label>
+                                                    <label class="checkbox-inline">
+                                                        <input type="checkbox" name="reportType" value="垃圾评论"> 垃圾评论
+                                                    </label>
+                                                </div>
+                                                <h3>填写举报的原因：</h3>
+                                                <div class="reason-row">
+                                                    <textarea class="form-control" rows="4" name="reportReason" placeholder="请输入举报原因..."></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                <button type="submit" class="btn btn-primary">提交</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
 
                             <span class="glyphicon glyphicon-comment icon" th:data-id="${commentDTO.id}" onclick="collapseComments(this)"></span>
                             <span class="commentCount" th:text="${commentDTO.commentCount}">11</span>

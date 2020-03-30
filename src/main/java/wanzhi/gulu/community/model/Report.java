@@ -224,4 +224,17 @@ public class Report {
     public void setGmtCreate(Long gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
+
+    @Override
+    public String toString() {
+        return "Report{" +
+                "id=" + id +
+                ", targetId=" + targetId +
+                ", targetType=" + targetType +
+                ", reportType='" + reportType + '\'' +
+                ", reportReason='" + reportReason + '\'' +
+                ", reporter=" + reporter +
+                ", gmtCreate=" + gmtCreate +
+                '}';
+    }
 }

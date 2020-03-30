@@ -127,3 +127,31 @@ body{
 .star-active{
     color: orangered;
 }
+/*#report_form{*/
+    /**/
+    /*z-index: -1;*/
+/*}*/
+.red_block{
+    width: 100px;
+    height: 100px;
+    margin: 80px;
+    background-color: red;
+}
+.btn-report{
+    color: #999;
+}
+.btn-report:hover{
+    text-decoration: none;
+}
+.choose-row{
+    padding-left: 80px;
+}
+.checkbox-inline{
+    width: 28%;
+}
+.comment-menu .fade *{
+    color: black;
+}
+.modal-footer .btn-primary{
+    color: white;
+}
