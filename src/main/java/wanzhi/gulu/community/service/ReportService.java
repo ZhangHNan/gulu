@@ -45,7 +45,7 @@ public class ReportService {
     }
 
     @Transactional
-    private void CreateOrUpdateDeal(Long targetId, Integer targetType) {
+    void CreateOrUpdateDeal(Long targetId, Integer targetType) {
         ReportDealExample example = new ReportDealExample();
         example.createCriteria()
                 .andTargetIdEqualTo(targetId)

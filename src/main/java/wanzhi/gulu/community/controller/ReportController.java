@@ -31,4 +31,6 @@ public class ReportController {
         reportService.createReport(report);
         return "redirect:index";
     }
+
+
 }
