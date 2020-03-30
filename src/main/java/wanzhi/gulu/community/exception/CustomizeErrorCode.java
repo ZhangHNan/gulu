@@ -23,6 +23,7 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     GITHUB_ALREADY_BINDING(4000,"用户已绑定github账号"),
     ACCOUNTID_IS_EXIST(4100,"该github账户已绑定，不可再绑定！"),
     PHONE_NOT_BINDING(4444,"未绑定手机号，请先绑定手机号！"),
+    HAS_REPORT(4444,"您已经举报过了，不能重复举报！"),
     ;//这里定义的枚举是为了给下面构造函数中传入message准备的
 
     private String message;

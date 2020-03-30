@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wanzhi.gulu.community.mapper.ReportDealExtMapper">
+  <resultMap id="BaseResultMap" type="wanzhi.gulu.community.model.ReportDeal">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="target_id" jdbcType="BIGINT" property="targetId" />
+    <result column="target_type" jdbcType="INTEGER" property="targetType" />
+    <result column="report_count" jdbcType="BIGINT" property="reportCount" />
+    <result column="latest_count" jdbcType="BIGINT" property="latestCount" />
+    <result column="ban_count" jdbcType="BIGINT" property="banCount" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="gmt_deal" jdbcType="BIGINT" property="gmtDeal" />
+    <result column="deal_result" jdbcType="VARCHAR" property="dealResult" />
+  </resultMap>
+  <update id="incReportCount" parameterType="wanzhi.gulu.community.dto.CountDTO" >
+    update report_deal
+    set report_count = report_count + #{count,jdbcType=BIGINT}
+    where id = #{id}
+  </update>
+  <update id="redReportCount" parameterType="wanzhi.gulu.community.dto.CountDTO" >
+    update report_deal
+    set report_count = report_count - #{count,jdbcType=BIGINT}
+    where id = #{id}
+  </update>
+  <update id="incLatestCount" parameterType="wanzhi.gulu.community.dto.CountDTO" >
+    update report_deal
+    set latest_count = latest_count + #{count,jdbcType=BIGINT}
+    where id = #{id}
+  </update>
+  <update id="redLatestCount" parameterType="wanzhi.gulu.community.dto.CountDTO" >
+    update report_deal
+    set latest_count = latest_count - #{count,jdbcType=BIGINT}
+    where id = #{id}
+  </update>
+  <update id="incBanCount" parameterType="wanzhi.gulu.community.dto.CountDTO" >
+    update report_deal
+    set ban_count = ban_count + #{count,jdbcType=BIGINT}
+    where id = #{id}
+  </update>
+  <update id="redBanCount" parameterType="wanzhi.gulu.community.dto.CountDTO" >
+    update report_deal
+    set ban_count = ban_count - #{count,jdbcType=BIGINT}
+    where id = #{id}
+  </update>
+</mapper>
