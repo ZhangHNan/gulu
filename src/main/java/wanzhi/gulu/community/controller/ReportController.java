@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import wanzhi.gulu.community.dto.BanCreateDTO;
 import wanzhi.gulu.community.dto.PageDTO;
 import wanzhi.gulu.community.exception.CustomizeErrorCode;
 import wanzhi.gulu.community.exception.CustomizeException;
@@ -47,8 +48,23 @@ public class ReportController {
         }
         PageDTO pageDTO =reportService.findDealPage(currentPage);
         model.addAttribute("pageDTO",pageDTO);
-        System.out.println(pageDTO);
         return "reportManagement";
+    }
+
+    @GetMapping("/cancelDeal")
+    public String cancelDeal(@RequestParam("id") Long id){
+        //驳回 :举报不成功 latest_count 清零，status置0
+        System.out.println(id);
+        return "redirect:/dealManage";
+    }
+
+    @PostMapping("/banDeal")
+    public String banDeal(BanCreateDTO banCreateDTO){
+
+        //banCount=2 永久封禁 status=4
+        //封禁 :举报成功，latest_count清零，status置2，banCount+1，增加处理时间，处理结果
+        System.out.println(banCreateDTO);
+        return "redirect:/dealManage";
     }
 
 }

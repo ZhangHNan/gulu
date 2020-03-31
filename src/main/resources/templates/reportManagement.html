@@ -42,8 +42,8 @@
                             <td th:text="${reportDealDTO.reportCount}">3次</td>
                             <td th:text="${reportDealDTO.banCount}">1次</td>
                             <td>
-                                <a th:href="@{/reportDeal(id=${reportDealDTO.id},deal=1)}">驳回</a>
-                                <a th:href="@{/reportDeal(id=${reportDealDTO.id},deal=2)}">封禁</a>
+                                <a th:href="@{/cancelDeal(id=${reportDealDTO.id})}">驳回</a>
+                                <a th:data-target="'#banModal-'+${reportDealDTO.id}" class="btn-report" data-toggle="modal">封禁</a>
                             </td>
                         </tr>
                     </table>
@@ -59,6 +59,31 @@
                                     </div>
                                     <form action="/report" method="post">
                                         <div class="modal-body" th:text="${reportDealDTO.content}">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 举报成功后模态框 -->
+                        <div class="modal fade" th:id="'banModal-'+${reportDealDTO.id}" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h2 class="modal-title">确认处罚</h2>
+                                    </div>
+                                    <form th:action="@{/banDeal(id=${reportDealDTO.id})}" method="post">
+                                        <div class="modal-body">
+                                            <input type="hidden" name="id" th:value="${reportDealDTO.id}">
+                                            <h3>填写举报的处理结果及原因：</h3>
+                                            <div class="reason-row">
+                                                <textarea class="form-control" rows="4" name="reportResult" placeholder="请输入封禁理由...">已封禁。</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                            <button type="submit" class="btn btn-primary">提交</button>
                                         </div>
                                     </form>
                                 </div>
