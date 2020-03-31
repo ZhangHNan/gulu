@@ -29,4 +29,11 @@ public class ReportUtils {
         countDTO.setCount(incCount);
         reportDealExtMapper.incLatestCount(countDTO);
     }
+
+    public void incDealBanCount(Long id, long incCount) {
+        CountDTO countDTO = new CountDTO();
+        countDTO.setId(id);
+        countDTO.setCount(incCount);
+        reportDealExtMapper.incBanCount(countDTO);
+    }
 }

@@ -52,19 +52,35 @@ public class ReportController {
     }
 
     @GetMapping("/cancelDeal")
-    public String cancelDeal(@RequestParam("id") Long id){
-        //驳回 :举报不成功 latest_count 清零，status置0
-        System.out.println(id);
+    public String cancelDeal(@RequestParam("id") Long id,
+                             HttpServletRequest request){
+        User loginUser = (User)request.getSession().getAttribute("user");
+        if (loginUser == null){
+            //如果未登录
+            throw new CustomizeException(CustomizeErrorCode.LOGIN_NOT_FOUND);
+        }
+        //驳回 :举报不成功 latest_count 清零，status置0，设置处理时间，设置处理结果：驳回
+        reportService.cancelReport(id);
         return "redirect:/dealManage";
     }
 
     @PostMapping("/banDeal")
-    public String banDeal(BanCreateDTO banCreateDTO){
+    public String banDeal(BanCreateDTO banCreateDTO,
+                          HttpServletRequest request){
 
-        //banCount=2 永久封禁 status=4
-        //封禁 :举报成功，latest_count清零，status置2，banCount+1，增加处理时间，处理结果
-        System.out.println(banCreateDTO);
-        return "redirect:/dealManage";
+        User loginUser = (User)request.getSession().getAttribute("user");
+        if (loginUser == null){
+            //如果未登录
+            throw new CustomizeException(CustomizeErrorCode.LOGIN_NOT_FOUND);
+        }
+        //banCount=2 永久封禁 status=4 || 评论 删除 status=4 处理结果设置为永久封禁
+        if (banCreateDTO.getBanCount()>=2||banCreateDTO.getType()==2){
+            reportService.foreverBan(banCreateDTO.getId(),banCreateDTO.getType());
+            return "redirect:/dealManage";
+        }else{
+            //封禁 :举报成功，latest_count清零，status置2，banCount+1，增加处理时间，处理结果，问题设置为ban状态，评论直接删除，创建申诉表
+            reportService.ban(banCreateDTO.getId(),banCreateDTO.getReportResult());
+            return "redirect:/dealManage";
+        }
     }
-
 }
