@@ -48,6 +48,9 @@ public class PageUtils {
     @Autowired
     ReportMapper reportMapper;
 
+    @Autowired
+    AppealMapper appealMapper;
+
     //编写自动构建PageDTO的步骤
     private PageDTO autoStructurePageDTO(int currentPage, int rows, int buttonCount) {
         //查询数据总数TotalCount
@@ -498,4 +501,46 @@ public class PageUtils {
     }
 
 
+    public PageDTO autoStructureMyAppealPageDTOByLoginId(Integer currentPage, Integer rows, Integer buttonCount, Long loginId) {
+        PageDTO pageDTO;
+        //查询总数TotalCount
+        Integer totalCount = selectMyAppealDTOTotalCountByLoginId(loginId);
+        //构建分页模型
+        pageDTO = autoStructurePageModel(currentPage, rows, buttonCount, totalCount);
+        //补充分页数据
+        pageDTO = injectMyAppealDTODataSByLoginId(pageDTO,loginId);
+        return pageDTO;
+    }
+
+    private Integer selectMyAppealDTOTotalCountByLoginId(Long loginId) {
+        AppealExample example = new AppealExample();
+        example.createCriteria()
+                .andUserIdEqualTo(loginId);
+        return appealMapper.countByExample(example);
+    }
+
+    private PageDTO injectMyAppealDTODataSByLoginId(PageDTO pageDTO,Long loginId) {
+        AppealExample example = new AppealExample();
+        example.createCriteria()
+                .andUserIdEqualTo(loginId);
+        List<Appeal> appeals = appealMapper.selectByExample(example);
+        List<AppealDTO> appealDTOS = appeals.stream()
+                .map(a -> {
+                    AppealDTO appealDTO = new AppealDTO();
+                    BeanUtils.copyProperties(a, appealDTO);
+                    ReportDeal reportDeal = reportDealMapper.selectByPrimaryKey(a.getDealId());
+                    appealDTO.setDeal(reportDeal);
+                    Question question = questionMapper.selectByPrimaryKey(a.getQuestionId());
+                    if (question.getTitle().length() > 10) {
+                        String substring = question.getTitle().substring(0, 9);
+                        String titleShort = substring + "...";
+                        appealDTO.setTitleShort(titleShort);
+                    } else {
+                        appealDTO.setTitleShort(question.getTitle());
+                    }
+                    return appealDTO;
+                }).collect(Collectors.toList());
+        pageDTO.setDataS(appealDTOS);
+        return pageDTO;
+    }
 }

@@ -32,8 +32,8 @@
                             <th> 申 诉 </th>
                         </tr>
                         <tr th:each="appealDTO:${pageDTO.dataS}">
-                            <td><a th:href="'/question/'+${appealDTO.deal.targetId}" th:text="${appealDTO.titleShort}">测试</a></td>
-                            <td th:text="${appealDTO.deal.reason}">封禁理由</td>
+                            <td><a th:href="'/question/'+${appealDTO.questionId}" th:text="${appealDTO.titleShort}">测试</a></td>
+                            <td th:text="${appealDTO.deal.dealResult}">封禁理由</td>
                             <td th:text="${appealDTO.deal.reportCount}">3次</td>
                             <td th:text="${appealDTO.deal.banCount}">1次</td>
                             <td>

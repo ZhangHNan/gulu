@@ -133,6 +133,8 @@ public class ReportService {
         //创建申诉表
         Appeal appeal = new Appeal();
         appeal.setDealId(id);
+        appeal.setQuestionId(question.getId());
+        appeal.setUserId(question.getCreator());
         appeal.setGmtCreate(System.currentTimeMillis());
         appeal.setStatus(1);
         appealMapper.insert(appeal);
