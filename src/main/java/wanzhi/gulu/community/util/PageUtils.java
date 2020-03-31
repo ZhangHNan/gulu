@@ -42,6 +42,12 @@ public class PageUtils {
     @Autowired
     WatchMapper watchMapper;
 
+    @Autowired
+    ReportDealMapper reportDealMapper;
+
+    @Autowired
+    ReportMapper reportMapper;
+
     //编写自动构建PageDTO的步骤
     private PageDTO autoStructurePageDTO(int currentPage, int rows, int buttonCount) {
         //查询数据总数TotalCount
@@ -427,4 +433,69 @@ public class PageUtils {
         pageDTO.setDataS(collects);
         return pageDTO;
     }
+
+    public PageDTO autoStructureDealPageDTO(Integer currentPage, Integer rows, Integer buttonCount) {
+        PageDTO pageDTO;
+        //查询总数TotalCount
+        Integer totalCount = selectDealDTOTotalCountByStatus();
+        //构建分页模型
+        pageDTO = autoStructurePageModel(currentPage, rows, buttonCount, totalCount);
+        //补充分页数据
+        pageDTO = injectDealDTODataSByStatus(pageDTO);
+        return pageDTO;
+    }
+
+    private Integer selectDealDTOTotalCountByStatus() {
+        ReportDealExample example = new ReportDealExample();
+        example.createCriteria()
+                .andStatusEqualTo(1);
+        return reportDealMapper.countByExample(example);
+    }
+
+    private PageDTO injectDealDTODataSByStatus(PageDTO pageDTO) {
+        ReportDealExample example = new ReportDealExample();
+        example.createCriteria()
+                .andStatusEqualTo(1);
+        example.setOrderByClause("latest_count desc");
+        List<ReportDeal> reportDeals = reportDealMapper.selectByExample(example);
+        List<ReportDealDTO> reportDealDTOS = reportDeals.stream().map(deal -> {
+            ReportDealDTO reportDealDTO = new ReportDealDTO();
+            BeanUtils.copyProperties(deal, reportDealDTO);
+            if (reportDealDTO.getTargetType()==1){
+                //帖子
+                Question question = questionMapper.selectByPrimaryKey(deal.getTargetId());
+                reportDealDTO.setTitle(question.getTitle());
+                if (question.getTitle().length()>10){
+                    String substring = question.getTitle().substring(0, 9);
+                    String titleShort = substring + "...";
+                    reportDealDTO.setTitleShort(titleShort);
+                }else{
+                    reportDealDTO.setTitleShort(question.getTitle());
+                }
+            }else{
+                //评论
+                Comment comment = commentMapper.selectByPrimaryKey(deal.getTargetId());
+                reportDealDTO.setContent(comment.getContent());
+                if (comment.getContent().length()>10){
+                    String substring = comment.getContent().substring(0, 9);
+                    String titleShort = substring + "...";
+                    reportDealDTO.setTitleShort(titleShort);
+                }else{
+                    reportDealDTO.setTitleShort(comment.getContent());
+                }
+            }
+            ReportExample reportExample = new ReportExample();
+            reportExample.createCriteria()
+                    .andTargetIdEqualTo(deal.getTargetId())
+                    .andTargetTypeEqualTo(deal.getTargetType());
+            reportExample.setOrderByClause("gmt_create desc");
+            List<Report> reports = reportMapper.selectByExample(reportExample);
+            reportDealDTO.setReports(reports);
+            return reportDealDTO;
+        }).collect(Collectors.toList());
+        pageDTO.setDataS(reportDealDTOS);
+        return pageDTO;
+    }
+
+
 }

@@ -33,19 +33,98 @@
                             <th>被封禁次数</th>
                             <th> 处 理 </th>
                         </tr>
-                        <tr>
-                            <td>评论</td>
-                            <td><a href="">查看详细报表（模态框）</a></td>
-                            <td><a href="">链接/模态框...</a></td>
-                            <td>1次</td>
-                            <td>3次</td>
-                            <td>1次</td>
+                        <tr th:each="reportDealDTO:${pageDTO.dataS}">
+                            <td th:text="${reportDealDTO.targetType==1?'帖子':'评论'}">评论</td>
+                            <td><a th:data-target="'#reportModal-'+${reportDealDTO.id}" class="btn-report" data-toggle="modal" data-target="#testa">查看详细报表</a></td>
+                            <td th:if="${reportDealDTO.targetType==1}"><a th:href="'/question/'+${reportDealDTO.targetId}" th:text="${reportDealDTO.titleShort}" class="btn-report">链接/模态框...</a></td>
+                            <td th:if="${reportDealDTO.targetType==2}"><a th:data-target="'#commentContentModal-'+${reportDealDTO.id}" th:text="${reportDealDTO.titleShort}" class="btn-report" data-toggle="modal" data-target="#test">链接/模态框...</a></td>
+                            <td th:text="${reportDealDTO.latestCount}">1次</td>
+                            <td th:text="${reportDealDTO.reportCount}">3次</td>
+                            <td th:text="${reportDealDTO.banCount}">1次</td>
                             <td>
-                                <a href="">驳回</a>
-                                <a href="">封禁</a>
+                                <a th:href="@{/reportDeal(id=${reportDealDTO.id},deal=1)}">驳回</a>
+                                <a th:href="@{/reportDeal(id=${reportDealDTO.id},deal=2)}">封禁</a>
                             </td>
                         </tr>
                     </table>
+
+                    <div th:each="reportDealDTO:${pageDTO.dataS}">
+                        <!-- 评论详情模态框 -->
+                        <div th:if="${reportDealDTO.targetType==2}" class="modal fade" id="testa" th:id="'commentContentModal-'+${reportDealDTO.id}" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h2 class="modal-title">评论详细信息</h2>
+                                    </div>
+                                    <form action="/report" method="post">
+                                        <div class="modal-body" th:text="${reportDealDTO.content}">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 举报详情模态框 -->
+                        <div class="modal fade" id="test" th:id="'reportModal-'+${reportDealDTO.id}" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h2 class="modal-title">详细举报信息</h2>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th>处理的类型</th>
+                                                <th>举报目标</th>
+                                                <th>举报类型</th>
+                                                <th>举报理由</th>
+                                                <th>举报人Id</th>
+                                                <th>举报时间</th>
+                                            </tr>
+                                            <tr th:each="report:${reportDealDTO.reports}">
+                                                <td th:text="${report.targetType==1?'帖子':'评论'}">测试</td>
+                                                <td th:text="${reportDealDTO.titleShort}">测试</td>
+                                                <td th:text="${report.reportType}">测试</td>
+                                                <td th:text="${report.reportReason}">测试</td>
+                                                <td th:text="${report.reporter}">测试</td>
+                                                <td th:text="${report.gmtCreate}">测试</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--分页按钮-->
+                    <nav>
+                        <ul class="pagination">
+                            <li th:if="${pageDTO.showFirst==true}">
+                                <a th:href="@{/dealManage(currentPage='1')}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li th:if="${pageDTO.showLast==true}">
+                                <a th:href="@{/dealManage(currentPage=${pageDTO.currentPage}-1,)}" aria-label="Previous">
+                                    <span aria-hidden="true">&lt;</span>
+                                </a>
+                            </li>
+                            <li th:each="showButton:${pageDTO.showButtons}" th:class="${pageDTO.currentPage==showButton?'active':''}">
+                                <a th:href="@{/dealManage(currentPage=${showButton})}" th:text="${showButton}"></a>
+                            </li>
+                            <li th:if="${pageDTO.showNext==true}">
+                                <a th:href="@{/dealManage(currentPage=${pageDTO.currentPage+1})}" aria-label="Previous">
+                                    <span aria-hidden="true">&gt;</span>
+                                </a>
+                            </li>
+                            <li th:if="${pageDTO.showEnd==true}">
+                                <a th:href="@{/dealManage(currentPage=${pageDTO.totalPage})}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
             <div class="col-lg-3 col-md-12 col-xs-12 right-bar">
