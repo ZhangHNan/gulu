@@ -31,75 +31,67 @@
                             <th>被封禁次数</th>
                             <th> 申 诉 </th>
                         </tr>
-                        <tr th:each="reportDealDTO:${pageDTO.dataS}">
-                            <td th:text="${reportDealDTO.targetType==1?'帖子':'评论'}">评论</td>
-                            <td><a th:data-target="'#reportModal-'+${reportDealDTO.id}" class="btn-report" data-toggle="modal" data-target="#testa">查看详细报表</a></td>
-                            <td th:if="${reportDealDTO.targetType==1}"><a th:href="'/question/'+${reportDealDTO.targetId}" th:text="${reportDealDTO.titleShort}" class="btn-report">链接/模态框...</a></td>
-                            <td th:if="${reportDealDTO.targetType==2}"><a th:data-target="'#commentContentModal-'+${reportDealDTO.id}" th:text="${reportDealDTO.titleShort}" class="btn-report" data-toggle="modal" data-target="#test">链接/模态框...</a></td>
-                            <td th:text="${reportDealDTO.latestCount}">1次</td>
-                            <td th:text="${reportDealDTO.reportCount}">3次</td>
-                            <td th:text="${reportDealDTO.banCount}">1次</td>
+                        <tr th:each="appealDTO:${pageDTO.dataS}">
+                            <td><a th:href="'/question/'+${appealDTO.deal.targetId}" th:text="${appealDTO.titleShort}">测试</a></td>
+                            <td th:text="${appealDTO.deal.reason}">封禁理由</td>
+                            <td th:text="${appealDTO.deal.reportCount}">3次</td>
+                            <td th:text="${appealDTO.deal.banCount}">1次</td>
                             <td>
-                                <a th:href="@{/cancelDeal(id=${reportDealDTO.id})}">放弃</a>
-                                <a th:data-target="'#banModal-'+${reportDealDTO.id}" class="btn-report" data-toggle="modal">申诉</a>
+                                <a th:href="@{/cancelApp(id=${appealDTO.id})}">放弃</a>
+                                <a th:data-target="'#appealModal-'+${appealDTO.id}" class="btn-report" data-toggle="modal" data-target="#test">申诉</a>
                             </td>
                         </tr>
                     </table>
 
-                    <!-- 举报成功后模态框 -->
-                    <div class="modal fade" th:id="'banModal-'+${reportDealDTO.id}" tabindex="-1" role="dialog">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h2 class="modal-title">确认处罚</h2>
-                                </div>
-                                <form th:action="@{/banDeal(id=${reportDealDTO.id})}" method="post">
-                                    <div class="modal-body">
-                                        <input type="hidden" name="id" th:value="${reportDealDTO.id}">
-                                        <input type="hidden" name="type" th:value="${reportDealDTO.targetType}">
-                                        <input type="hidden" name="banCount" th:value="${reportDealDTO.banCount}">
-                                        <h3>填写举报的处理结果及原因：</h3>
-                                        <div class="reason-row">
-                                            <textarea class="form-control" rows="4" name="reportResult" placeholder="请输入封禁理由...">已封禁。</textarea>
+                    <!-- 申诉模态框 -->
+                    <div th:each="appealDTO:${pageDTO.dataS}">
+                        <div class="modal fade" th:id="'appealModal-'+${appealDTO.id}" id="test" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h2 class="modal-title">整改申诉</h2>
+                                    </div>
+                                    <form th:action="@{/appeal(id=${appealDTO.id})}" method="post">
+                                        <div class="modal-body">
+                                            <h3>填写申诉的理由或整改检讨：</h3>
+                                            <div class="reason-row">
+                                                <textarea class="form-control" rows="4" name="appealReason" placeholder="请输入封禁理由...">已整改。</textarea>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                        <button type="submit" class="btn btn-primary">提交</button>
-                                    </div>
-                                </form>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                            <button type="submit" class="btn btn-primary">提交</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-
-
-
 
                     <!--分页按钮-->
                     <nav>
                         <ul class="pagination">
                             <li th:if="${pageDTO.showFirst==true}">
-                                <a th:href="@{/dealManage(currentPage='1')}" aria-label="Previous">
+                                <a th:href="@{/myAppeal(currentPage='1')}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
                             <li th:if="${pageDTO.showLast==true}">
-                                <a th:href="@{/dealManage(currentPage=${pageDTO.currentPage}-1,)}" aria-label="Previous">
+                                <a th:href="@{/myAppeal(currentPage=${pageDTO.currentPage}-1,)}" aria-label="Previous">
                                     <span aria-hidden="true">&lt;</span>
                                 </a>
                             </li>
                             <li th:each="showButton:${pageDTO.showButtons}" th:class="${pageDTO.currentPage==showButton?'active':''}">
-                                <a th:href="@{/dealManage(currentPage=${showButton})}" th:text="${showButton}"></a>
+                                <a th:href="@{/myAppeal(currentPage=${showButton})}" th:text="${showButton}"></a>
                             </li>
                             <li th:if="${pageDTO.showNext==true}">
-                                <a th:href="@{/dealManage(currentPage=${pageDTO.currentPage+1})}" aria-label="Previous">
+                                <a th:href="@{/myAppeal(currentPage=${pageDTO.currentPage+1})}" aria-label="Previous">
                                     <span aria-hidden="true">&gt;</span>
                                 </a>
                             </li>
                             <li th:if="${pageDTO.showEnd==true}">
-                                <a th:href="@{/dealManage(currentPage=${pageDTO.totalPage})}" aria-label="Next">
+                                <a th:href="@{/myAppeal(currentPage=${pageDTO.totalPage})}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
