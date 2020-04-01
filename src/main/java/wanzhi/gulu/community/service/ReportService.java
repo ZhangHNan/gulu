@@ -179,4 +179,17 @@ public class ReportService {
             }
         }
     }
+
+    public void passAppeal(Long appealId) {
+        Appeal appeal = appealMapper.selectByPrimaryKey(appealId);
+        ReportDeal reportDeal = reportDealMapper.selectByPrimaryKey(appeal.getDealId());
+        reportDeal.setLatestCount(0L);
+        reportDeal.setStatus(0);
+        reportDeal.setGmtDeal(System.currentTimeMillis());
+        reportDeal.setDealResult("申诉成功");
+        ReportDealExample example = new ReportDealExample();
+        example.createCriteria()
+                .andIdEqualTo(reportDeal.getId());
+        reportDealMapper.updateByExample(reportDeal, example);
+    }
 }

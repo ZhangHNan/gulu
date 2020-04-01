@@ -37,7 +37,7 @@
                             <td th:text="${appealDTO.deal.reportCount}">3次</td>
                             <td th:text="${appealDTO.deal.banCount}">1次</td>
                             <td>
-                                <a th:href="@{/cancelApp(id=${appealDTO.id})}">放弃</a>
+                                <a th:href="@{/cancelAppeal(id=${appealDTO.id})}">放弃</a>
                                 <a th:data-target="'#appealModal-'+${appealDTO.id}" class="btn-report" data-toggle="modal" data-target="#test">申诉</a>
                             </td>
                         </tr>
@@ -54,6 +54,7 @@
                                     </div>
                                     <form th:action="@{/appeal(id=${appealDTO.id})}" method="post">
                                         <div class="modal-body">
+                                            <input type="hidden" name="id" th:value="${appealDTO.id}">
                                             <h3>填写申诉的理由或整改检讨：</h3>
                                             <div class="reason-row">
                                                 <textarea class="form-control" rows="4" name="appealReason" placeholder="请输入封禁理由...">已整改。</textarea>

@@ -11,12 +11,8 @@ import wanzhi.gulu.community.dto.QuestionDTO;
 import wanzhi.gulu.community.enums.PraiseTypeEnum;
 import wanzhi.gulu.community.exception.CustomizeErrorCode;
 import wanzhi.gulu.community.exception.CustomizeException;
-import wanzhi.gulu.community.mapper.QuestionExtMapper;
-import wanzhi.gulu.community.mapper.QuestionMapper;
-import wanzhi.gulu.community.mapper.UserMapper;
-import wanzhi.gulu.community.model.Question;
-import wanzhi.gulu.community.model.QuestionExample;
-import wanzhi.gulu.community.model.User;
+import wanzhi.gulu.community.mapper.*;
+import wanzhi.gulu.community.model.*;
 import wanzhi.gulu.community.util.*;
 
 import java.util.ArrayList;
@@ -35,6 +31,9 @@ public class QuestionService {
 
     @Autowired
     QuestionExtMapper questionExtMapper;
+
+    @Autowired
+    AppealMapper appealMapper;
 
     @Autowired
     UserService userService;
@@ -180,5 +179,15 @@ public class QuestionService {
 
     public PageDTO findPageByStar(Integer currentPage, Long id) {
         return pageUtils.autoStructureQuestionPageDTOByStar(currentPage,questionRows,questionButtonCount,id);
+    }
+
+    public void cancelBan(Long appealId) {
+        Appeal appeal = appealMapper.selectByPrimaryKey(appealId);
+        Question question = questionMapper.selectByPrimaryKey(appeal.getQuestionId());
+        question.setBan(0);
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.createCriteria()
+                .andIdEqualTo(appeal.getQuestionId());
+        questionMapper.updateByExample(question, questionExample);
     }
 }

@@ -515,14 +515,16 @@ public class PageUtils {
     private Integer selectMyAppealDTOTotalCountByLoginId(Long loginId) {
         AppealExample example = new AppealExample();
         example.createCriteria()
-                .andUserIdEqualTo(loginId);
+                .andUserIdEqualTo(loginId)
+                .andStatusEqualTo(1);
         return appealMapper.countByExample(example);
     }
 
     private PageDTO injectMyAppealDTODataSByLoginId(PageDTO pageDTO,Long loginId) {
         AppealExample example = new AppealExample();
         example.createCriteria()
-                .andUserIdEqualTo(loginId);
+                .andUserIdEqualTo(loginId)
+                .andStatusEqualTo(1);
         List<Appeal> appeals = appealMapper.selectByExample(example);
         List<AppealDTO> appealDTOS = appeals.stream()
                 .map(a -> {
@@ -538,6 +540,55 @@ public class PageUtils {
                     } else {
                         appealDTO.setTitleShort(question.getTitle());
                     }
+                    return appealDTO;
+                }).collect(Collectors.toList());
+        pageDTO.setDataS(appealDTOS);
+        return pageDTO;
+    }
+
+    public PageDTO autoStructureAppealDealPageDTOByStatus(Integer currentPage, Integer rows, Integer buttonCount) {
+        PageDTO pageDTO;
+        //查询总数TotalCount
+        Integer totalCount = selectAppealDTOTotalCountByStatus();
+        //构建分页模型
+        pageDTO = autoStructurePageModel(currentPage, rows, buttonCount, totalCount);
+        //补充分页数据
+        pageDTO = injectAppealDTODataSByStatus(pageDTO);
+        return pageDTO;
+    }
+
+    private Integer selectAppealDTOTotalCountByStatus() {
+        AppealExample example = new AppealExample();
+        example.createCriteria()
+                .andStatusEqualTo(2);
+        return appealMapper.countByExample(example);
+    }
+
+    private PageDTO injectAppealDTODataSByStatus(PageDTO pageDTO) {
+        AppealExample example = new AppealExample();
+        example.createCriteria()
+                .andStatusEqualTo(2);
+        List<Appeal> appeals = appealMapper.selectByExample(example);
+        List<AppealDTO> appealDTOS = appeals.stream()
+                .map(a -> {
+                    AppealDTO appealDTO = new AppealDTO();
+                    BeanUtils.copyProperties(a, appealDTO);
+                    Question question = questionMapper.selectByPrimaryKey(a.getQuestionId());
+                    if (question.getTitle().length() > 10) {
+                        String substring = question.getTitle().substring(0, 9);
+                        String titleShort = substring + "...";
+                        appealDTO.setTitleShort(titleShort);
+                    } else {
+                        appealDTO.setTitleShort(question.getTitle());
+                    }
+                    ReportDeal reportDeal = reportDealMapper.selectByPrimaryKey(a.getDealId());
+                    appealDTO.setDeal(reportDeal);
+                    ReportExample reportExample = new ReportExample();
+                    reportExample.createCriteria()
+                            .andTargetIdEqualTo(a.getQuestionId())
+                            .andTargetTypeEqualTo(1);
+                    List<Report> reports = reportMapper.selectByExample(reportExample);
+                    appealDTO.setReports(reports);
                     return appealDTO;
                 }).collect(Collectors.toList());
         pageDTO.setDataS(appealDTOS);
