@@ -15,5 +15,5 @@ public class NotificationDTO {
     private Long gmtCreate; //创建时间
     private String typeName; //类型描述，前端要直接显示 xxx 回复了评论/问题 xxx
     private String outerTitle; //哪条评论的content或问题的title
-    private Long commentId; //产生通知的评论id
+    private Long sourceId; //产生通知的评论id
 }

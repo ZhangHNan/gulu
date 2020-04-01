@@ -174,7 +174,7 @@ public class ReportService {
                     //删除通知
                     NotificationExample notificationExample = new NotificationExample();
                     notificationExample.createCriteria()
-                            .andCommentIdEqualTo(c.getId())
+                            .andSourceIdEqualTo(c.getId())
                             .andTypeEqualTo(2);
                     notificationMapper.deleteByExample(notificationExample);
                 }
@@ -182,7 +182,7 @@ public class ReportService {
                 //删除通知
                 NotificationExample notificationExample = new NotificationExample();
                 notificationExample.createCriteria()
-                        .andCommentIdEqualTo(comment.getId())
+                        .andSourceIdEqualTo(comment.getId())
                         .andTypeEqualTo(1);
                 notificationMapper.deleteByExample(notificationExample);
             }else{
@@ -191,7 +191,7 @@ public class ReportService {
                 //删除通知
                 NotificationExample notificationExample = new NotificationExample();
                 notificationExample.createCriteria()
-                        .andCommentIdEqualTo(reportDeal.getTargetId())
+                        .andSourceIdEqualTo(reportDeal.getTargetId())
                         .andTypeEqualTo(2);
                 notificationMapper.deleteByExample(notificationExample);
             }
@@ -216,7 +216,7 @@ public class ReportService {
                         //删除通知
                         NotificationExample notificationExample = new NotificationExample();
                         notificationExample.createCriteria()
-                                .andCommentIdEqualTo(c.getId())
+                                .andSourceIdEqualTo(c.getId())
                                 .andTypeEqualTo(2);
                         notificationMapper.deleteByExample(notificationExample);
                     }
@@ -225,7 +225,7 @@ public class ReportService {
                 //删除通知
                 NotificationExample notificationExample = new NotificationExample();
                 notificationExample.createCriteria()
-                        .andCommentIdEqualTo(com.getId())
+                        .andSourceIdEqualTo(com.getId())
                         .andTypeEqualTo(1);
                 notificationMapper.deleteByExample(notificationExample);
             }

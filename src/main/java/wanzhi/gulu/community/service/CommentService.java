@@ -109,7 +109,7 @@ public class CommentService {
                 .andGmtCreateEqualTo(comment.getGmtCreate());
         List<Comment> comments = commentMapper.selectByExample(example);
         if (comments.size()!=0){
-            notification.setCommentId(comments.get(0).getId());
+            notification.setSourceId(comments.get(0).getId());
         }
         notificationMapper.insert(notification);
     }
