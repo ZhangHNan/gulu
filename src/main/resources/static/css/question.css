@@ -157,3 +157,10 @@ body{
 .modal-footer .btn-primary{
     color: white;
 }
+.authorSpan{
+    font-size: 20px;
+    position: relative;
+    top: 4px;
+}
+.author{
+}

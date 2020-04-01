@@ -30,6 +30,7 @@ body{
 .author{
     color: #333333;
 }
+
 .author:hover{
     color: black;
     text-decoration: none;

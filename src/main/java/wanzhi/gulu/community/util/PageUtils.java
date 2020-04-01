@@ -385,17 +385,13 @@ public class PageUtils {
         {
             //按创建时间排序未做？
             QuestionDTO questionDTO = new QuestionDTO();
-            System.out.println(m);
             Question question = questionMapper.selectByPrimaryKey(m);
-            System.out.println(question);
             BeanUtils.copyProperties(question, questionDTO);
             User user = userMapper.selectByPrimaryKey(question.getCreator());
             questionDTO.setUser(user);
-            System.out.println(questionDTO);
             return questionDTO;
         }).collect(Collectors.toList());
         pageDTO.setDataS(questionDTOS);
-        System.out.println(questionDTOS);
         return pageDTO;
     }
 
