@@ -41,9 +41,18 @@ public class PublishController {
 
     //到发布页面
     @GetMapping("/publish")
-    public String publish(HttpServletRequest request,Model model){
+    public String publish(HttpServletRequest request, Model model) {
         //进入publish时，也要获取cookies中的token数据，根据token查询数据库中有无登录数据
-        model.addAttribute("tags",TagCache.get());
+        User loginUser = (User) request.getSession().getAttribute("user");
+        if (loginUser == null) {
+            //如果未登录
+            throw new CustomizeException(CustomizeErrorCode.LOGIN_NOT_FOUND);
+        }
+        if (loginUser.getPower() != 1 || loginUser.getPower() != 2) {
+            //如果不是管理员
+            throw new CustomizeException(CustomizeErrorCode.NOT_VIP);
+        }
+        model.addAttribute("tags", TagCache.get());
         return "publish";
     }
 
@@ -51,14 +60,22 @@ public class PublishController {
     @GetMapping("/publish/{id}")
     public String edit(@PathVariable("id") long id,
                        HttpServletRequest request,
-                       Model model){
+                       Model model) {
         //判断执行这个请求的是否是本人（登录的人）
-        User sessionUser = (User)request.getSession().getAttribute("user");
+        User loginUser = (User) request.getSession().getAttribute("user");
+        if (loginUser == null) {
+            //如果未登录
+            throw new CustomizeException(CustomizeErrorCode.LOGIN_NOT_FOUND);
+        }
+        if (loginUser.getPower() != 1 || loginUser.getPower() != 2) {
+            //如果不是管理员
+            throw new CustomizeException(CustomizeErrorCode.NOT_VIP);
+        }
 //        Integer creator = questionMapper.findCreatorById(id);
         Question question1 = questionMapper.selectByPrimaryKey(id);
         Long creator = question1.getCreator();
 
-        if(!sessionUser.getId().equals(creator)){
+        if (!loginUser.getId().equals(creator)) {
             //不是本人操作直接抛自定义异常
             throw new CustomizeException(CustomizeErrorCode.PERMISSION_DENIED);
             //如果不是本人操作直接返回首页
@@ -68,11 +85,11 @@ public class PublishController {
 //        QuestionDTO question = questionMapper.findById(id);
         Question question = questionMapper.selectByPrimaryKey(id);
         //用于页面回显
-        model.addAttribute("title",question.getTitle());
-        model.addAttribute("description",question.getDescription());
-        model.addAttribute("tag",question.getTag());
-        model.addAttribute("id",id);
-        model.addAttribute("tags",TagCache.get());
+        model.addAttribute("title", question.getTitle());
+        model.addAttribute("description", question.getDescription());
+        model.addAttribute("tag", question.getTag());
+        model.addAttribute("id", id);
+        model.addAttribute("tags", TagCache.get());
         return "publish";
     }
 
@@ -81,14 +98,22 @@ public class PublishController {
     public String doEdit(Question question,
                          HttpServletRequest request,//用于获取cookies
                          Model model//用于传递信息
-    ){
-        if(question.getId()!=null){//如果是修改操作，需先进行登录校验
+    ) {
+        if (question.getId() != null) {//如果是修改操作，需先进行登录校验
             //判断执行这个请求的是否是本人（登录的人）
-            User sessionUser = (User)request.getSession().getAttribute("user");
+            User loginUser = (User) request.getSession().getAttribute("user");
+            if (loginUser == null) {
+                //如果未登录
+                throw new CustomizeException(CustomizeErrorCode.LOGIN_NOT_FOUND);
+            }
+            if (loginUser.getPower() != 1 || loginUser.getPower() != 2) {
+                //如果不是管理员
+                throw new CustomizeException(CustomizeErrorCode.NOT_VIP);
+            }
 //            Integer creator = questionMapper.findCreatorById(question.getId());
             Question question1 = questionMapper.selectByPrimaryKey(question.getId());
             Long creator = question1.getCreator();
-            if(!sessionUser.getId().equals(creator)){
+            if (!loginUser.getId().equals(creator)) {
                 //不是本人操作直接抛自定义异常
                 throw new CustomizeException(CustomizeErrorCode.PERMISSION_DENIED);
                 //如果不是本人操作直接返回首页
@@ -97,44 +122,44 @@ public class PublishController {
         }
 
         //安全校验通过，执行修改逻辑
-        if (question.getTitle()==null||question.getTitle().equals("")){
-            model.addAttribute("error","标题不能为空");
-            model.addAttribute("title",question.getTitle());
-            model.addAttribute("description",question.getDescription());
-            model.addAttribute("tag",question.getTag());
-            model.addAttribute("id",question.getId());
-            model.addAttribute("tags",TagCache.get());
+        if (question.getTitle() == null || question.getTitle().equals("")) {
+            model.addAttribute("error", "标题不能为空");
+            model.addAttribute("title", question.getTitle());
+            model.addAttribute("description", question.getDescription());
+            model.addAttribute("tag", question.getTag());
+            model.addAttribute("id", question.getId());
+            model.addAttribute("tags", TagCache.get());
             return "publish";
         }
-        if (question.getDescription()==null||question.getDescription().equals("")){
-            model.addAttribute("error","内容不能为空");
-            model.addAttribute("title",question.getTitle());
-            model.addAttribute("description",question.getDescription());
-            model.addAttribute("tag",question.getTag());
-            model.addAttribute("id",question.getId());
-            model.addAttribute("tags",TagCache.get());
+        if (question.getDescription() == null || question.getDescription().equals("")) {
+            model.addAttribute("error", "内容不能为空");
+            model.addAttribute("title", question.getTitle());
+            model.addAttribute("description", question.getDescription());
+            model.addAttribute("tag", question.getTag());
+            model.addAttribute("id", question.getId());
+            model.addAttribute("tags", TagCache.get());
             return "publish";
         }
-        if (question.getTag()==null||question.getTag().equals("")){
-            model.addAttribute("error","标签不能为空");
-            model.addAttribute("title",question.getTitle());
-            model.addAttribute("description",question.getDescription());
-            model.addAttribute("tag",question.getTag());
-            model.addAttribute("id",question.getId());
-            model.addAttribute("tags",TagCache.get());
+        if (question.getTag() == null || question.getTag().equals("")) {
+            model.addAttribute("error", "标签不能为空");
+            model.addAttribute("title", question.getTitle());
+            model.addAttribute("description", question.getDescription());
+            model.addAttribute("tag", question.getTag());
+            model.addAttribute("id", question.getId());
+            model.addAttribute("tags", TagCache.get());
             return "publish";
         }
         String invalid = TagCache.filterInvalid(question.getTag());
-        if(StringUtils.isNotBlank(invalid)){
-            model.addAttribute("error","有非法标签请改正！");
-            model.addAttribute("title",question.getTitle());
-            model.addAttribute("description",question.getDescription());
-            model.addAttribute("tag",question.getTag());
-            model.addAttribute("id",question.getId());
-            model.addAttribute("tags",TagCache.get());
+        if (StringUtils.isNotBlank(invalid)) {
+            model.addAttribute("error", "有非法标签请改正！");
+            model.addAttribute("title", question.getTitle());
+            model.addAttribute("description", question.getDescription());
+            model.addAttribute("tag", question.getTag());
+            model.addAttribute("id", question.getId());
+            model.addAttribute("tags", TagCache.get());
             return "publish";
         }
-        User user=null; //下面要判断这个对象是不是null，此处不能用new User(),这样user就不是null了
+        User user = null; //下面要判断这个对象是不是null，此处不能用new User(),这样user就不是null了
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {//用户关闭浏览器后cookie可能清空，cookies为null执行下面遍历就会出现空指针异常
             for (Cookie cookie : cookies) {
@@ -147,7 +172,7 @@ public class PublishController {
                     userExample.createCriteria()
                             .andTokenEqualTo(token);
                     List<User> users = userMapper.selectByExample(userExample);
-                    if (users.size()!=0){//防止出现用户浏览器未关，服务器就删除数据库的情况下还能正常运行（保证下面user.getId()能返回值）
+                    if (users.size() != 0) {//防止出现用户浏览器未关，服务器就删除数据库的情况下还能正常运行（保证下面user.getId()能返回值）
                         user = users.get(0);
                         question.setId(question.getId());
                         question.setCreator(user.getId());
@@ -157,20 +182,20 @@ public class PublishController {
                 }
             }
         }
-        if(user == null){
-            model.addAttribute("error","用户未登录");
+        if (user == null) {
+            model.addAttribute("error", "用户未登录");
             //未登录时发帖页面的回调
-            model.addAttribute("title",question.getTitle());
-            model.addAttribute("description",question.getDescription());
-            model.addAttribute("tag",question.getTag());
-            model.addAttribute("questionId",question.getId());
-            model.addAttribute("tags",TagCache.get());
+            model.addAttribute("title", question.getTitle());
+            model.addAttribute("description", question.getDescription());
+            model.addAttribute("tag", question.getTag());
+            model.addAttribute("questionId", question.getId());
+            model.addAttribute("tags", TagCache.get());
 //            System.out.println("未登录！");
-            loginCheck.check(cookies,request);
+            loginCheck.check(cookies, request);
 //            System.out.println("question:"+question);
             return "publish";//要使用model传值就不能重定向
         }
-        questionService.updateOrCreate(question,user.getId());
+        questionService.updateOrCreate(question, user.getId());
 //        System.out.println("question:"+question);
         return "redirect:/";
     }
