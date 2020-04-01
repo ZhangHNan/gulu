@@ -155,7 +155,25 @@ public class ReportService {
             //评论
             //删除
             //删除评论，评论对应的帖子的评论数理应减少，但太麻烦了，这里只作评论删除即可
-            commentMapper.deleteByPrimaryKey(reportDeal.getTargetId());
+            //这里还应该判断是一级评论还是二级评论，一级评论删除，还要删除其中的二级评论，二级评论直接删除即可
+//            commentMapper.deleteByPrimaryKey(reportDeal.getTargetId());
+            Comment comment = commentMapper.selectByPrimaryKey(reportDeal.getTargetId());
+            if (comment.getType()==1){
+                //评论帖子的
+                CommentExample commentExample = new CommentExample();
+                commentExample.createCriteria()
+                        .andTargetIdEqualTo(comment.getId())
+                        .andTypeEqualTo(2);
+                List<Comment> comments = commentMapper.selectByExample(commentExample);
+                for (Comment c:comments){
+                    commentMapper.deleteByPrimaryKey(c.getId());
+                }
+                commentMapper.deleteByPrimaryKey(comment.getId());
+            }else{
+                //评论评论的
+                commentMapper.deleteByPrimaryKey(reportDeal.getTargetId());
+            }
+
         }else{
             //帖子 //永久删除 帖子 及其对应的一级评论和二级评论
             questionMapper.deleteByPrimaryKey(reportDeal.getTargetId());

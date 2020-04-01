@@ -83,9 +83,9 @@
                 <span th:text="${questionDTO.starCount}" class="ICount" th:id="'starCount-'+${questionDTO.id}">11</span>
 
                 <!-- Button trigger modal -->
-                <a class="btn-report" data-toggle="modal" data-target="#questionModal">
+                <span class="icon btn-report" data-toggle="modal" data-target="#questionModal">
                     举报
-                </a>
+                </span>
 
                 <!-- 模态框 -->
                 <div class="modal fade" id="questionModal" tabindex="-1" role="dialog">
@@ -180,9 +180,9 @@
 
                             <!--举报-->
                             <!-- Button trigger modal -->
-                            <a class="btn-report" data-toggle="modal" th:data-target="'#commentModal-'+${commentDTO.id}">
+                            <span class="btn-report icon" data-toggle="modal" th:data-target="'#commentModal-'+${commentDTO.id}">
                                 举报
-                            </a>
+                            </span>
 
                             <!-- 模态框 -->
                             <div class="modal fade" th:id="'commentModal-'+${commentDTO.id}" tabindex="-1" role="dialog">
@@ -254,6 +254,19 @@
                                         <!--我是评论内容-->
                                     <!--</div>-->
                                     <!--<div class="comment-menu">-->
+                                        <!--<span class="glyphicon glyphicon-thumbs-up comments-like icon like-active"-->
+                                              <!--th:class="${commentDTO.praiseStatus==0?'glyphicon glyphicon-thumbs-up comments-like icon':'glyphicon glyphicon-thumbs-up comments-like icon like-active'}"-->
+                                              <!--th:data-id="${commentDTO.id}"-->
+                                              <!--th:id="'comPraise-'+${commentDTO.id}" onclick="commentPraise(this)"></span>-->
+                                        <!--<span th:text="${commentDTO.praiseCount}" class="ICount" th:id="'comPraCount-'+${commentDTO.id}">11</span>-->
+                                        <!--<span class="glyphicon glyphicon-thumbs-down comments-like icon like-active"-->
+                                              <!--th:class="${commentDTO.treadStatus==0?'glyphicon glyphicon-thumbs-down comments-like icon':'glyphicon glyphicon-thumbs-down comments-like icon tread-active'}"-->
+                                              <!--th:data-id="${commentDTO.id}"-->
+                                              <!--th:id="'comTread-'+${commentDTO.id}" onclick="commentTread(this)"></span>-->
+                                        <!--<span th:text="${commentDTO.treadCount}" class="ICount" th:id="'comTreCount-'+${commentDTO.id}">11</span>-->
+                                        <!--<span class="btn-report icon" data-toggle="modal" th:data-target="'#commentModal-'+${commentDTO.id}">-->
+                                            <!--举报-->
+                                        <!--</span>-->
                                         <!--<span class="glyphicon glyphicon-thumbs-up comments-like icon"></span>-->
                                         <!--<span class="pull-right comments-data" th:text="${#dates.format(commentDTO.gmtCreate,'yyyy-MM-dd HH:mm')}">2019-06-09</span>-->
                                     <!--</div>-->
@@ -262,23 +275,37 @@
                             <!--</div>-->
                             <!--这段需要手写↑↑↑-->
                             <!--直接构造好复制到js中，前后用"+ (这中间可以取变量值)+"-->
-                            <!--<div class="media">-->
-                                <!--<div class="media-left">-->
-                                    <!--<img class="media-object img-rounded img-comments" src="1"-->
-                                         <!--src="../static/img/9150e4e5gy1gab4a9xjurj205h04wdfr.jpg">-->
-                                <!--</div>-->
-                                <!--<div class="comments media-body">-->
-                                    <!--<span class="comment-commentator">2</span>-->
-                                    <!--<div>-->
-                                        <!--3-->
-                                    <!--</div>-->
-                                    <!--<div class="comment-menu">-->
-                                        <!--<span class="glyphicon glyphicon-thumbs-up comments-like icon"></span>-->
-                                        <!--<span class="pull-right comments-data" th:text="${#dates.format(4,'yyyy-MM-dd HH:mm')}">2019-06-09</span>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<hr class="comments-hr">-->
-                            <!--</div>-->
+                            <div class="media">
+                                <div class="media-left">
+                                    <img class="media-object img-rounded img-comments" src="1"
+                                         src="../static/img/9150e4e5gy1gab4a9xjurj205h04wdfr.jpg">
+                                </div>
+                                <div class="comments media-body">
+                                    <span class="comment-commentator">2</span>
+                                    <div>
+                                        3
+                                    </div>
+                                    <div class="comment-menu">
+                                        <span class="glyphicon glyphicon-thumbs-up comments-like icon like-active"
+                                              th:class="${commentDTO.praiseStatus==0?'glyphicon glyphicon-thumbs-up comments-like icon':'glyphicon glyphicon-thumbs-up comments-like icon like-active'}"
+                                              th:data-id="${commentDTO.id}"
+                                              th:id="'comPraise-'+${commentDTO.id}" onclick="commentPraise(this)"></span>
+                                        <span th:text="${commentDTO.praiseCount}" class="ICount" th:id="'comPraCount-'+${commentDTO.id}">11</span>
+                                        <span class="glyphicon glyphicon-thumbs-down comments-like icon like-active"
+                                              th:class="${commentDTO.treadStatus==0?'glyphicon glyphicon-thumbs-down comments-like icon':'glyphicon glyphicon-thumbs-down comments-like icon tread-active'}"
+                                              th:data-id="${commentDTO.id}"
+                                              th:id="'comTread-'+${commentDTO.id}" onclick="commentTread(this)"></span>
+                                        <span th:text="${commentDTO.treadCount}" class="ICount" th:id="'comTreCount-'+${commentDTO.id}">11</span>
+                                        <span class="btn-report icon" data-toggle="modal" th:data-target="'#commentModal-'+${commentDTO.id}">
+                                            举报
+                                        </span>
+
+                                        <span class="glyphicon glyphicon-thumbs-up comments-like icon"></span>
+                                        <span class="pull-right comments-data" th:text="${#dates.format(4,'yyyy-MM-dd HH:mm')}">2019-06-09</span>
+                                    </div>
+                                </div>
+                                <hr class="comments-hr">
+                            </div>
                             <!--复制到js中替换其中的变量即可↑↑↑-->
 
                             <!--二级评论编辑区-->
