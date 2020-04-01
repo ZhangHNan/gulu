@@ -73,6 +73,10 @@ public class AppealController {
             //如果未登录
             throw new CustomizeException(CustomizeErrorCode.LOGIN_NOT_FOUND);
         }
+        if (loginUser.getPower()!=1){
+            //如果不是管理员
+            throw new CustomizeException(CustomizeErrorCode.PERMISSION_DENIED);
+        }
         PageDTO pageDTO =appealService.findAppealDealPage(currentPage);
         model.addAttribute("pageDTO",pageDTO);
         return "appealManagement";
@@ -85,6 +89,10 @@ public class AppealController {
         if (loginUser == null){
             //如果未登录
             throw new CustomizeException(CustomizeErrorCode.LOGIN_NOT_FOUND);
+        }
+        if (loginUser.getPower()!=1){
+            //如果不是管理员
+            throw new CustomizeException(CustomizeErrorCode.PERMISSION_DENIED);
         }
         //申诉不通过，
         //appeal的状态置3 返回report_deal的id
@@ -101,6 +109,10 @@ public class AppealController {
         if (loginUser == null){
             //如果未登录
             throw new CustomizeException(CustomizeErrorCode.LOGIN_NOT_FOUND);
+        }
+        if (loginUser.getPower()!=1){
+            //如果不是管理员
+            throw new CustomizeException(CustomizeErrorCode.PERMISSION_DENIED);
         }
         //需要loginUser有管理员权限
         //申诉通过：

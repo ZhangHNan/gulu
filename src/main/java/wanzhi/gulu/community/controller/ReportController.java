@@ -41,10 +41,14 @@ public class ReportController {
     public String toDeal(@RequestParam(value = "currentPage",defaultValue = "1") Integer currentPage,
                          HttpServletRequest request,
                          Model model){
-        User user = (User)request.getSession().getAttribute("user");
-        if (user == null){
+        User loginUser = (User)request.getSession().getAttribute("user");
+        if (loginUser == null){
             //如果未登录
             throw new CustomizeException(CustomizeErrorCode.LOGIN_NOT_FOUND);
+        }
+        if (loginUser.getPower()!=1){
+            //如果不是管理员
+            throw new CustomizeException(CustomizeErrorCode.PERMISSION_DENIED);
         }
         PageDTO pageDTO =reportService.findDealPage(currentPage);
         model.addAttribute("pageDTO",pageDTO);
@@ -59,6 +63,10 @@ public class ReportController {
             //如果未登录
             throw new CustomizeException(CustomizeErrorCode.LOGIN_NOT_FOUND);
         }
+        if (loginUser.getPower()!=1){
+            //如果不是管理员
+            throw new CustomizeException(CustomizeErrorCode.PERMISSION_DENIED);
+        }
         //驳回 :举报不成功 latest_count 清零，status置0，设置处理时间，设置处理结果：驳回
         reportService.cancelReport(id);
         return "redirect:/dealManage";
@@ -72,6 +80,10 @@ public class ReportController {
         if (loginUser == null){
             //如果未登录
             throw new CustomizeException(CustomizeErrorCode.LOGIN_NOT_FOUND);
+        }
+        if (loginUser.getPower()!=1){
+            //如果不是管理员
+            throw new CustomizeException(CustomizeErrorCode.PERMISSION_DENIED);
         }
         //banCount=2 永久封禁 status=4 || 评论 删除 status=4 处理结果设置为永久封禁
         if (banCreateDTO.getBanCount()>=2||banCreateDTO.getType()==2){
