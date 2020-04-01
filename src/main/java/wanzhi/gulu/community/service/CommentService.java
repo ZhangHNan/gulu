@@ -55,7 +55,7 @@ public class CommentService {
 
     //添加评论功能
     @Transactional//增加事务
-    public void insert(Comment comment, Long loginId) {
+    public void insert(Comment comment) {
         if (comment.getTargetId() == null || comment.getTargetId() == 0) {
             throw new CustomizeException(CustomizeErrorCode.TARGET_PARAM_ERROR);
         }
@@ -103,6 +103,14 @@ public class CommentService {
         notification.setNotifier(comment.getCommentator());
         notification.setStatus(NotificationStatusEnum.UNREAD.getStatus());
         notification.setReceiver(receiver);
+        //注意：这里传入的comment是null，可以利用创建时间唯一性来从数据库中查找相应的comment
+        CommentExample example = new CommentExample();
+        example.createCriteria()
+                .andGmtCreateEqualTo(comment.getGmtCreate());
+        List<Comment> comments = commentMapper.selectByExample(example);
+        if (comments.size()!=0){
+            notification.setCommentId(comments.get(0).getId());
+        }
         notificationMapper.insert(notification);
     }
 

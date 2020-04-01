@@ -33,6 +33,9 @@ public class ReportService {
     AppealMapper appealMapper;
 
     @Autowired
+    NotificationMapper notificationMapper;
+
+    @Autowired
     ReportUtils reportUtils;
 
     @Autowired
@@ -140,6 +143,7 @@ public class ReportService {
         appealMapper.insert(appeal);
     }
 
+    @Transactional
     public void foreverBan(Long id, Integer type) {
         //banCount=2 永久删除 status=4 || 评论 删除 status=4 处理结果设置为永久封禁
         ReportDeal reportDeal = reportDealMapper.selectByPrimaryKey(id);
@@ -167,11 +171,29 @@ public class ReportService {
                 List<Comment> comments = commentMapper.selectByExample(commentExample);
                 for (Comment c:comments){
                     commentMapper.deleteByPrimaryKey(c.getId());
+                    //删除通知
+                    NotificationExample notificationExample = new NotificationExample();
+                    notificationExample.createCriteria()
+                            .andCommentIdEqualTo(c.getId())
+                            .andTypeEqualTo(2);
+                    notificationMapper.deleteByExample(notificationExample);
                 }
                 commentMapper.deleteByPrimaryKey(comment.getId());
+                //删除通知
+                NotificationExample notificationExample = new NotificationExample();
+                notificationExample.createCriteria()
+                        .andCommentIdEqualTo(comment.getId())
+                        .andTypeEqualTo(1);
+                notificationMapper.deleteByExample(notificationExample);
             }else{
                 //评论评论的
                 commentMapper.deleteByPrimaryKey(reportDeal.getTargetId());
+                //删除通知
+                NotificationExample notificationExample = new NotificationExample();
+                notificationExample.createCriteria()
+                        .andCommentIdEqualTo(reportDeal.getTargetId())
+                        .andTypeEqualTo(2);
+                notificationMapper.deleteByExample(notificationExample);
             }
 
         }else{
@@ -182,18 +204,30 @@ public class ReportService {
                     .andTargetIdEqualTo(reportDeal.getTargetId())
                     .andTypeEqualTo(1);
             List<Comment> comments = commentMapper.selectByExample(commentExample);
-            for(Comment c:comments){
+            for(Comment com:comments){
                 CommentExample comment2Example = new CommentExample();
                 comment2Example.createCriteria()
-                        .andTargetIdEqualTo(c.getId())
+                        .andTargetIdEqualTo(com.getId())
                         .andTypeEqualTo(2);
                 List<Comment> comments2 = commentMapper.selectByExample(comment2Example);
                 if (comments2.size()!=0){
-                    for (Comment com: comments2){
-                        commentMapper.deleteByPrimaryKey(com.getId());
+                    for (Comment c: comments2){
+                        commentMapper.deleteByPrimaryKey(c.getId());
+                        //删除通知
+                        NotificationExample notificationExample = new NotificationExample();
+                        notificationExample.createCriteria()
+                                .andCommentIdEqualTo(c.getId())
+                                .andTypeEqualTo(2);
+                        notificationMapper.deleteByExample(notificationExample);
                     }
                 }
-                commentMapper.deleteByPrimaryKey(c.getId());
+                commentMapper.deleteByPrimaryKey(com.getId());
+                //删除通知
+                NotificationExample notificationExample = new NotificationExample();
+                notificationExample.createCriteria()
+                        .andCommentIdEqualTo(com.getId())
+                        .andTypeEqualTo(1);
+                notificationMapper.deleteByExample(notificationExample);
             }
         }
     }
