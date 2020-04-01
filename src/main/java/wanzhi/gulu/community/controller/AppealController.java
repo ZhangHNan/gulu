@@ -64,7 +64,7 @@ public class AppealController {
         return "redirect:/myAppeal";
     }
 
-    @GetMapping("/appealDeal")
+    @GetMapping("/appealManage")
     public String toAppealManagement(@RequestParam(value = "currentPage",defaultValue = "1") Integer currentPage,
                                      HttpServletRequest request,
                                      Model model){
