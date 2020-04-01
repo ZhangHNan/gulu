@@ -101,11 +101,61 @@ function collapseComments(e) {
                         "                                        <span class=\"glyphicon glyphicon-thumbs-down comments-like icon "+treadClass+"\"\n" +
                         "                                              data-id=\""+comment.id+"\"\n" +
                         "                                              id=\"comTread-"+comment.id+"\" onclick=\"commentTread(this)\"></span>\n" +
-                        "                                        <span  class=\"ICount\" id=\"comTreCount-"+comment.id+"\">"+comment.treadCount+"</span>"+
+                        "                                        <span  class=\"ICount\" id=\"comTreCount-"+comment.id+"\">"+comment.treadCount+"</span>"+"" +
+                        "                                        <span class=\"btn-report icon\" data-toggle=\"modal\" data-target=\"#commentModal-"+comment.id+"\">\n" +
+                        "                                            举报\n" +
+                        "                                        </span>"+
                         "                                        <span class=\"pull-right comments-data\">" + moment(comment.gmtCreate).format('YYYY-M-D HH:mm') + "</span>\n" +
                         "                                    </div>\n" +
                         "                                </div>\n" +
                         "                                <hr class=\"comments-hr\">\n" +
+                        "                            </div>"+
+                        "                            <div class=\"modal fade\" id=\"commentModal-"+comment.id+"\" tabindex=\"-1\" role=\"dialog\">\n" +
+                        "                                <div class=\"modal-dialog\" role=\"document\">\n" +
+                        "                                    <div class=\"modal-content\">\n" +
+                        "                                        <div class=\"modal-header\">\n" +
+                        "                                            <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n" +
+                        "                                            <h2 class=\"modal-title\">请选择举报类型及填写举报原因</h2>\n" +
+                        "                                        </div>\n" +
+                        "                                        <form action=\"/report\" method=\"post\">\n" +
+                        "                                            <div class=\"modal-body\">\n" +
+                        "                                                <input type=\"hidden\" name=\"targetId\" value=\""+comment.id+"\">\n" +
+                        "                                                <input type=\"hidden\" name=\"targetType\" value=\"2\">\n" +
+                        "                                                <h3>选择举报的类型：</h3>\n" +
+                        "                                                <div class=\"choose-row\">\n" +
+                        "                                                    <label class=\"checkbox-inline\">\n" +
+                        "                                                        <input type=\"checkbox\" name=\"reportType\" value=\"恶意中伤\"> 恶意中伤\n" +
+                        "                                                    </label>\n" +
+                        "                                                    <label class=\"checkbox-inline\">\n" +
+                        "                                                        <input type=\"checkbox\" name=\"reportType\" value=\"言语攻击\"> 言语攻击\n" +
+                        "                                                    </label>\n" +
+                        "                                                    <label class=\"checkbox-inline\">\n" +
+                        "                                                        <input type=\"checkbox\" name=\"reportType\" value=\"传播谣言\"> 传播谣言\n" +
+                        "                                                    </label>\n" +
+                        "                                                </div>\n" +
+                        "                                                <div class=\"choose-row\">\n" +
+                        "                                                    <label class=\"checkbox-inline\">\n" +
+                        "                                                        <input type=\"checkbox\" name=\"reportType\" value=\"广告欺诈\"> 广告欺诈\n" +
+                        "                                                    </label>\n" +
+                        "                                                    <label class=\"checkbox-inline\">\n" +
+                        "                                                        <input type=\"checkbox\" name=\"reportType\" value=\"违法言论\"> 违法言论\n" +
+                        "                                                    </label>\n" +
+                        "                                                    <label class=\"checkbox-inline\">\n" +
+                        "                                                        <input type=\"checkbox\" name=\"reportType\" value=\"垃圾评论\"> 垃圾评论\n" +
+                        "                                                    </label>\n" +
+                        "                                                </div>\n" +
+                        "                                                <h3>填写举报的原因：</h3>\n" +
+                        "                                                <div class=\"reason-row\">\n" +
+                        "                                                    <textarea class=\"form-control\" rows=\"4\" name=\"reportReason\" placeholder=\"请输入举报原因...\"></textarea>\n" +
+                        "                                                </div>\n" +
+                        "                                            </div>\n" +
+                        "                                            <div class=\"modal-footer\">\n" +
+                        "                                                <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">取消</button>\n" +
+                        "                                                <button type=\"submit\" class=\"btn btn-primary\">提交</button>\n" +
+                        "                                            </div>\n" +
+                        "                                        </form>\n" +
+                        "                                    </div>\n" +
+                        "                                </div>\n" +
                         "                            </div>";
                     subCommentContainer.prepend(a);
                 });

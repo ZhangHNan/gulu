@@ -48,12 +48,12 @@ public class PublishController {
             //如果未登录
             throw new CustomizeException(CustomizeErrorCode.LOGIN_NOT_FOUND);
         }
-        if (loginUser.getPower() != 1 || loginUser.getPower() != 2) {
-            //如果不是管理员
-            throw new CustomizeException(CustomizeErrorCode.NOT_VIP);
+        if (loginUser.getPower() == 1 || loginUser.getPower() == 2) {
+            model.addAttribute("tags", TagCache.get());
+            return "publish";
         }
-        model.addAttribute("tags", TagCache.get());
-        return "publish";
+        //如果不是管理员
+        throw new CustomizeException(CustomizeErrorCode.NOT_VIP);
     }
 
     //到编辑页面（同发布页面）
