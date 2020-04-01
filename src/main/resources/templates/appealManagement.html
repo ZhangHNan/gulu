@@ -123,8 +123,8 @@
                     <a href="/myStar" class="list-group-item">我的收藏</a>
                     <a href="/myWatch" class="list-group-item">我的关注</a>
                     <a href="/myAppeal" class="list-group-item">申诉中心</a>
-                    <a th:if="${session.user.power==1}" href="/dealManage" class="list-group-item active">投诉管理</a>
-                    <a th:if="${session.user.power==1}" href="/appealManage" class="list-group-item">申诉管理</a>
+                    <a th:if="${session.user.power==2}" href="/dealManage" class="list-group-item">投诉管理</a>
+                    <a th:if="${session.user.power==2}" href="/appealManage" class="list-group-item active">申诉管理</a>
                     <a href="/logout" class="list-group-item">退出登录</a>
                 </div>
             </div>

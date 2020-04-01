@@ -257,13 +257,17 @@ public class PageUtils {
         if (id == null) {
             //查询所有帖子总数
 //            totalCount = questionMapper.findTotalCount();
-            totalCount = questionMapper.countByExample(new QuestionExample());
+            QuestionExample example = new QuestionExample();
+            example.createCriteria()
+                    .andBanEqualTo(0);
+            totalCount = questionMapper.countByExample(example);
         } else {
             //根据创建者来查询帖子总数
 //            totalCount = questionMapper.findTotalCountById(id);
             QuestionExample example = new QuestionExample();
             example.createCriteria()
-                    .andCreatorEqualTo(id);
+                    .andCreatorEqualTo(id)
+                    .andBanEqualTo(0);
             totalCount = questionMapper.countByExample(example);
         }
         return totalCount;
@@ -278,6 +282,8 @@ public class PageUtils {
             //分页查询所有帖子
 //            questionDTOs = questionMapper.findByPage(start, rows);
             QuestionExample example = new QuestionExample();
+            example.createCriteria()
+                    .andBanEqualTo(0);
             example.setOrderByClause("gmt_create desc");
             questions = questionMapper.selectByExampleWithRowbounds(example, new RowBounds(pageDTO.getStart(), pageDTO.getRows()));
         } else {
@@ -285,7 +291,8 @@ public class PageUtils {
 //            questionDTOs = questionMapper.findByPageByCreator(start, rows, id);
             QuestionExample example = new QuestionExample();
             example.createCriteria()
-                    .andCreatorEqualTo(id);
+                    .andCreatorEqualTo(id)
+                    .andBanEqualTo(0);
             example.setOrderByClause("gmt_create desc");
             questions = questionMapper.selectByExampleWithRowbounds(example, new RowBounds(pageDTO.getStart(), pageDTO.getRows()));
         }

@@ -55,8 +55,8 @@
                             <li><a href="/myStar">我的收藏</a></li>
                             <li><a href="/myWatch">我的关注</a></li>
                             <li><a href="/myAppeal">申诉中心</a></li>
-                            <li th:if="${session.user.power==1}"><a href="/dealManage">投诉管理</a></li>
-                            <li th:if="${session.user.power==1}"><a href="/appealManage">申诉管理</a></li>
+                            <li th:if="${session.user.power==2}"><a href="/dealManage">投诉管理</a></li>
+                            <li th:if="${session.user.power==2}"><a href="/appealManage">申诉管理</a></li>
                             <li><a href="/logout">退出登录</a></li>
                         </ul>
                     </li>

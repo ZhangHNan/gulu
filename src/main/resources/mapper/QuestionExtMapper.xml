@@ -25,13 +25,13 @@
     where id = #{id}
   </update>
   <select id="selectRelated" parameterType="wanzhi.gulu.community.model.Question" resultMap="BaseResultMap">
-    select * from question WHERE tag REGEXP #{tag} AND id != #{id};
+    select * from question WHERE tag REGEXP #{tag} AND id != #{id} AND ban = 0;
   </select>
   <select id="countBySearch" parameterType="java.lang.String" resultType="java.lang.Integer">
-    select count(*) from question WHERE title REGEXP #{regxpSearch};
+    select count(*) from question WHERE title REGEXP #{regxpSearch} AND ban = 0;
   </select>
   <select id="selectBySearchPage" parameterType="wanzhi.gulu.community.dto.SearchDTO" resultMap="BaseResultMap">
-    select * from question WHERE (title REGEXP #{regxpSearch}) order by gmt_create desc limit #{start} , #{rows};
+    select * from question WHERE (title REGEXP #{regxpSearch}) AND ban = 0 order by gmt_create desc limit #{start} , #{rows};
   </select>
   <update id="incHot" parameterType="wanzhi.gulu.community.dto.CountDTO" >
     update question

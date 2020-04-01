@@ -73,7 +73,7 @@ public class AppealController {
             //如果未登录
             throw new CustomizeException(CustomizeErrorCode.LOGIN_NOT_FOUND);
         }
-        if (loginUser.getPower()!=1){
+        if (loginUser.getPower()!=2){
             //如果不是管理员
             throw new CustomizeException(CustomizeErrorCode.PERMISSION_DENIED);
         }
@@ -90,7 +90,7 @@ public class AppealController {
             //如果未登录
             throw new CustomizeException(CustomizeErrorCode.LOGIN_NOT_FOUND);
         }
-        if (loginUser.getPower()!=1){
+        if (loginUser.getPower()!=2){
             //如果不是管理员
             throw new CustomizeException(CustomizeErrorCode.PERMISSION_DENIED);
         }
@@ -110,7 +110,7 @@ public class AppealController {
             //如果未登录
             throw new CustomizeException(CustomizeErrorCode.LOGIN_NOT_FOUND);
         }
-        if (loginUser.getPower()!=1){
+        if (loginUser.getPower()!=2){
             //如果不是管理员
             throw new CustomizeException(CustomizeErrorCode.PERMISSION_DENIED);
         }
@@ -122,6 +122,6 @@ public class AppealController {
         questionService.cancelBan(id);
         // appeal表状态置 0
         appealService.passAppeal(id);
-        return "redirect:/appealDeal";
+        return "redirect:/appealManage";
     }
 }
