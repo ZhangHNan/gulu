@@ -173,14 +173,14 @@ public class QuestionService {
         QuestionExample example = new QuestionExample();
         example.createCriteria()
                 .andCreatorEqualTo(id);
-        int count = questionMapper.countByExample(example);
-        return count;
+        return questionMapper.countByExample(example);
     }
 
     public PageDTO findPageByStar(Integer currentPage, Long id) {
         return pageUtils.autoStructureQuestionPageDTOByStar(currentPage,questionRows,questionButtonCount,id);
     }
 
+    //取消帖子的封禁状态
     public void cancelBan(Long appealId) {
         Appeal appeal = appealMapper.selectByPrimaryKey(appealId);
         Question question = questionMapper.selectByPrimaryKey(appeal.getQuestionId());

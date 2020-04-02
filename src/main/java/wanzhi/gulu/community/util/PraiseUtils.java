@@ -11,6 +11,7 @@ import wanzhi.gulu.community.model.Question;
 
 import java.util.List;
 
+//点赞工具类
 @Component
 public class PraiseUtils {
 

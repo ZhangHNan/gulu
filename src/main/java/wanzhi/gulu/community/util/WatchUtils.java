@@ -10,6 +10,7 @@ import wanzhi.gulu.community.model.WatchExample;
 
 import java.util.List;
 
+//关注工具类
 @Component
 public class WatchUtils {
 

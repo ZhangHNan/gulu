@@ -26,6 +26,7 @@ public class AppealService {
     @Value("${page.question.buttonCount}")
     private Integer questionButtonCount;//设置我的问题页每页展示页面按钮数。请设置为奇数，设置为偶数中间段还是奇数个，头和尾才是偶数个
 
+    //申诉中心提交申诉后：创建申诉状态数据
     @Transactional
     public void createApply(AppealApplyDTO appealApplyDTO) {
         Appeal appeal = appealMapper.selectByPrimaryKey(appealApplyDTO.getId());
@@ -40,11 +41,13 @@ public class AppealService {
         return pageUtils.autoStructureMyAppealPageDTOByLoginId(currentPage, questionRows, questionButtonCount,loginId);
     }
 
+    //检查这个申诉是不是本人的
     public Boolean check(long id, long loginId){
         Appeal appeal = appealMapper.selectByPrimaryKey(id);
         return appeal.getUserId() == loginId;
     }
 
+    //处理用户提交的申诉：申诉不通过
     @Transactional
     public Long outAppeal(Long id) {
         Appeal appeal = appealMapper.selectByPrimaryKey(id);
@@ -59,6 +62,7 @@ public class AppealService {
         return pageUtils.autoStructureAppealDealPageDTOByStatus(currentPage, questionRows, questionButtonCount);
     }
 
+    //处理用户提交的申诉：申诉通过
     public void passAppeal(Long id) {
         Appeal appeal = appealMapper.selectByPrimaryKey(id);
         appeal.setStatus(0);

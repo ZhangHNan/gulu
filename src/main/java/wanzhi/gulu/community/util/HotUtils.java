@@ -7,6 +7,7 @@ import wanzhi.gulu.community.mapper.CommentExtMapper;
 import wanzhi.gulu.community.mapper.QuestionExtMapper;
 import wanzhi.gulu.community.mapper.UserExtMapper;
 
+//热度值工具类
 @Component
 public class HotUtils {
 

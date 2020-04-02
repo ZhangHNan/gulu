@@ -30,6 +30,7 @@ public class PraisesService {
     @Autowired
     HotUtils hotUtils;
 
+    //检查点赞状态
     public Praise checkPraiseStatus(PraiseCreateDTO praiseCreateDTO) {
         PraiseExample example = new PraiseExample();
         example.createCriteria()
@@ -43,6 +44,7 @@ public class PraisesService {
         return null;
     }
 
+    //创建帖子点赞
     @Transactional
     public Long createQuestionPraise(PraiseCreateDTO praiseCreateDTO) {
         Praise praise = new Praise();
@@ -62,6 +64,7 @@ public class PraisesService {
 
     }
 
+    //取消帖子点赞
     @Transactional
     public Long removeQuestionPraise(Praise praise){
         praiseMapper.deleteByPrimaryKey(praise.getId());
@@ -74,6 +77,7 @@ public class PraisesService {
         return praiseUtils.getQuePraCount(praise.getPraiseId());
     }
 
+    //创建评论点赞
     @Transactional
     public Long createCommentPraise(PraiseCreateDTO praiseCreateDTO) {
         Praise praise = new Praise();
@@ -89,6 +93,7 @@ public class PraisesService {
         return praiseUtils.getComPraCount(praiseCreateDTO.getPraiseId());
     }
 
+    //取消评论点赞
     @Transactional
     public Long removeCommentPraise(Praise praise) {
         praiseMapper.deleteByPrimaryKey(praise.getId());

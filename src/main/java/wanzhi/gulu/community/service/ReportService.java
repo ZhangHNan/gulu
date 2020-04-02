@@ -47,7 +47,7 @@ public class ReportService {
     @Value("${page.question.buttonCount}")
     private Integer questionButtonCount;//设置我的问题页每页展示页面按钮数。请设置为奇数，设置为偶数中间段还是奇数个，头和尾才是偶数个
 
-
+    //举报功能：创建举报表、创建或更新举报处理表
     @Transactional
     public void createReport(Report report) {
         //1.创建举报表
@@ -65,6 +65,7 @@ public class ReportService {
         CreateOrUpdateDeal(report.getTargetId(),report.getTargetType());
     }
 
+    //创建或更新举报处理表
     @Transactional
     void CreateOrUpdateDeal(Long targetId, Integer targetType) {
         ReportDealExample example = new ReportDealExample();
@@ -100,6 +101,7 @@ public class ReportService {
         return pageUtils.autoStructureDealPageDTO(currentPage,questionRows,questionButtonCount);
     }
 
+    //举报不通过：驳回举报
     public void cancelReport(Long id) {
         //驳回 :举报不成功 latest_count 清零，status置0，设置处理时间，设置处理结果：驳回
         ReportDeal reportDeal = reportDealMapper.selectByPrimaryKey(id);
@@ -113,7 +115,7 @@ public class ReportService {
         reportDealMapper.updateByExample(reportDeal, example);
     }
 
-    //封禁待申诉：只有帖子可以申诉
+    //举报通过：封禁待申诉：只有帖子可以申诉
     @Transactional
     public void ban(Long id,String reportResult) {
         //封禁 :举报成功，latest_count清零，status置2，增加处理时间，处理结果。banCount+1，问题设置为ban状态，创建申诉表
@@ -144,7 +146,7 @@ public class ReportService {
     }
 
     /**
-     *
+     * 永久封禁：帖子前两次封禁、评论封禁
      * @param id 需要永久封禁的reportDeal的id
      * @param type 即处理举报的类型：1帖子，2评论
      */
@@ -237,6 +239,7 @@ public class ReportService {
         }
     }
 
+    //通过申诉后，reportDealMapper的处理逻辑
     public void passAppeal(Long appealId) {
         Appeal appeal = appealMapper.selectByPrimaryKey(appealId);
         ReportDeal reportDeal = reportDealMapper.selectByPrimaryKey(appeal.getDealId());

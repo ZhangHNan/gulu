@@ -39,7 +39,7 @@ public class UserController {
         if (loginUser==null){
             throw new CustomizeException(CustomizeErrorCode.LOGIN_NOT_FOUND);
         }
-        UserDTO userDTO =userService.findUserDTOByid(id,loginUser.getId());
+        UserDTO userDTO =userService.findUserDTOById(id,loginUser.getId());
         PageDTO pageDTO = questionService.findPageByUserId(currentPage,id);
         model.addAttribute("pageDTO",pageDTO);
         model.addAttribute("userDTO",userDTO);

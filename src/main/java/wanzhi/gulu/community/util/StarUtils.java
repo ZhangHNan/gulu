@@ -13,6 +13,7 @@ import wanzhi.gulu.community.model.StarExample;
 
 import java.util.List;
 
+//收藏工具类
 @Component
 public class StarUtils {
 

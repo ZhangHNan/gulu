@@ -20,6 +20,7 @@ public class WatchService {
     @Autowired
     HotUtils hotUtils;
 
+    //关注、取消关注
     @Transactional
     public void updateWatch(Long loginId, Long id) {
         Watch dbWatch = watchUtils.checkWatch(loginId,id);

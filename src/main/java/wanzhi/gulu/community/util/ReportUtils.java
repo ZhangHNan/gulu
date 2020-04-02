@@ -7,6 +7,7 @@ import wanzhi.gulu.community.mapper.ReportDealExtMapper;
 import wanzhi.gulu.community.mapper.ReportDealMapper;
 import wanzhi.gulu.community.mapper.ReportMapper;
 
+//举报工具类
 @Component
 public class ReportUtils {
 

@@ -81,6 +81,7 @@ public class UserService {
         }
     }
 
+    //检查数据库中是否有该用户
     public boolean checkAccountId(Long id) {
         UserExample example = new UserExample();
         example.createCriteria()
@@ -89,10 +90,12 @@ public class UserService {
         return users.size() != 0;
     }
 
+    //更新用户数据
     public void binding(User loginUser) {
         userMapper.updateByPrimaryKey(loginUser);
     }
 
+    //检查数据库中是否有该手机号
     public Boolean checkPhone(String data) {
         UserExample example = new UserExample();
         example.createCriteria()
@@ -101,7 +104,8 @@ public class UserService {
         return users.size() != 0;
     }
 
-    public UserDTO findUserDTOByid(Long id, Long loginId) {
+    //通过id查找用户信息
+    public UserDTO findUserDTOById(Long id, Long loginId) {
         UserDTO userDTO = new UserDTO();
         User user = userMapper.selectByPrimaryKey(id);
         BeanUtils.copyProperties(user,userDTO);
@@ -109,6 +113,7 @@ public class UserService {
         return userDTO;
     }
 
+    //分页查询用户的所有关注（用户）
     public PageDTO findPageByWatch(Integer currentPage, Long id) {
         return pageUtils.autoStructureUserDTOByWatch(currentPage, notificationRows,notificationButtonCount,id);
     }

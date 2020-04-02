@@ -8,6 +8,7 @@ import wanzhi.gulu.community.model.*;
 
 import java.util.List;
 
+//踩工具类
 @Component
 public class TreadUtils {
 
