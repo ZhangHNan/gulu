@@ -36,11 +36,11 @@ public class LoginInterceptor implements HandlerInterceptor {
         //获取未读通知数
         User user = (User)request.getSession().getAttribute("user");
         if(user!=null){
-            //如果登录才查询未读通知
+            //如果登录了就将这些数据存入session域
             Integer unread = notificationService.findUnreadCountByReceiver(user.getId());
             Integer myQuestionCount =questionService.findQuestionCountByCreator(user.getId());
-            request.getSession().setAttribute("myQuestionCount",myQuestionCount);
-            request.getSession().setAttribute("unread",unread);
+            request.getSession().setAttribute("myQuestionCount",myQuestionCount);//查询登录用户的问题数
+            request.getSession().setAttribute("unread",unread);//查询未读通知数
         }
         return true;
     }

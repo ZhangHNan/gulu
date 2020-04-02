@@ -143,6 +143,11 @@ public class ReportService {
         appealMapper.insert(appeal);
     }
 
+    /**
+     *
+     * @param id 需要永久封禁的reportDeal的id
+     * @param type 即处理举报的类型：1帖子，2评论
+     */
     @Transactional
     public void foreverBan(Long id, Integer type) {
         //banCount=2 永久删除 status=4 || 评论 删除 status=4 处理结果设置为永久封禁

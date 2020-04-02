@@ -10,7 +10,6 @@ import wanzhi.gulu.community.dto.AppealApplyDTO;
 import wanzhi.gulu.community.dto.PageDTO;
 import wanzhi.gulu.community.exception.CustomizeErrorCode;
 import wanzhi.gulu.community.exception.CustomizeException;
-import wanzhi.gulu.community.mapper.QuestionMapper;
 import wanzhi.gulu.community.model.User;
 import wanzhi.gulu.community.service.AppealService;
 import wanzhi.gulu.community.service.QuestionService;
