@@ -252,4 +252,12 @@ public class ReportService {
                 .andIdEqualTo(reportDeal.getId());
         reportDealMapper.updateByExample(reportDeal, example);
     }
+
+    //用于查询需要处理的投诉处理申请数放入session域中
+    public Integer findDealApplyCount() {
+        ReportDealExample example = new ReportDealExample();
+        example.createCriteria()
+                .andStatusEqualTo(1);
+        return reportDealMapper.countByExample(example);
+    }
 }

@@ -68,4 +68,12 @@ public class StarService {
         hotUtils.redUserHot(targetQuestion.getCreator(),5L);
         return starUtils.getStarCount(star.getStarId());
     }
+
+    //用于查询我的收藏数放入session域中
+    public Integer findMyStarCount(Long id) {
+        StarExample example = new StarExample();
+        example.createCriteria()
+                .andCollectorEqualTo(id);
+        return starMapper.countByExample(example);
+    }
 }

@@ -70,4 +70,21 @@ public class AppealService {
         example.createCriteria().andIdEqualTo(appeal.getId());
         appealMapper.updateByExample(appeal, example);
     }
+
+    //用于查询我被封禁待申诉数放入session域中
+    public Integer findMyAppealCount(Long id) {
+        AppealExample example = new AppealExample();
+        example.createCriteria()
+                .andUserIdEqualTo(id)
+                .andStatusEqualTo(1);
+        return appealMapper.countByExample(example);
+    }
+
+    //用于查询需要处理的申诉申请数放入session域中
+    public Integer findAppealApplyCount() {
+        AppealExample example = new AppealExample();
+        example.createCriteria()
+                .andStatusEqualTo(2);
+        return appealMapper.countByExample(example);
+    }
 }

@@ -169,7 +169,8 @@ public class QuestionService {
         return questionDTOS;
     }
 
-    public Integer findQuestionCountByCreator(Long id) {
+    //用于查询我的问题数放入session域中
+    public Integer findMyQuestionCount(Long id) {
         QuestionExample example = new QuestionExample();
         example.createCriteria()
                 .andCreatorEqualTo(id);

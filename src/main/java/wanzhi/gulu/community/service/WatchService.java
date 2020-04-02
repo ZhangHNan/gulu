@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wanzhi.gulu.community.mapper.WatchMapper;
 import wanzhi.gulu.community.model.Watch;
+import wanzhi.gulu.community.model.WatchExample;
 import wanzhi.gulu.community.util.HotUtils;
 import wanzhi.gulu.community.util.WatchUtils;
 
@@ -39,5 +40,13 @@ public class WatchService {
             watchUtils.incFans(id,1L);
             hotUtils.incUserHot(id,8L);
         }
+    }
+
+    //用于查询我的关注数放入session域中
+    public Integer findMyWatchCount(Long id) {
+        WatchExample example = new WatchExample();
+        example.createCriteria()
+                .andCollectorEqualTo(id);
+        return watchMapper.countByExample(example);
     }
 }
