@@ -2,7 +2,6 @@ package wanzhi.gulu.community.provider;
 
 import com.alibaba.fastjson.JSON;
 import okhttp3.*;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import wanzhi.gulu.community.dto.AccessTokenDTO;
 import wanzhi.gulu.community.dto.GithubUser;
