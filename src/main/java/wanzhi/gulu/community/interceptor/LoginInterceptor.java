@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import wanzhi.gulu.community.check.LoginCheck;
-import wanzhi.gulu.community.mapper.NotificationMapper;
 import wanzhi.gulu.community.model.User;
 import wanzhi.gulu.community.service.NotificationService;
 import wanzhi.gulu.community.service.QuestionService;

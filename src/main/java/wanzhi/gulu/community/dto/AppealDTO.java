@@ -6,6 +6,7 @@ import wanzhi.gulu.community.model.ReportDeal;
 
 import java.util.List;
 
+//用于申诉中心和申诉管理的表 行
 @Data
 public class AppealDTO {
     private Long id;

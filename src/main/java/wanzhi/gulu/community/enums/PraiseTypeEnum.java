@@ -1,5 +1,6 @@
 package wanzhi.gulu.community.enums;
 
+//点赞类型枚举
 public enum PraiseTypeEnum {
     QUESTION(1),
     COMMENT(2);

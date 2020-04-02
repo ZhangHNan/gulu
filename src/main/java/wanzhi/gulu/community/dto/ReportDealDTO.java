@@ -5,6 +5,7 @@ import wanzhi.gulu.community.model.Report;
 
 import java.util.List;
 
+//创建投诉管理表数据需要的DTO
 @Data
 public class ReportDealDTO {
     private Long id;

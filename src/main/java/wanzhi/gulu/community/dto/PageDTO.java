@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.util.List;
 
+//分页DTO，所有分页数据的展示都基于这个DTO
 @Data
 public class PageDTO<T> {
     private Integer currentPage; //当前页面

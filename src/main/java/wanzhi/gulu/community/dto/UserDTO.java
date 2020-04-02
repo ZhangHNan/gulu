@@ -2,6 +2,7 @@ package wanzhi.gulu.community.dto;
 
 import lombok.Data;
 
+//用于用户信息展示
 @Data
 public class UserDTO {
     private Long id;

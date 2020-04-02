@@ -1,7 +1,6 @@
 package wanzhi.gulu.community.dto;
 
 import lombok.Data;
-import org.springframework.web.servlet.ModelAndView;
 import wanzhi.gulu.community.exception.CustomizeErrorCode;
 import wanzhi.gulu.community.exception.CustomizeException;
 

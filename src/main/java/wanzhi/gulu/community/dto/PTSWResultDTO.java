@@ -2,6 +2,7 @@ package wanzhi.gulu.community.dto;
 
 import lombok.Data;
 
+//点赞收藏踩关注功能的返回信息的DTO
 @Data
 public class PTSWResultDTO {
     private Integer code;

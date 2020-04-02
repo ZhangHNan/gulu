@@ -2,6 +2,7 @@ package wanzhi.gulu.community.dto;
 
 import lombok.Data;
 
+//通用的结果                                                                               返回DTO
 @Data
 public class ResultDTO {
     private Integer code;
