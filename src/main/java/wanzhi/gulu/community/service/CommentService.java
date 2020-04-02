@@ -76,7 +76,7 @@ public class CommentService {
             commentExtMapper.incCommentCount(updateComment);
             hotUtils.incCommentHot(dbComment.getId(),1L);
             //创建通知
-            createNotify(comment,dbComment.getCommentator(), NotificationTypeEnum.REPLY_COMMENT);
+            createCommentNotify(comment,dbComment.getCommentator(), NotificationTypeEnum.REPLY_COMMENT);
         } else {
             //回复问题
             Question dbQuestion = questionMapper.selectByPrimaryKey(comment.getTargetId());
@@ -90,12 +90,12 @@ public class CommentService {
             hotUtils.incQuestionHot(dbQuestion.getId(),1L);
             hotUtils.incUserHot(dbQuestion.getCreator(),1L);
             //创建通知
-            createNotify(comment,dbQuestion.getCreator(), NotificationTypeEnum.REPLY_QUESTION);
+            createCommentNotify(comment,dbQuestion.getCreator(), NotificationTypeEnum.REPLY_QUESTION);
         }
     }
 
-    //创建通知：传入被评论对象，以及评论人id，和评论类型即可
-    private void createNotify(Comment comment, Long receiver, NotificationTypeEnum notificationTypeEnum) {
+    //创建评论通知：传入被评论对象，以及评论人id，和评论类型即可
+    private void createCommentNotify(Comment comment, Long receiver, NotificationTypeEnum notificationTypeEnum) {
         Notification notification = new Notification();
         notification.setGmtCreate(System.currentTimeMillis());
         notification.setType(notificationTypeEnum.getType());
@@ -108,6 +108,27 @@ public class CommentService {
         example.createCriteria()
                 .andGmtCreateEqualTo(comment.getGmtCreate());
         List<Comment> comments = commentMapper.selectByExample(example);
+        if (notificationTypeEnum.getType() == NotificationTypeEnum.REPLY_QUESTION.getType()) {
+            Question targetQuestion = questionMapper.selectByPrimaryKey(comment.getTargetId());
+            if (targetQuestion.getTitle().length()>10){
+                String substring = targetQuestion.getTitle().substring(0, 9);
+                String titleShort = substring + "...";
+                notification.setOuterTitle(titleShort);
+            }else{
+                notification.setOuterTitle(targetQuestion.getTitle());
+            }
+            notification.setTypeName(NotificationTypeEnum.REPLY_QUESTION.getName());
+        } else {
+            Comment targetComment = commentMapper.selectByPrimaryKey(comment.getTargetId());
+            if (targetComment.getContent().length()>10){
+                String substring = targetComment.getContent().substring(0, 9);
+                String titleShort = substring + "...";
+                notification.setOuterTitle(titleShort);
+            }else{
+                notification.setOuterTitle(comment.getContent());
+            }
+            notification.setTypeName(NotificationTypeEnum.REPLY_COMMENT.getName());
+        }
         if (comments.size()!=0){
             notification.setSourceId(comments.get(0).getId());
         }

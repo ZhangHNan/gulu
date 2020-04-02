@@ -349,15 +349,6 @@ public class PageUtils {
 //            User user = userMapper.findById(questionDTO.getCreator());
             User user = userMapper.selectByPrimaryKey(notificationDTO.getNotifier());
             notificationDTO.setUser(user);
-            if (notificationDTO.getType() == NotificationTypeEnum.REPLY_QUESTION.getType()) {
-                Question question = questionMapper.selectByPrimaryKey(notificationDTO.getOuterId());
-                notificationDTO.setOuterTitle(question.getTitle());
-                notificationDTO.setTypeName(NotificationTypeEnum.REPLY_QUESTION.getName());
-            } else {
-                Comment comment = commentMapper.selectByPrimaryKey(notificationDTO.getOuterId());
-                notificationDTO.setOuterTitle(comment.getContent());
-                notificationDTO.setTypeName(NotificationTypeEnum.REPLY_COMMENT.getName());
-            }
         }
         //将查询出来的帖子赋给PageDTO
         pageDTO.setDataS(notificationDTOs);
