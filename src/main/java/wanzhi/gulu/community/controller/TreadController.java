@@ -7,14 +7,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import wanzhi.gulu.community.dto.CommentResultDTO;
 import wanzhi.gulu.community.dto.PTSWResultDTO;
-import wanzhi.gulu.community.dto.PraiseCreateDTO;
 import wanzhi.gulu.community.dto.TreadCreateDTO;
 import wanzhi.gulu.community.exception.CustomizeErrorCode;
 import wanzhi.gulu.community.exception.CustomizeException;
-import wanzhi.gulu.community.model.Praise;
 import wanzhi.gulu.community.model.Tread;
 import wanzhi.gulu.community.model.User;
-import wanzhi.gulu.community.service.PraisesService;
 import wanzhi.gulu.community.service.TreadService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +22,7 @@ public class TreadController {
     @Autowired
     TreadService treadService;
 
+    //问题踩功能
     @ResponseBody
     @PostMapping("/questionTread")
     public Object questionTread(@RequestBody TreadCreateDTO treadCreateDTO,
@@ -55,6 +53,7 @@ public class TreadController {
         return PTSWResultDTO.okOf(status,queTreCount);
     }
 
+    //评论踩功能
     @ResponseBody
     @PostMapping("/commentTread")
     public Object commentTread(@RequestBody TreadCreateDTO treadCreateDTO,

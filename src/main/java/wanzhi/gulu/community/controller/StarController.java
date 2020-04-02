@@ -21,6 +21,7 @@ public class StarController {
     @Autowired
     StarService starService;
 
+    //收藏功能
     @ResponseBody
     @PostMapping("/star")
     public Object star(@RequestBody StarCreateDTO starCreateDTO,

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import wanzhi.gulu.community.check.LoginCheck;
 import wanzhi.gulu.community.dto.PageDTO;
 import wanzhi.gulu.community.model.User;
-import wanzhi.gulu.community.service.NotificationService;
 import wanzhi.gulu.community.service.QuestionService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,12 +21,9 @@ public class MyStarController {
     @Autowired
     QuestionService questionService;
 
-    @Autowired
-    private NotificationService notificationService;
-
-    //到我的问题页面
+    //到我的收藏页面
     @GetMapping("/myStar")
-    public String profile(Model model,
+    public String myStar(Model model,
                           @RequestParam(value = "currentPage",defaultValue = "1") Integer currentPage,
                           HttpServletRequest request){
         //从session域中获取登录的user

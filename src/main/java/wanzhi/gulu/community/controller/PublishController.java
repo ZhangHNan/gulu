@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import wanzhi.gulu.community.cache.TagCache;
 import wanzhi.gulu.community.check.LoginCheck;
-import wanzhi.gulu.community.dto.QuestionDTO;
-import wanzhi.gulu.community.dto.TagDTO;
 import wanzhi.gulu.community.exception.CustomizeErrorCode;
 import wanzhi.gulu.community.exception.CustomizeException;
 import wanzhi.gulu.community.mapper.QuestionMapper;

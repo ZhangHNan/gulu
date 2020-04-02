@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import wanzhi.gulu.community.dto.AppealApplyDTO;
 import wanzhi.gulu.community.dto.PageDTO;
 import wanzhi.gulu.community.exception.CustomizeErrorCode;
 import wanzhi.gulu.community.exception.CustomizeException;
@@ -29,40 +27,7 @@ public class AppealController {
     @Autowired
     QuestionService questionService;
 
-    @GetMapping("/cancelAppeal")
-    public String cancelAppeal(HttpServletRequest request,
-                               @RequestParam("id") Long id){
-        User loginUser = (User)request.getSession().getAttribute("user");
-        if (loginUser == null){
-            //如果未登录
-            throw new CustomizeException(CustomizeErrorCode.LOGIN_NOT_FOUND);
-        }
-        //已登录，要确认是取消申请本人的，是才取消，不是报错
-        Boolean isSelf =appealService.check(id,loginUser.getId());
-        if (isSelf){
-            //安全，
-            //appeal的状态置3 返回report_deal的id
-            Long dealId = appealService.outAppeal(id);
-            //删除相应的帖子和一级及二级评论,
-            reportService.foreverBan(dealId,1);
-            return "redirect:/myAppeal";
-        }else{
-            throw new CustomizeException(CustomizeErrorCode.PERMISSION_DENIED);
-        }
-    }
-
-    @PostMapping("/appeal")
-    public String appeal(HttpServletRequest request,
-                         AppealApplyDTO appealApplyDTO){
-        User loginUser = (User)request.getSession().getAttribute("user");
-        if (loginUser == null){
-            //如果未登录
-            throw new CustomizeException(CustomizeErrorCode.LOGIN_NOT_FOUND);
-        }
-        appealService.createApply(appealApplyDTO);
-        return "redirect:/myAppeal";
-    }
-
+    //到申诉管理页面
     @GetMapping("/appealManage")
     public String toAppealManagement(@RequestParam(value = "currentPage",defaultValue = "1") Integer currentPage,
                                      HttpServletRequest request,
@@ -81,6 +46,7 @@ public class AppealController {
         return "appealManagement";
     }
 
+    //申诉失败：驳回功能
     @GetMapping("/failAppeal")
     public String failAppeal(HttpServletRequest request,
                              @RequestParam("id") Long id){
@@ -101,6 +67,7 @@ public class AppealController {
         return "redirect:/appealDeal";
     }
 
+    //申诉成功：申诉通过功能
     @GetMapping("/passAppeal")
     public String passAppeal(HttpServletRequest request,
                              @RequestParam("id") Long id){

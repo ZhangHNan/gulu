@@ -22,6 +22,7 @@ public class ReportController {
     @Autowired
     ReportService reportService;
 
+    //举报功能
     @PostMapping("/report")
     public String report(Report report,
                                  HttpServletRequest request){
@@ -37,6 +38,7 @@ public class ReportController {
         return "redirect:index";
     }
 
+    //到投诉管理页面
     @GetMapping("/dealManage")
     public String toDeal(@RequestParam(value = "currentPage",defaultValue = "1") Integer currentPage,
                          HttpServletRequest request,
@@ -55,6 +57,7 @@ public class ReportController {
         return "reportManagement";
     }
 
+    //举报不成功：举报不成立
     @GetMapping("/cancelDeal")
     public String cancelDeal(@RequestParam("id") Long id,
                              HttpServletRequest request){
@@ -72,6 +75,7 @@ public class ReportController {
         return "redirect:/dealManage";
     }
 
+    //举报成功：封禁帖子或评论
     @PostMapping("/banDeal")
     public String banDeal(BanCreateDTO banCreateDTO,
                           HttpServletRequest request){

@@ -10,7 +10,6 @@ import wanzhi.gulu.community.dto.ResultDTO;
 import wanzhi.gulu.community.dto.UserDTO;
 import wanzhi.gulu.community.exception.CustomizeErrorCode;
 import wanzhi.gulu.community.exception.CustomizeException;
-import wanzhi.gulu.community.model.Question;
 import wanzhi.gulu.community.model.User;
 import wanzhi.gulu.community.service.QuestionService;
 import wanzhi.gulu.community.service.UserService;
@@ -48,7 +47,6 @@ public class UserController {
     }
 
     //关注功能
-    //升级会员
     @ResponseBody
     @PostMapping("/watch")
     public Object VIP(@RequestBody BindingDTO bindingDTO,

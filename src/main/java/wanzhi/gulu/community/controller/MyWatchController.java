@@ -17,6 +17,7 @@ public class MyWatchController {
     @Autowired
     UserService userService;
 
+    //到我的关注页面
     @GetMapping("/myWatch")
     public String toMyWatch(Model model,
                             @RequestParam(value = "currentPage",defaultValue = "1") Integer currentPage,

@@ -27,6 +27,7 @@ public class LoginController {
         return "login";
     }
 
+    //手机号登录功能：手机号+密码 方式登录
     @PostMapping("/login")
     public String login(@RequestParam("phone") String phone,
                         @RequestParam("password") String password,

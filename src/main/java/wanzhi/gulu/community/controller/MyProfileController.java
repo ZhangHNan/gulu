@@ -2,12 +2,11 @@ package wanzhi.gulu.community.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import sun.security.util.Password;
-import wanzhi.gulu.community.dto.*;
+import wanzhi.gulu.community.dto.BindingDTO;
+import wanzhi.gulu.community.dto.ResultDTO;
 import wanzhi.gulu.community.exception.CustomizeErrorCode;
 import wanzhi.gulu.community.exception.CustomizeException;
 import wanzhi.gulu.community.model.User;
@@ -90,6 +89,7 @@ public class MyProfileController {
         return ResultDTO.okOf();
     }
 
+    //设置简介
     @PostMapping("/updateBio")
     public String bindingBio(@RequestParam("bio")String bio,
                              HttpServletRequest request){

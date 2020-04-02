@@ -11,7 +11,6 @@ import wanzhi.gulu.community.enums.CommentTypeEnum;
 import wanzhi.gulu.community.model.User;
 import wanzhi.gulu.community.service.CommentService;
 import wanzhi.gulu.community.service.QuestionService;
-import wanzhi.gulu.community.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;

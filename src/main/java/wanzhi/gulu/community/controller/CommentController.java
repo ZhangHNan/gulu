@@ -23,6 +23,7 @@ public class CommentController {
     CommentService commentService;
 
     /**
+     * 评论功能
      * 前后端分离API（Ajax）：前端携带Json数据请求（contentType:"application/json",data:JSON.stringify(),dataType:"json"），
      * 后端返回json数据
      * @param commentCreateDTO

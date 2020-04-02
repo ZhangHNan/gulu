@@ -25,6 +25,7 @@ public class RegisterController {
         return "register";
     }
 
+    //注册功能
     @PostMapping("/register")
     public String register(RegisterDTO RegisterDTO,
                            Model model){

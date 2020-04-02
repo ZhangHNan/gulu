@@ -20,6 +20,7 @@ public class PraisesController {
     @Autowired
     PraisesService praisesService;
 
+    //帖子点赞功能
     @ResponseBody
     @PostMapping("/questionPraise")
     public Object questionPraise(@RequestBody PraiseCreateDTO praiseCreateDTO,
@@ -50,6 +51,7 @@ public class PraisesController {
         return PTSWResultDTO.okOf(status,quePraCount);
     }
 
+    //评论点赞功能
     @ResponseBody
     @PostMapping("/commentPraise")
     public Object commentPraise(@RequestBody PraiseCreateDTO praiseCreateDTO,
