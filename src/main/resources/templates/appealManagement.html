@@ -88,25 +88,25 @@
                     <nav>
                         <ul class="pagination">
                             <li th:if="${pageDTO.showFirst==true}">
-                                <a th:href="@{/myAppeal(currentPage='1')}" aria-label="Previous">
+                                <a th:href="@{/appealManage(currentPage='1')}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
                             <li th:if="${pageDTO.showLast==true}">
-                                <a th:href="@{/myAppeal(currentPage=${pageDTO.currentPage}-1,)}" aria-label="Previous">
+                                <a th:href="@{/appealManage(currentPage=${pageDTO.currentPage}-1,)}" aria-label="Previous">
                                     <span aria-hidden="true">&lt;</span>
                                 </a>
                             </li>
                             <li th:each="showButton:${pageDTO.showButtons}" th:class="${pageDTO.currentPage==showButton?'active':''}">
-                                <a th:href="@{/myAppeal(currentPage=${showButton})}" th:text="${showButton}"></a>
+                                <a th:href="@{/appealManage(currentPage=${showButton})}" th:text="${showButton}"></a>
                             </li>
                             <li th:if="${pageDTO.showNext==true}">
-                                <a th:href="@{/myAppeal(currentPage=${pageDTO.currentPage+1})}" aria-label="Previous">
+                                <a th:href="@{/appealManage(currentPage=${pageDTO.currentPage+1})}" aria-label="Previous">
                                     <span aria-hidden="true">&gt;</span>
                                 </a>
                             </li>
                             <li th:if="${pageDTO.showEnd==true}">
-                                <a th:href="@{/myAppeal(currentPage=${pageDTO.totalPage})}" aria-label="Next">
+                                <a th:href="@{/appealManage(currentPage=${pageDTO.totalPage})}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>

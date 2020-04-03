@@ -4,13 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import wanzhi.gulu.community.dto.CommentResultDTO;
 import wanzhi.gulu.community.enums.NotificationStatusEnum;
 import wanzhi.gulu.community.enums.NotificationTypeEnum;
+import wanzhi.gulu.community.exception.CustomizeErrorCode;
+import wanzhi.gulu.community.exception.CustomizeException;
 import wanzhi.gulu.community.mapper.CommentMapper;
 import wanzhi.gulu.community.mapper.NotificationMapper;
-import wanzhi.gulu.community.model.Comment;
-import wanzhi.gulu.community.model.Notification;
-import wanzhi.gulu.community.model.NotificationExample;
+import wanzhi.gulu.community.mapper.UserMapper;
+import wanzhi.gulu.community.model.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class NotificationController {
@@ -20,6 +25,9 @@ public class NotificationController {
 
     @Autowired
     CommentMapper commentMapper;
+
+    @Autowired
+    UserMapper userMapper;
 
     //已读通知操作：改变通知状态，同时跳转到相应的question页面
     @GetMapping("/read")
@@ -59,5 +67,22 @@ public class NotificationController {
         example.createCriteria()
                 .andIdEqualTo(id);
         notificationMapper.updateByExample(notification, example);
+    }
+
+    @GetMapping("/allRead")
+    public String allRead(HttpServletRequest request){
+        User loginUser = (User)request.getSession().getAttribute("user");
+        if (loginUser == null) {
+            //用户未登录
+            throw new CustomizeException(CustomizeErrorCode.LOGIN_NOT_FOUND);
+        }
+        NotificationExample example = new NotificationExample();
+        example.createCriteria()
+                .andReceiverEqualTo(loginUser.getId());
+        List<Notification> notifications = notificationMapper.selectByExample(example);
+        for (Notification n : notifications){
+            signRead(n.getId());
+        }
+        return "redirect:/myMessage";
     }
 }

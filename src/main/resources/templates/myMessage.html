@@ -19,7 +19,7 @@
                 <!--左3/4区域：主页的主体-->
                 <h2>
                     <span class=" glyphicon glyphicon-question-sign" aria-hidden="true"></span>
-                    我的消息</h2>
+                    我的消息 <a href="/allRead" class="allRead">一键已读</a></h2>
                 <hr>
                 <div class="media" th:each="notificationDTO:${notificationPageDTO.dataS}">
                     <span th:text="${notificationDTO.user.name}" th:if="${notificationDTO.type<=3}"></span>
@@ -35,25 +35,25 @@
                 <nav>
                     <ul class="pagination">
                         <li th:if="${notificationPageDTO.showFirst==true}">
-                            <a th:href="@{/profile/replies(currentPage='1')}" aria-label="Previous">
+                            <a th:href="@{/myMessage(currentPage='1')}" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
                         <li th:if="${notificationPageDTO.showLast==true}">
-                            <a th:href="@{/profile/replies(currentPage=${notificationPageDTO.currentPage}-1)}" aria-label="Previous">
+                            <a th:href="@{/myMessage(currentPage=${notificationPageDTO.currentPage}-1)}" aria-label="Previous">
                                 <span aria-hidden="true">&lt;</span>
                             </a>
                         </li>
                         <li th:each="showButton:${notificationPageDTO.showButtons}" th:class="${notificationPageDTO.currentPage==showButton?'active':''}">
-                            <a th:href="@{/profile/replies(currentPage=${showButton})}" th:text="${showButton}"></a>
+                            <a th:href="@{/myMessage(currentPage=${showButton})}" th:text="${showButton}"></a>
                         </li>
                         <li th:if="${notificationPageDTO.showNext==true}">
-                            <a th:href="@{/profile/replies(currentPage=${notificationPageDTO.currentPage+1})}" aria-label="Previous">
+                            <a th:href="@{/myMessage(currentPage=${notificationPageDTO.currentPage+1})}" aria-label="Previous">
                                 <span aria-hidden="true">&gt;</span>
                             </a>
                         </li>
                         <li th:if="${notificationPageDTO.showEnd==true}">
-                            <a th:href="@{/profile/replies(currentPage=${notificationPageDTO.totalPage})}" aria-label="Next">
+                            <a th:href="@{/myMessage(currentPage=${notificationPageDTO.totalPage})}" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>

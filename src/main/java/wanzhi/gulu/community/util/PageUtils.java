@@ -274,7 +274,6 @@ public class PageUtils {
     }
 
     //QuestionPageDTO查询数据数的方法
-.
     private PageDTO injectQuestionDTODataS(PageDTO<QuestionDTO> pageDTO, Long id) {
         //分页查询帖子（需要传入开始索引和显示行数）
         List<QuestionDTO> questionDTOs = new ArrayList<>();
