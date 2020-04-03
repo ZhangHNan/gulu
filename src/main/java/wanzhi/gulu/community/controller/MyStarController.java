@@ -27,12 +27,12 @@ public class MyStarController {
                           @RequestParam(value = "currentPage",defaultValue = "1") Integer currentPage,
                           HttpServletRequest request){
         //从session域中获取登录的user
-        User user = (User)request.getSession().getAttribute("user");
-        if (user == null){
+        User loginUser = (User)request.getSession().getAttribute("user");
+        if (loginUser == null){
             //如果未登录重定向到首页，注意：如果是“redirect:index”，它会跳转到同级的index。即/profile/index
             return "redirect:/index";
         }
-        PageDTO pageDTO = questionService.findPageByStar(currentPage,user.getId());
+        PageDTO pageDTO = questionService.findPageByStar(currentPage,loginUser.getId());
         model.addAttribute("pageDTO",pageDTO);
         return "myStar";
     }

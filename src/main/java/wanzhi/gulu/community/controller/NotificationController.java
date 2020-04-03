@@ -25,29 +25,39 @@ public class NotificationController {
     @GetMapping("/read")
     public String read(@RequestParam("id") Long id,
                        @RequestParam("type") Integer type,
-                       @RequestParam("outerId")Long outerId){
-        if (type==NotificationTypeEnum.REPLY_QUESTION.getType()){
-            //标为已读
-            Notification notification = notificationMapper.selectByPrimaryKey(id);
-            notification.setStatus(NotificationStatusEnum.READ.getStatus());
-            NotificationExample example = new NotificationExample();
-            example.createCriteria()
-                    .andIdEqualTo(id);
-            notificationMapper.updateByExample(notification, example);
-            return "forward:/question/"+outerId;
-        }else{
-            //标为已读
-            Notification notification = notificationMapper.selectByPrimaryKey(id);
-            notification.setStatus(NotificationStatusEnum.READ.getStatus());
-            NotificationExample example = new NotificationExample();
-            example.createCriteria()
-                    .andIdEqualTo(id);
-            notificationMapper.updateByExample(notification, example);
+                       @RequestParam("outerId")Long outerId,
+                       @RequestParam(name="myAppeal",required = false)Boolean myAppeal){
+        //标为已读
+        signRead(id);
+        if (type==NotificationTypeEnum.REPLY_COMMENT.getType()){
+
             //查询outerId对应的questionId
             Comment comment = commentMapper.selectByPrimaryKey(outerId);
             Long parentId = comment.getTargetId();
             //跳转
             return "forward:/question/"+parentId;
         }
+        if (type==NotificationTypeEnum.WATCH_FOR.getType()){
+            return "forward:/myProfile";
+        }
+        //其他的
+        if (myAppeal!=null&&myAppeal==true){
+            return "forward:/myAppeal";
+        }
+        if (type==NotificationTypeEnum.FOREVER_BAN.getType() ||
+                type==NotificationTypeEnum.CANCEL_APPEAL.getType() ||
+                type==NotificationTypeEnum.APPEAL_FAIL.getType() ){
+            return "redirect:/myMessage";
+        }
+        return "forward:/question/"+outerId;
+    }
+
+    private void signRead(Long id){
+        Notification notification = notificationMapper.selectByPrimaryKey(id);
+        notification.setStatus(NotificationStatusEnum.READ.getStatus());
+        NotificationExample example = new NotificationExample();
+        example.createCriteria()
+                .andIdEqualTo(id);
+        notificationMapper.updateByExample(notification, example);
     }
 }

@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wanzhi.gulu.community.dto.PageDTO;
+import wanzhi.gulu.community.enums.NotificationStatusEnum;
+import wanzhi.gulu.community.enums.NotificationTypeEnum;
 import wanzhi.gulu.community.exception.CustomizeErrorCode;
 import wanzhi.gulu.community.exception.CustomizeException;
 import wanzhi.gulu.community.mapper.*;
@@ -34,6 +36,9 @@ public class ReportService {
 
     @Autowired
     NotificationMapper notificationMapper;
+
+    @Autowired
+    StarMapper starMapper;
 
     @Autowired
     ReportUtils reportUtils;
@@ -66,7 +71,6 @@ public class ReportService {
     }
 
     //创建或更新举报处理表
-    @Transactional
     void CreateOrUpdateDeal(Long targetId, Integer targetType) {
         ReportDealExample example = new ReportDealExample();
         example.createCriteria()
@@ -143,6 +147,28 @@ public class ReportService {
         appeal.setGmtCreate(System.currentTimeMillis());
         appeal.setStatus(1);
         appealMapper.insert(appeal);
+        //创建通知
+        createBanNotify(appeal);
+    }
+
+    //创建封禁通知：传入被Watch对象即可
+    private void createBanNotify(Appeal appeal) {
+        Notification notification = new Notification();
+        notification.setGmtCreate(System.currentTimeMillis());
+        notification.setType(NotificationTypeEnum.BAN.getType());
+        notification.setTypeName(NotificationTypeEnum.BAN.getName());
+        notification.setReceiver(appeal.getUserId());
+        notification.setOuterId(appeal.getQuestionId());
+        notification.setStatus(NotificationStatusEnum.UNREAD.getStatus());
+        Question targetQuestion = questionMapper.selectByPrimaryKey(appeal.getQuestionId());
+        if (targetQuestion.getTitle().length()>10){
+            String substring = targetQuestion.getTitle().substring(0, 9);
+            String titleShort = substring + "...";
+            notification.setOuterTitle(titleShort);
+        }else{
+            notification.setOuterTitle(targetQuestion.getTitle());
+        }
+        notificationMapper.insert(notification);
     }
 
     /**
@@ -151,7 +177,7 @@ public class ReportService {
      * @param type 即处理举报的类型：1帖子，2评论
      */
     @Transactional
-    public void foreverBan(Long id, Integer type) {
+    public void foreverBan(Long id, Integer type,NotificationTypeEnum notificationTypeEnum) {
         //banCount=2 永久删除 status=4 || 评论 删除 status=4 处理结果设置为永久封禁
         ReportDeal reportDeal = reportDealMapper.selectByPrimaryKey(id);
         reportDeal.setLatestCount(0L);
@@ -204,12 +230,19 @@ public class ReportService {
             }
 
         }else{
-            //帖子 //永久删除 帖子 及其对应的一级评论和二级评论
+            //帖子 //永久删除 帖子 及其对应的一级评论和二级评论，以及收藏该帖子的记录
+            createForeverBanNotify(reportDeal,notificationTypeEnum);
             questionMapper.deleteByPrimaryKey(reportDeal.getTargetId());
             CommentExample commentExample = new CommentExample();
             commentExample.createCriteria()
                     .andTargetIdEqualTo(reportDeal.getTargetId())
                     .andTypeEqualTo(1);
+            //删除收藏该帖子的记录
+            StarExample starExample = new StarExample();
+            starExample.createCriteria()
+                    .andStarIdEqualTo(reportDeal.getTargetId());
+            starMapper.deleteByExample(starExample);
+            //删除该贴的所有一级二级评论
             List<Comment> comments = commentMapper.selectByExample(commentExample);
             for(Comment com:comments){
                 CommentExample comment2Example = new CommentExample();
@@ -236,7 +269,29 @@ public class ReportService {
                         .andTypeEqualTo(1);
                 notificationMapper.deleteByExample(notificationExample);
             }
+            //创建永久封禁通知，如果放在这里，这时帖子已经被删除了，会造成空指针异常
         }
+    }
+
+    //创建永久封禁通知：传入被Watch对象即可
+    private void createForeverBanNotify(ReportDeal reportDeal,NotificationTypeEnum notificationTypeEnum) {
+        Notification notification = new Notification();
+        notification.setGmtCreate(System.currentTimeMillis());
+        notification.setType(notificationTypeEnum.getType());
+        notification.setTypeName(notificationTypeEnum.getName());
+        System.out.println(reportDeal.getTargetId());
+        Question targetQuestion = questionMapper.selectByPrimaryKey(reportDeal.getTargetId());
+        notification.setReceiver(targetQuestion.getCreator());
+        notification.setOuterId(reportDeal.getTargetId());
+        notification.setStatus(NotificationStatusEnum.UNREAD.getStatus());
+        if (targetQuestion.getTitle().length()>10){
+            String substring = targetQuestion.getTitle().substring(0, 9);
+            String titleShort = substring + "...";
+            notification.setOuterTitle(titleShort);
+        }else{
+            notification.setOuterTitle(targetQuestion.getTitle());
+        }
+        notificationMapper.insert(notification);
     }
 
     //通过申诉后，reportDealMapper的处理逻辑

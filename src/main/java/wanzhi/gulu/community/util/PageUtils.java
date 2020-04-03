@@ -274,6 +274,7 @@ public class PageUtils {
     }
 
     //QuestionPageDTO查询数据数的方法
+.
     private PageDTO injectQuestionDTODataS(PageDTO<QuestionDTO> pageDTO, Long id) {
         //分页查询帖子（需要传入开始索引和显示行数）
         List<QuestionDTO> questionDTOs = new ArrayList<>();
@@ -347,36 +348,42 @@ public class PageUtils {
         }
         for (NotificationDTO notificationDTO : notificationDTOs) {
 //            User user = userMapper.findById(questionDTO.getCreator());
-            User user = userMapper.selectByPrimaryKey(notificationDTO.getNotifier());
-            notificationDTO.setUser(user);
+            if(notificationDTO.getNotifier()!=null){
+                User user = userMapper.selectByPrimaryKey(notificationDTO.getNotifier());
+                notificationDTO.setUser(user);
+            }
         }
         //将查询出来的帖子赋给PageDTO
         pageDTO.setDataS(notificationDTOs);
         return pageDTO;
     }
 
-    public PageDTO autoStructureQuestionPageDTOByStar(Integer currentPage, Integer rows, Integer buttonCount, Long id) {
+    public PageDTO autoStructureQuestionPageDTOByStar(Integer currentPage, Integer rows, Integer buttonCount, Long loginId) {
         PageDTO pageDTO = new PageDTO();
         //查询数据总数TotalCount
         StarExample example = new StarExample();
         example.createCriteria()
-                .andCollectorEqualTo(id);
+                .andCollectorEqualTo(loginId);
         List<Star> stars = starMapper.selectByExample(example);
         List<Long> myStarQuestionId = stars.stream().map(s -> s.getStarId()).collect(Collectors.toList());
         Integer totalCount = myStarQuestionId.size();
         //构建分页模型
         pageDTO = autoStructurePageModel(currentPage, rows, buttonCount, totalCount);
         //补充数据
-        pageDTO = injectQuestionDTODataSByStar(pageDTO, myStarQuestionId);
+        pageDTO = injectQuestionDTODataSByStar(pageDTO,loginId);
         return pageDTO;
     }
 
-    private PageDTO injectQuestionDTODataSByStar(PageDTO pageDTO, List<Long> myStarQuestionId) {
-        List<QuestionDTO> questionDTOS = myStarQuestionId.stream().map(m ->
+    private PageDTO injectQuestionDTODataSByStar(PageDTO pageDTO,Long loginId) {
+        StarExample starExample = new StarExample();
+        starExample.createCriteria()
+                .andCollectorEqualTo(loginId);
+        List<Star> stars = starMapper.selectByExampleWithRowbounds(starExample, new RowBounds(pageDTO.getStart(), pageDTO.getRows()));
+        List<QuestionDTO> questionDTOS = stars.stream().map(s ->
         {
             //按创建时间排序未做？
             QuestionDTO questionDTO = new QuestionDTO();
-            Question question = questionMapper.selectByPrimaryKey(m);
+            Question question = questionMapper.selectByPrimaryKey(s.getStarId());
             BeanUtils.copyProperties(question, questionDTO);
             User user = userMapper.selectByPrimaryKey(question.getCreator());
             questionDTO.setUser(user);
@@ -420,7 +427,7 @@ public class PageUtils {
         WatchExample example = new WatchExample();
         example.createCriteria()
                 .andCollectorEqualTo(id);
-        List<Watch> watches = watchMapper.selectByExample(example);
+        List<Watch> watches = watchMapper.selectByExampleWithRowbounds(example, new RowBounds(pageDTO.getStart(), pageDTO.getRows()));
         List<UserDTO> collects = watches.stream().map(watch -> {
             UserDTO userDTO = new UserDTO();
             User user = userMapper.selectByPrimaryKey(watch.getWatchId());
@@ -454,7 +461,7 @@ public class PageUtils {
         example.createCriteria()
                 .andStatusEqualTo(1);
         example.setOrderByClause("latest_count desc");
-        List<ReportDeal> reportDeals = reportDealMapper.selectByExample(example);
+        List<ReportDeal> reportDeals = reportDealMapper.selectByExampleWithRowbounds(example, new RowBounds(pageDTO.getStart(), pageDTO.getRows()));
         List<ReportDealDTO> reportDealDTOS = reportDeals.stream().map(deal -> {
             ReportDealDTO reportDealDTO = new ReportDealDTO();
             BeanUtils.copyProperties(deal, reportDealDTO);
@@ -519,7 +526,7 @@ public class PageUtils {
         example.createCriteria()
                 .andUserIdEqualTo(loginId)
                 .andStatusEqualTo(1);
-        List<Appeal> appeals = appealMapper.selectByExample(example);
+        List<Appeal> appeals = appealMapper.selectByExampleWithRowbounds(example, new RowBounds(pageDTO.getStart(), pageDTO.getRows()));
         List<AppealDTO> appealDTOS = appeals.stream()
                 .map(a -> {
                     AppealDTO appealDTO = new AppealDTO();
@@ -562,7 +569,7 @@ public class PageUtils {
         AppealExample example = new AppealExample();
         example.createCriteria()
                 .andStatusEqualTo(2);
-        List<Appeal> appeals = appealMapper.selectByExample(example);
+        List<Appeal> appeals = appealMapper.selectByExampleWithRowbounds(example, new RowBounds(pageDTO.getStart(), pageDTO.getRows()));
         List<AppealDTO> appealDTOS = appeals.stream()
                 .map(a -> {
                     AppealDTO appealDTO = new AppealDTO();

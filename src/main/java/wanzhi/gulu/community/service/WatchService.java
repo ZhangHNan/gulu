@@ -67,9 +67,12 @@ public class WatchService {
         Notification notification = new Notification();
         notification.setGmtCreate(System.currentTimeMillis());
         notification.setType(NotificationTypeEnum.WATCH_FOR.getType());
+        notification.setTypeName(NotificationTypeEnum.WATCH_FOR.getName());
         notification.setNotifier(watch.getCollector());
         notification.setStatus(NotificationStatusEnum.UNREAD.getStatus());
+        notification.setOuterId(watch.getCollector());
         notification.setReceiver(watch.getWatchId());
+        notification.setOuterTitle("了解");
         //注意：这里传入的comment是null，可以利用创建时间唯一性来从数据库中查找相应的comment
         WatchExample example = new WatchExample();
         example.createCriteria()

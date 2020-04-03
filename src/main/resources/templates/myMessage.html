@@ -22,10 +22,14 @@
                     我的消息</h2>
                 <hr>
                 <div class="media" th:each="notificationDTO:${notificationPageDTO.dataS}">
-                    <span th:text="${notificationDTO.user.name}"></span>
-                    <span th:text="${notificationDTO.typeName}"></span>
-                    <!--<a href="#"th:href="@{'/question/'+${notificationDTO.outerid}}" th:text="${notificationDTO.outerTitle}"></a>-->
-                    <a href="#" th:href="@{/read(type=${notificationDTO.type},id=${notificationDTO.id},outerId=${notificationDTO.outerId})}" th:text="${notificationDTO.outerTitle}"></a>
+                    <span th:text="${notificationDTO.user.name}" th:if="${notificationDTO.type<=3}"></span>
+                    <span th:if="${notificationDTO.type>3}">您的帖子</span>
+                    <span th:text="${notificationDTO.typeName}" th:if="${notificationDTO.type<=3}"></span>
+                    <a href="#" th:href="@{/read(type=${notificationDTO.type},id=${notificationDTO.id},outerId=${notificationDTO.outerId})}" th:if="${notificationDTO.type!=5 && notificationDTO.type!=6 && notificationDTO.type!=8}" th:text="${notificationDTO.outerTitle}"></a>
+                    <span href="#" th:if="${notificationDTO.type==5||notificationDTO.type==6||notificationDTO.type==8}" th:text="${notificationDTO.outerTitle}"></span>
+                    <span th:text="${notificationDTO.typeName}" th:if="${notificationDTO.type>3}"></span>
+                    <span th:if="${notificationDTO.type==4}"><a th:href="@{/read(type=${notificationDTO.type},id=${notificationDTO.id},outerId=${notificationDTO.outerId},myAppeal=true)}">申请解封</a></span>
+                    <a href="#" th:href="@{/read(type=${notificationDTO.type},id=${notificationDTO.id},outerId=${notificationDTO.outerId})}" th:if="${notificationDTO.type==5||notificationDTO.type==6||notificationDTO.type==8}">了解</a>
                     <span class="badge badge-red" th:if="${notificationDTO.status==0}">NEW</span>
                 </div>
                 <nav>

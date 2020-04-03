@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import wanzhi.gulu.community.dto.AppealApplyDTO;
 import wanzhi.gulu.community.dto.PageDTO;
+import wanzhi.gulu.community.enums.NotificationTypeEnum;
 import wanzhi.gulu.community.exception.CustomizeErrorCode;
 import wanzhi.gulu.community.exception.CustomizeException;
 import wanzhi.gulu.community.model.User;
@@ -56,7 +57,7 @@ public class MyAppealController {
             //appeal的状态置3 返回report_deal的id
             Long dealId = appealService.outAppeal(id);
             //删除相应的帖子和一级及二级评论,
-            reportService.foreverBan(dealId,1);
+            reportService.foreverBan(dealId,1,NotificationTypeEnum.CANCEL_APPEAL);
             return "redirect:/myAppeal";
         }else{
             throw new CustomizeException(CustomizeErrorCode.PERMISSION_DENIED);

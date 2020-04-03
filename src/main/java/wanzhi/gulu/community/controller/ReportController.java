@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import wanzhi.gulu.community.dto.BanCreateDTO;
 import wanzhi.gulu.community.dto.PageDTO;
+import wanzhi.gulu.community.enums.NotificationTypeEnum;
 import wanzhi.gulu.community.exception.CustomizeErrorCode;
 import wanzhi.gulu.community.exception.CustomizeException;
 import wanzhi.gulu.community.model.Report;
@@ -91,7 +92,7 @@ public class ReportController {
         }
         //banCount=2 永久封禁 status=4 || 评论 删除 status=4 处理结果设置为永久封禁
         if (banCreateDTO.getBanCount()>=2||banCreateDTO.getType()==2){
-            reportService.foreverBan(banCreateDTO.getId(),banCreateDTO.getType());
+            reportService.foreverBan(banCreateDTO.getId(),banCreateDTO.getType(),NotificationTypeEnum.FOREVER_BAN);
             return "redirect:/dealManage";
         }else{
             //封禁 :举报成功，latest_count清零，status置2，banCount+1，增加处理时间，处理结果，问题设置为ban状态，评论直接删除，创建申诉表
