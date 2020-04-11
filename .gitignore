@@ -29,3 +29,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+src/main/resources/aliyun.properties
+src/main/resources/ucloud.properties

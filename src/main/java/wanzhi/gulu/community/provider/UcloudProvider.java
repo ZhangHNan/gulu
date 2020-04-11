@@ -8,6 +8,7 @@ import cn.ucloud.ufile.bean.PutObjectResultBean;
 import cn.ucloud.ufile.exception.UfileClientException;
 import cn.ucloud.ufile.exception.UfileServerException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import wanzhi.gulu.community.exception.CustomizeErrorCode;
 import wanzhi.gulu.community.exception.CustomizeException;
@@ -17,6 +18,7 @@ import java.util.UUID;
 
 //UCloud图片上传相关业务
 @Service
+@PropertySource(value = {"classpath:ucloud.properties"})
 public class UcloudProvider {
     @Value("${ucloud.ufile.public-key}")
     private String publicKey;//设置Ucloud公匙

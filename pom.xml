@@ -98,6 +98,13 @@
             <version>2.4.2</version>
         </dependency>
 
+        <!--阿里云短信服务SDK-->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+
 
     </dependencies>
 
