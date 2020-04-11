@@ -10,4 +10,5 @@ public class RegisterDTO {
     private String phone;
     private String password;
     private String passwordAgain;
+    private String code; //短信验证码
 }

@@ -54,3 +54,10 @@ body{
     font-weight: normal;
     color: #999;
 }
+.smsInput{
+    width: 138px;
+    margin-right: 14px;
+}
+.smsIn *{
+    display: inline-block;
+}

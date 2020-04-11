@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" href="../static/css/bootstrap-theme.min.css" th:href="@{/css/bootstrap-theme.min.css}">
     <link rel="stylesheet" href="../static/css/register.css" th:href="@{/css/register.css}">
+    <script src="../static/js/register.js" th:src="@{/js/register.js}"></script>
 </head>
 <body>
 <div th:insert="~{navigation :: nav}"></div>
@@ -56,6 +57,15 @@
                         </div>
                         <div class="col-xs-8">
                             <input type="password" class="form-control input" th:value="${passwordAgain}" name="passwordAgain" id="passwordAgain" placeholder="请再次输入密码">
+                        </div>
+                    </div>
+                    <div class="form-group input-item row">
+                        <div class="col-xs-4 div-title">
+                            <label for="smsCode" class="title">短信验证码：</label>
+                        </div>
+                        <div class="col-xs-8 smsIn">
+                            <input type="text" class="form-control smsInput" th:value="${smsCode}" name="code" id="smsCode" placeholder="请输入短信验证码">
+                            <button type="button" class="btn btn-info" onclick="getSmsCode()">获取验证码</button>
                         </div>
                     </div>
                     <div class="form-group input-item-msg row"th:if="${msg!=null}">

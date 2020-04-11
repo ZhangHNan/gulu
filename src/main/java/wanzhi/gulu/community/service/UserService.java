@@ -117,4 +117,15 @@ public class UserService {
     public PageDTO findPageByWatch(Integer currentPage, Long id) {
         return pageUtils.autoStructureUserDTOByWatch(currentPage, notificationRows,notificationButtonCount,id);
     }
+
+    public User findUserByPhone(String phone) {
+        UserExample example = new UserExample();
+        example.createCriteria()
+                .andPhoneEqualTo(phone);
+        List<User> users = userMapper.selectByExample(example);
+        if (users.size()!=0){
+            return users.get(0);
+        }
+        return null;
+    }
 }

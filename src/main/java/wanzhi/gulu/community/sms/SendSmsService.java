@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
+//发送短信验证码服务
 @Service
 @PropertySource(value = {"classpath:aliyun.properties"})
 public class SendSmsService {
