@@ -115,13 +115,13 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!--引入flyway插件-->
+            <!--&lt;!&ndash;引入flyway插件&ndash;&gt;
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>6.3.0</version>
                 <executions>
-                    <!--当install时会执行migrate-->
+                    &lt;!&ndash;当install时会执行migrate&ndash;&gt;
                     <execution>
                         <phase>generate-sources</phase>
                         <goals>
@@ -130,7 +130,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <!--和数据源配置差不多-->
+                    &lt;!&ndash;和数据源配置差不多&ndash;&gt;
                     <url>jdbc:mysql://localhost:3306/community?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC</url>
                     <user>root</user>
                     <password>123</password>
@@ -142,7 +142,7 @@
                         <version>8.0.19</version>
                     </dependency>
                 </dependencies>
-            </plugin>
+            </plugin>-->
 
             <!--引入Mybatis Generator插件，方便快速生成MapperCRUD-->
             <plugin>

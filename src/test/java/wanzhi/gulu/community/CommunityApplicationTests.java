@@ -18,8 +18,12 @@ public class CommunityApplicationTests {
 
     @Test
     public void contextLoads() {
-        sendSmsService.sendSms("18219198767",SmSTemplateType.LOGIN,"1234");
-
+        boolean sendStatus = sendSmsService.sendSms("1821919876", SmSTemplateType.LOGIN, "6666");
+        if (sendStatus==true){
+            System.out.println("短信验证码发送成功");
+        }else{
+            System.out.println("出意外了，短信验证发送失败!");
+        }
     }
 
 }

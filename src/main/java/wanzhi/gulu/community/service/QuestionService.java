@@ -1,6 +1,7 @@
 package wanzhi.gulu.community.service;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -190,5 +191,12 @@ public class QuestionService {
         questionExample.createCriteria()
                 .andIdEqualTo(appeal.getQuestionId());
         questionMapper.updateByExample(question, questionExample);
+    }
+
+    //查找热度前十的帖子
+    public List<Question> findQuestionByHot() {
+        QuestionExample example = new QuestionExample();
+        example.setOrderByClause("hot desc");
+        return questionMapper.selectByExampleWithRowbounds(example, new RowBounds(0, 8));
     }
 }

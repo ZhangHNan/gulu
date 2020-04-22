@@ -8,12 +8,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import wanzhi.gulu.community.check.LoginCheck;
 import wanzhi.gulu.community.dto.PageDTO;
+import wanzhi.gulu.community.dto.QuestionDTO;
 import wanzhi.gulu.community.mapper.UserMapper;
+import wanzhi.gulu.community.model.Question;
 import wanzhi.gulu.community.service.QuestionService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Controller
 public class IndexController {
@@ -37,7 +40,9 @@ public class IndexController {
 
         //获取页面帖子数据用于首页展示
         PageDTO pageDTO = questionService.findPage(currentPage,search);
+        List<Question> hotQuestions = questionService.findQuestionByHot();
         model.addAttribute("pageDTO",pageDTO);
+        model.addAttribute("hotQuestions",hotQuestions);
         if (StringUtils.isBlank(search)){
             model.addAttribute("search",null);
         }else{

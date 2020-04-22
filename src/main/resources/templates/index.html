@@ -11,14 +11,14 @@
     <link rel="stylesheet" href="../static/css/index.css" th:href="@{/css/index.css}">
 </head>
 <script type="application/javascript">
-    window.onload =function () {
+    /*window.onload =function () {
         var closable = window.localStorage.getItem("closable");
         if(closable == "true"){
             window.localStorage.removeItem("closable");
             // window.location.href="about:blank"; 如果浏览器页面不能自动关闭，加上这个试试
             window.close();
         }
-    }
+    }*/
 </script>
 <body>
 <div th:insert="~{navigation :: nav}"></div>
@@ -87,24 +87,25 @@
                 <hr>
                 <h4>本网站由个人开发！欢迎测试！</h4>
                 <p>
-                    本网站现可用功能：发帖、评论、评论通知、查询。
+                    发帖功能需要先升级会员（会员密码“咕噜会员”）
                 </p>
                 <hr>
                 <h3>操作指南</h3>
                 <hr>
                 <p>
-                    1.本网站可使用github登陆，登陆后才可以使用发布、通知功能。
+                    1.登陆后才可以使用发布、通知等功能。本网站可使用github登陆、短信验证码登录、用户名密码登方式登录。
                 </p>
                 <p>
                     2.由于github服务器在国外，登录时可能出现连接超时等原因导致登录失败。
                 </p>
                 <hr>
-                <h3>热门话题</h3>
+                <h3>热帖推荐</h3>
                 <hr>
-                1.XXXXXXXXXXXXXXXXXX
-                2.XXXXXXXXXXXXXXXXXX
-                3.XXXXXXXXXXXXXXXXXX
-                4.XXXXXXXXXXXXXXXXXX
+                <ol>
+                    <li th:each="hotQuestion:${hotQuestions}">
+                        <a href="#" th:href="@{'/question/'+${hotQuestion.getId()}}" th:text="${hotQuestion.title}"> 测试</a>
+                    </li>
+                </ol>
             </div>
         </div>
     </div>

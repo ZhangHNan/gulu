@@ -1,5 +1,6 @@
 package wanzhi.gulu.community.sms;
 
+import com.alibaba.fastjson.JSON;
 import com.aliyuncs.CommonRequest;
 import com.aliyuncs.CommonResponse;
 import com.aliyuncs.DefaultAcsClient;
@@ -11,6 +12,7 @@ import com.aliyuncs.profile.DefaultProfile;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import wanzhi.gulu.community.dto.SmsResponse;
 
 //发送短信验证码服务
 @Service
@@ -23,8 +25,8 @@ public class SendSmsService {
     @Value("${sms.aliyun.accessKeySecret}")
     private String accessKeySecret;
 
-    //传入要发送的手机号和验证码即可
-    public void sendSms(String receive,SmSTemplateType templateType,String code) {
+    //传入要发送的手机号和验证码即可(返回true表示发送成功，返回false表示发送失败)
+    public boolean sendSms(String receive,SmSTemplateType templateType,String code) {
         DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessKeySecret);
         IAcsClient client = new DefaultAcsClient(profile);
 
@@ -44,11 +46,18 @@ public class SendSmsService {
         try {
             //发送短信验证码并接受返回数据（JSON）
             CommonResponse response = client.getCommonResponse(request);
+            SmsResponse smsResponse = JSON.parseObject(response.getData(), SmsResponse.class);
             System.out.println(response.getData());
+            System.out.println(smsResponse);
+            if (smsResponse.getMessage().equals("OK")&&smsResponse.getCode().equals("OK")){
+                return true;
+            }
+            //如果发送成功返回true（短信验证码发送成功）;发送失败返回false；（出意外了，短信验证发送失败）
         } catch (ServerException e) {
             e.printStackTrace();
         } catch (ClientException e) {
             e.printStackTrace();
         }
+        return false;
     }
 }
